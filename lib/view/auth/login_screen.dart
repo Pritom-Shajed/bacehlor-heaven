@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Container(
-            padding: EdgeInsets.only(top: 80),
+            padding: EdgeInsets.only(top: 65),
             height: MediaQuery.of(context).size.height / 3,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
@@ -25,12 +25,17 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Sign in to'.toUpperCase(),
-                  style: poppinsTextStyle(size: 24, color: whiteColor),
-                ),
-                Text(
                   'Bachelor Heaven',
                   style: satisfyTextStyle(size: 34, color: whiteColor),
+                ),
+                Text(
+                  'Login Now',
+                  style: poppinsTextStyle(
+                      size: 24, fontWeight: FontWeight.bold, color: whiteColor),
+                ),
+                Text(
+                  'We missed you!',
+                  style: poppinsTextStyle(size: 12, color: whiteColor),
                 ),
               ],
             ),

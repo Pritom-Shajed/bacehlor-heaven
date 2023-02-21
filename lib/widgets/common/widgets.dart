@@ -56,7 +56,7 @@ Widget customTextField(
     required String hintText,
     required IconData icon}) {
   return Card(
-    elevation: 3,
+    elevation: 1,
     child: TextField(
       cursorColor: blackColor,
       controller: controller,

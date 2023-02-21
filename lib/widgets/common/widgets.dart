@@ -75,15 +75,17 @@ Widget customButton({required String text, required VoidCallback onTap}) {
   return InkWell(
     onTap: onTap,
     child: Container(
+      alignment: Alignment.center,
+      width: double.maxFinite,
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
           blurRadius: 1,
           color: Colors.black45,
         )
-      ], color: bgColor2, borderRadius: BorderRadius.circular(12)),
+      ], color: bgColor2, borderRadius: BorderRadius.circular(6)),
       child: Text(
-        'Sign In',
+        text,
         style: poppinsTextStyle(color: whiteColor, fontWeight: FontWeight.w500),
       ),
     ),

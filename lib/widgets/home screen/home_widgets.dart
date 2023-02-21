@@ -73,13 +73,13 @@ Widget DrawerWidget() {
           ),
         ),
         ListTile(
-          title: Text('Sign In'.toUpperCase()),
+          title: Text('Login'.toUpperCase()),
           subtitle: Text('as user'),
           leading: Icon(Icons.login),
         ),
         ListTile(
           onTap: () => Get.toNamed('/login_screen'),
-          title: Text('Sign In'.toUpperCase()),
+          title: Text('Login'.toUpperCase()),
           subtitle: Text('as landlord'),
           leading: Icon(Icons.login),
         ),

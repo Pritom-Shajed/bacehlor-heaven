@@ -9,54 +9,57 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController _emailController = TextEditingController();
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.topCenter,
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            padding: EdgeInsets.only(top: 65),
-            height: MediaQuery.of(context).size.height / 3,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                gradient: bgColorGradiant,
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(24),
-                    bottomRight: Radius.circular(24))),
-            child: Column(
-              children: [
-                Text(
-                  'Bachelor Heaven',
-                  style: satisfyTextStyle(size: 34, color: whiteColor),
-                ),
-                Text(
-                  'Login Now',
-                  style: poppinsTextStyle(
-                      size: 24, fontWeight: FontWeight.bold, color: whiteColor),
-                ),
-                Text(
-                  'We missed you!',
-                  style: poppinsTextStyle(size: 12, color: whiteColor),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: -320,
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              padding:
-                  EdgeInsets.only(top: 15, bottom: 30, left: 10, right: 10),
+      body: SingleChildScrollView(
+        child: Stack(
+          alignment: Alignment.topCenter,
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              padding: EdgeInsets.only(top: 65),
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.92),
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 4,
-                    color: Colors.black38,
+                gradient: bgColorGradiant,
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    'Bachelor Heaven',
+                    style: satisfyTextStyle(size: 34, color: whiteColor),
+                  ),
+                  Text(
+                    'Login Now',
+                    style: poppinsTextStyle(
+                        size: 24,
+                        fontWeight: FontWeight.bold,
+                        color: whiteColor),
+                  ),
+                  Text(
+                    'We missed you!',
+                    style: poppinsTextStyle(size: 12, color: whiteColor),
                   ),
                 ],
               ),
-              child: Form(
+            ),
+            Positioned(
+              top: 180,
+              bottom: 0,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.92),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(55),
+                      topRight: Radius.circular(55)),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 4,
+                      color: Colors.black38,
+                    ),
+                  ],
+                ),
                 child: Column(
                   children: [
                     SizedBox(
@@ -72,13 +75,17 @@ class LoginScreen extends StatelessWidget {
                         hintText: 'Password',
                         icon: Icons.lock),
                     verticalSpace,
-                    customButton(text: 'Sign In', onTap: () {}),
+                    customButton(
+                        text: 'Login',
+                        onTap: () {
+                          print('tapped');
+                        }),
                   ],
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

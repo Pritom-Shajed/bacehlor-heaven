@@ -25,7 +25,7 @@ class _BottomNavState extends State<BottomNav> {
     ];
     return GetBuilder<BottomNavController>(builder: (controller) {
       return Scaffold(
-        drawer: DrawerWidget(),
+        drawer: DrawerWidget(context),
         appBar: AppBar(
           elevation: 0,
         ),

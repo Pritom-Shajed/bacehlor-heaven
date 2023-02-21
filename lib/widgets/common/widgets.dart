@@ -65,7 +65,7 @@ Widget customTextField(
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: Icon(icon),
-        prefixIconColor: bgColor2,
+        prefixIconColor: blackColor,
         border: InputBorder.none,
       ),
     ),
@@ -85,7 +85,7 @@ Widget customButton({required String text, required VoidCallback onTap}) {
           blurRadius: 1,
           color: Colors.black45,
         )
-      ], color: bgColor2, borderRadius: BorderRadius.circular(6)),
+      ], color: blackColor, borderRadius: BorderRadius.circular(6)),
       child: Text(
         text,
         style: poppinsTextStyle(color: whiteColor, fontWeight: FontWeight.w500),

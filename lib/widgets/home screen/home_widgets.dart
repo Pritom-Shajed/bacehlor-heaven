@@ -1,4 +1,5 @@
 import 'package:bachelor_heaven/constants/constants.dart';
+import 'package:bachelor_heaven/widgets/bottom%20sheet/bottom_scheet_widget.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/gridItems.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/slider_item.dart';
@@ -59,12 +60,12 @@ List<Widget> gridItems = [
       text: 'Seat')
 ];
 
-Widget DrawerWidget() {
+Widget DrawerWidget(BuildContext context) {
   return Drawer(
     child: ListView(
       children: [
         DrawerHeader(
-          decoration: BoxDecoration(gradient: bgColorGradiant),
+          decoration: BoxDecoration(color: bgColor),
           child: Center(
             child: Text(
               'Bachelor Heaven',
@@ -78,7 +79,31 @@ Widget DrawerWidget() {
           leading: Icon(Icons.login),
         ),
         ListTile(
-          onTap: () => Get.toNamed('/login_screen'),
+          onTap: () {
+            Get.back();
+            showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(12),
+                ),
+              ),
+              builder: (BuildContext context) {
+                return Padding(
+                  padding: MediaQuery.of(context).viewInsets,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.all(12),
+                      child: bottomSheetWidget(
+                          onTapEmail: () => Get.offNamed('login_screen'),
+                          onTapGoogle: () {}),
+                    ),
+                  ),
+                );
+              },
+            );
+          },
           title: Text('Login'.toUpperCase()),
           subtitle: Text('as landlord'),
           leading: Icon(Icons.login),

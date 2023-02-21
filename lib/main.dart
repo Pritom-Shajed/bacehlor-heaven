@@ -1,5 +1,6 @@
 import 'package:bachelor_heaven/bindings/bindings.dart';
 import 'package:bachelor_heaven/constants/constants.dart';
+import 'package:bachelor_heaven/view/auth/login_screen.dart';
 import 'package:bachelor_heaven/view/bottom_nav.dart';
 import 'package:bachelor_heaven/view/pages/home_screen.dart';
 import 'package:bachelor_heaven/view/pages/landlords_screen.dart';
@@ -32,8 +33,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/home_screen', page: () => HomeScreen()),
         GetPage(name: '/nav_panel', page: () => BottomNav()),
         GetPage(name: '/landlords_screen', page: () => LandlordsScreen()),
+        GetPage(name: '/login_screen', page: () => LoginScreen())
       ],
-      initialRoute: '/nav_panel',
+      initialRoute: '/splash_screen',
       initialBinding: InitialBinding(),
     );
   }

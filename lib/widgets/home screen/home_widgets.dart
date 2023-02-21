@@ -3,6 +3,7 @@ import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/gridItems.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/slider_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 // Header
 Widget HeaderWidget() {
@@ -63,7 +64,7 @@ Widget DrawerWidget() {
     child: ListView(
       children: [
         DrawerHeader(
-          decoration: BoxDecoration(color: Colors.brown.shade400),
+          decoration: BoxDecoration(gradient: bgColorGradiant),
           child: Center(
             child: Text(
               'Bachelor Heaven',
@@ -77,6 +78,7 @@ Widget DrawerWidget() {
           leading: Icon(Icons.login),
         ),
         ListTile(
+          onTap: () => Get.toNamed('/login_screen'),
           title: Text('Sign In'.toUpperCase()),
           subtitle: Text('as landlord'),
           leading: Icon(Icons.login),

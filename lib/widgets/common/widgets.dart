@@ -31,10 +31,10 @@ TextStyle satisfyTextStyle({
       letterSpacing: letterSpacing,
     ));
 
-
-
 //Search Bar
-Widget searchBar({required TextEditingController controller, }){
+Widget searchBar({
+  required TextEditingController controller,
+}) {
   return Card(
     elevation: 3,
     child: TextField(
@@ -45,6 +45,46 @@ Widget searchBar({required TextEditingController controller, }){
         prefixIcon: Icon(Icons.search),
         prefixIconColor: Colors.grey.shade700,
         border: InputBorder.none,
+      ),
+    ),
+  );
+}
+
+// TextField
+Widget customTextField(
+    {required TextEditingController controller,
+    required String hintText,
+    required IconData icon}) {
+  return Card(
+    elevation: 3,
+    child: TextField(
+      cursorColor: blackColor,
+      controller: controller,
+      decoration: InputDecoration(
+        hintText: hintText,
+        prefixIcon: Icon(icon),
+        prefixIconColor: bgColor2,
+        border: InputBorder.none,
+      ),
+    ),
+  );
+}
+
+// Custom Button
+Widget customButton({required String text, required VoidCallback onTap}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+          blurRadius: 1,
+          color: Colors.black45,
+        )
+      ], color: bgColor2, borderRadius: BorderRadius.circular(12)),
+      child: Text(
+        'Sign In',
+        style: poppinsTextStyle(color: whiteColor, fontWeight: FontWeight.w500),
       ),
     ),
   );

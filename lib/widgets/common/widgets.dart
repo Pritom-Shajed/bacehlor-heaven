@@ -54,10 +54,12 @@ Widget searchBar({
 Widget customTextField(
     {required TextEditingController controller,
     required String hintText,
-    required IconData icon}) {
+    required IconData icon,
+    bool obscureText = false}) {
   return Card(
     elevation: 1,
     child: TextField(
+      obscureText: obscureText,
       cursorColor: blackColor,
       controller: controller,
       decoration: InputDecoration(

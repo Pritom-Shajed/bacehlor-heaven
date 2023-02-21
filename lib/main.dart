@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/landlords_screen', page: () => LandlordsScreen()),
         GetPage(name: '/login_screen', page: () => LoginScreen())
       ],
-      initialRoute: '/nav_panel',
+      initialRoute: '/splash_screen',
       initialBinding: InitialBinding(),
     );
   }

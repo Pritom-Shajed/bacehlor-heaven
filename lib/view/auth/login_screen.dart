@@ -1,13 +1,16 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _emailController = TextEditingController();
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -71,14 +74,16 @@ class LoginScreen extends StatelessWidget {
                         hintText: 'Email',
                         icon: Icons.email),
                     customTextField(
-                        controller: _emailController,
+                        obscureText: true,
+                        controller: _passController,
                         hintText: 'Password',
                         icon: Icons.lock),
                     verticalSpace,
                     customButton(
                         text: 'Login',
                         onTap: () {
-                          print('tapped');
+                          _emailController.clear();
+                          _passController.clear();
                         }),
                   ],
                 ),

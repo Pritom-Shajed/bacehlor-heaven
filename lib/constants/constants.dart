@@ -8,6 +8,7 @@ String currentDate = DateFormat.yMMMd().format(DateTime.now());
 Color blackColor = Colors.black;
 Color whiteColor = Colors.white;
 Color greyColor = Colors.grey;
+Color lightGreyColor = Colors.grey.shade300;
 Color bgColor = Colors.black.withOpacity(0.7);
 // Color bgColor1 = Color(0xffBEA35E);
 // Color bgColor2 = Color(0xff7B693B);

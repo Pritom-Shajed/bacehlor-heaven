@@ -1,10 +1,14 @@
 import 'package:bachelor_heaven/constants/constants.dart';
+import 'package:bachelor_heaven/controller/auth/auth_controller.dart';
 import 'package:bachelor_heaven/widgets/bottom%20sheet/bottom_scheet_widget.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/gridItems.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/slider_item.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+AuthController controller = Get.put(AuthController());
 
 // Header
 Widget HeaderWidget() {
@@ -15,15 +19,8 @@ Widget HeaderWidget() {
           style: satisfyTextStyle(
               color: blackColor, size: 36, fontWeight: FontWeight.w200)),
       Text(currentDate, style: TextStyle(fontSize: 18)),
-      RichText(
-          text: TextSpan(children: [
-        TextSpan(
-            text: 'Hello, ',
-            style: poppinsTextStyle(color: greyColor, size: 16)),
-        TextSpan(
-            text: 'Pritom Shajed',
-            style: poppinsTextStyle(color: greyColor, size: 16)),
-      ])),
+      Text('Find your next stay...',
+          style: poppinsTextStyle(color: greyColor, size: 16)),
     ],
   );
 }
@@ -60,6 +57,7 @@ List<Widget> gridItems = [
       text: 'Seat')
 ];
 
+//Normal Drawer
 Widget DrawerWidget(BuildContext context) {
   return Drawer(
     child: ListView(
@@ -72,11 +70,6 @@ Widget DrawerWidget(BuildContext context) {
               style: satisfyTextStyle(size: 36, color: whiteColor),
             ),
           ),
-        ),
-        ListTile(
-          title: Text('Login'.toUpperCase()),
-          subtitle: Text('as user'),
-          leading: Icon(Icons.login),
         ),
         ListTile(
           onTap: () {
@@ -109,9 +102,46 @@ Widget DrawerWidget(BuildContext context) {
           leading: Icon(Icons.login),
         ),
         ListTile(
+          onTap: () => Get.toNamed('/reg_screen'),
           title: Text('New Here ?'.toUpperCase()),
           subtitle: Text('Register'),
           leading: Icon(Icons.app_registration),
+        ),
+      ],
+    ),
+  );
+}
+
+//Drawer for logged in users
+Widget LoggedInDrawer({required String text}) {
+  return Drawer(
+    child: ListView(
+      children: [
+        DrawerHeader(
+          decoration: BoxDecoration(color: bgColor),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                  radius: 35,
+                  backgroundColor: lightGreyColor,
+                  backgroundImage: AssetImage('assets/images/avatar.png')),
+              verticalSpace,
+              Text(
+                text,
+                style: poppinsTextStyle(
+                    color: whiteColor, size: 16, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+        ),
+        ListTile(
+          onTap: () {
+            controller.signOut();
+          },
+          title: Text('Sign Out'.toUpperCase()),
+          leading: Icon(Icons.logout),
         ),
       ],
     ),

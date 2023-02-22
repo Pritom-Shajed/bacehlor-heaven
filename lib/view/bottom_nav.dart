@@ -2,6 +2,8 @@ import 'package:bachelor_heaven/controller/bottom_nav_controller.dart';
 import 'package:bachelor_heaven/view/pages/home_screen.dart';
 import 'package:bachelor_heaven/view/pages/landlords_screen.dart';
 import 'package:bachelor_heaven/view/pages/category_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -16,6 +18,7 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
+  User? _currentUser = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     List<Widget> _pages = [
@@ -25,7 +28,9 @@ class _BottomNavState extends State<BottomNav> {
     ];
     return GetBuilder<BottomNavController>(builder: (controller) {
       return Scaffold(
-        drawer: DrawerWidget(context),
+        drawer: _currentUser == null
+            ? DrawerWidget(context)
+            : LoggedInDrawer(text: 'Pritom Shajed'),
         appBar: AppBar(
           elevation: 0,
         ),

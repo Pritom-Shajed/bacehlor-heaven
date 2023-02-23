@@ -138,6 +138,13 @@ Widget LoggedInDrawer({required String text}) {
         ),
         ListTile(
           onTap: () {
+            Get.toNamed('/profile_screen');
+          },
+          title: Text('Profile'.toUpperCase()),
+          leading: Icon(Icons.account_circle),
+        ),
+        ListTile(
+          onTap: () {
             controller.signOut();
           },
           title: Text('Sign Out'.toUpperCase()),

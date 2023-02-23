@@ -88,3 +88,30 @@ Widget passTextField(
     ),
   );
 }
+
+Widget locationTextField({
+  required TextEditingController controller,
+  required String hintText,
+  required IconData icon,
+}) {
+  return Card(
+    elevation: 1,
+    child: TextFormField(
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'This field can\'t be empty';
+        } else {
+          return null;
+        }
+      },
+      cursorColor: blackColor,
+      controller: controller,
+      decoration: InputDecoration(
+        hintText: hintText,
+        prefixIcon: Icon(icon),
+        prefixIconColor: blackColor,
+        border: InputBorder.none,
+      ),
+    ),
+  );
+}

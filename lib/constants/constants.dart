@@ -23,4 +23,8 @@ const verticalSpace = Divider(
   color: Colors.transparent,
 );
 
+const horizontalSpace = SizedBox(
+  width: 10,
+);
+
 enum Selected { flat, room, seat }

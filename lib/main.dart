@@ -5,6 +5,7 @@ import 'package:bachelor_heaven/view/auth/registration_screen.dart';
 import 'package:bachelor_heaven/view/bottom_nav.dart';
 import 'package:bachelor_heaven/view/pages/home_screen.dart';
 import 'package:bachelor_heaven/view/pages/landlords_screen.dart';
+import 'package:bachelor_heaven/view/pages/profile_screen.dart';
 import 'package:bachelor_heaven/view/pages/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +35,12 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme()),
       getPages: [
         GetPage(name: '/splash_screen', page: () => SplashScreen()),
-        GetPage(name: '/home_screen', page: () => HomeScreen()),
-        GetPage(name: '/nav_panel', page: () => BottomNav()),
-        GetPage(name: '/landlords_screen', page: () => LandlordsScreen()),
         GetPage(name: '/login_screen', page: () => LoginScreen()),
         GetPage(name: '/reg_screen', page: () => RegScreen()),
+        GetPage(name: '/profile_screen', page: () => ProfileScreen()),
+        GetPage(name: '/nav_panel', page: () => BottomNav()),
+        GetPage(name: '/home_screen', page: () => HomeScreen()),
+        GetPage(name: '/landlords_screen', page: () => LandlordsScreen()),
       ],
       initialRoute: '/splash_screen',
       initialBinding: InitialBinding(),

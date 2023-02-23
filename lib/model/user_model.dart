@@ -5,12 +5,16 @@ class UserModel {
   String? email;
   String? profilePic;
   String? uid;
+  String? location;
+  String? joinedDate;
 
   UserModel({
     required this.name,
     required this.email,
     this.profilePic,
     required this.uid,
+    required this.location,
+    required this.joinedDate,
   });
 
   Map<String, dynamic> toJson() {
@@ -19,6 +23,8 @@ class UserModel {
       'email': email,
       'profilePic': profilePic,
       'uid': uid,
+      'location': location,
+      'joinedDate': joinedDate
     };
   }
 
@@ -28,6 +34,8 @@ class UserModel {
         name: snapshot['name'],
         email: snapshot['email'],
         profilePic: snapshot['profilePic'],
-        uid: snapshot['uid']);
+        uid: snapshot['uid'],
+        location: snapshot['location'],
+        joinedDate: snapshot['joinedDate']);
   }
 }

@@ -2,6 +2,7 @@ import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/auth/auth_controller.dart';
 import 'package:bachelor_heaven/widgets/auth/reg_screen.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,6 +13,7 @@ class RegScreen extends StatelessWidget {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
+  TextEditingController _locationController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -121,20 +123,26 @@ class RegScreen extends StatelessWidget {
                           controller: _passController,
                           hintText: 'Password',
                           icon: Icons.lock),
+                      locationTextField(
+                          controller: _locationController,
+                          hintText: 'City Name',
+                          icon: Icons.location_city),
                       verticalSpace,
                       customButton(
                           text: 'Register',
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
                               controller.signUp(
-                                  email: _emailController.text
-                                      .toLowerCase()
-                                      .trim(),
-                                  pass: _passController.text,
-                                  name: _nameController.text.trim());
+                                email:
+                                    _emailController.text.toLowerCase().trim(),
+                                pass: _passController.text,
+                                name: _nameController.text.trim(),
+                                location: _locationController.text.trim(),
+                              );
                               _emailController.clear();
                               _passController.clear();
                               _nameController.clear();
+                              _locationController.clear();
                             }
                           }),
                     ],

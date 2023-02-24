@@ -85,6 +85,7 @@ class LoginScreen extends StatelessWidget {
                           text: 'Login',
                           onTap: () {
                             controller.singIn(
+                                context: context,
                                 email: _emailController.text,
                                 pass: _passController.text);
                           }),

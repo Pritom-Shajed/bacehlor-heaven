@@ -133,6 +133,7 @@ class RegScreen extends StatelessWidget {
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
                               controller.signUp(
+                                context: context,
                                 email:
                                     _emailController.text.toLowerCase().trim(),
                                 pass: _passController.text,
@@ -145,6 +146,13 @@ class RegScreen extends StatelessWidget {
                               _locationController.clear();
                             }
                           }),
+                      verticalSpace,
+                      Center(
+                        child: Text(
+                          'Or login using your google account directly',
+                          style: poppinsTextStyle(color: greyColor, size: 12),
+                        ),
+                      ),
                     ],
                   ),
                 ),

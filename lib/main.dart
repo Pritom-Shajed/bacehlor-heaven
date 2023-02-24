@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
               elevation: 0,
               color: Colors.white,
               iconTheme: IconThemeData(color: blackColor)),
-          primarySwatch: Colors.deepPurple,
+          primarySwatch: Colors.blueGrey,
           textTheme: GoogleFonts.poppinsTextTheme()),
       getPages: [
         GetPage(name: '/splash_screen', page: () => SplashScreen()),

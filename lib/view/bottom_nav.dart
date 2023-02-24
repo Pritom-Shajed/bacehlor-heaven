@@ -3,7 +3,6 @@ import 'package:bachelor_heaven/view/pages/home_screen.dart';
 import 'package:bachelor_heaven/view/pages/landlords_screen.dart';
 import 'package:bachelor_heaven/view/pages/category_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -30,7 +29,10 @@ class _BottomNavState extends State<BottomNav> {
       return Scaffold(
         drawer: _currentUser == null
             ? DrawerWidget(context)
-            : LoggedInDrawer(text: 'Pritom Shajed'),
+            : LoggedInDrawer(
+                context: context,
+                text: _currentUser!.displayName!,
+                image: _currentUser!.photoURL!),
         appBar: AppBar(
           elevation: 0,
         ),

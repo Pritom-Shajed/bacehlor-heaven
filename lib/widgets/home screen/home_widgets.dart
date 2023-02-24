@@ -4,7 +4,6 @@ import 'package:bachelor_heaven/widgets/bottom%20sheet/bottom_scheet_widget.dart
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/gridItems.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/slider_item.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -90,7 +89,8 @@ Widget DrawerWidget(BuildContext context) {
                       padding: EdgeInsets.all(12),
                       child: bottomSheetWidget(
                           onTapEmail: () => Get.offNamed('login_screen'),
-                          onTapGoogle: () {}),
+                          onTapGoogle: () => controller.signInWithGoogle(
+                              context: context, location: 'Uttara')),
                     ),
                   ),
                 );
@@ -113,7 +113,10 @@ Widget DrawerWidget(BuildContext context) {
 }
 
 //Drawer for logged in users
-Widget LoggedInDrawer({required String text}) {
+Widget LoggedInDrawer(
+    {required String text,
+    required String image,
+    required BuildContext context}) {
   return Drawer(
     child: ListView(
       children: [
@@ -126,7 +129,7 @@ Widget LoggedInDrawer({required String text}) {
               CircleAvatar(
                   radius: 35,
                   backgroundColor: lightGreyColor,
-                  backgroundImage: AssetImage('assets/images/avatar.png')),
+                  backgroundImage: NetworkImage(image)),
               verticalSpace,
               Text(
                 text,
@@ -148,11 +151,11 @@ Widget LoggedInDrawer({required String text}) {
             Get.toNamed('/post_add');
           },
           title: Text('Post your add'.toUpperCase()),
-          leading: Icon(Icons.account_circle),
+          leading: Icon(Icons.add_business),
         ),
         ListTile(
           onTap: () {
-            controller.signOut();
+            controller.signOut(context);
           },
           title: Text('Sign Out'.toUpperCase()),
           leading: Icon(Icons.logout),

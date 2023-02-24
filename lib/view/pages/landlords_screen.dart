@@ -99,12 +99,17 @@ class LandlordsScreen extends StatelessWidget {
                         });
                   } else {
                     return Center(
-                      child: Text('No Registred Landlords Found!'),
+                      child: Text(
+                        'No Registred Landlords Found!',
+                        style: poppinsTextStyle(color: blackColor),
+                      ),
                     );
                   }
                 } else {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      color: blackColor,
+                    ),
                   );
                 }
               }),

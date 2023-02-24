@@ -4,8 +4,10 @@ import 'package:bachelor_heaven/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AuthController extends GetxController {
@@ -18,24 +20,8 @@ class AuthController extends GetxController {
     }
   }
 
-  // uploadImage({required String uid, required File img}) async {
-  //   try {
-  //     Reference ref =
-  //         FirebaseStorage.instance.ref().child('profile-pic').child(uid);
-
-  //     TaskSnapshot taskSnapshot = await ref.putFile(img);
-
-  //     String profilePicUrl = await taskSnapshot.ref.getDownloadURL();
-  //     update();
-  //   } catch (e) {
-  //     print(e);
-  //     Get.snackbar(
-  //         'Error Occured!', 'Error uploading your picture, kindly try again',
-  //         duration: Duration(seconds: 2));
-  //   }
-  // }
-
   signUp({
+    required BuildContext context,
     required String email,
     required String pass,
     required String name,
@@ -43,16 +29,24 @@ class AuthController extends GetxController {
   }) async {
     try {
       if (image != null) {
-        Fluttertoast.showToast(
-            msg: 'Creating account for $name...',
-            toastLength: Toast.LENGTH_SHORT);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: whiteColor,
+                ),
+              );
+            });
 
         //Sign in
-        final credential =
+        UserCredential credential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email,
           password: pass,
         );
+
+        await credential.user!.updateDisplayName(name);
 
         //Upload Image
         Reference ref = FirebaseStorage.instance
@@ -63,6 +57,8 @@ class AuthController extends GetxController {
         TaskSnapshot taskSnapshot = await ref.putFile(image!);
 
         String profilePicUrl = await taskSnapshot.ref.getDownloadURL();
+
+        await credential.user!.updatePhotoURL(profilePicUrl);
 
         //Storing informations
         UserModel user = UserModel(
@@ -75,12 +71,11 @@ class AuthController extends GetxController {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(credential.user!.uid)
-            .set(user.toJson());
-
-        Get.snackbar(
-            'Successfully Registered', 'Hi $name, Welcome to Bachelor Heaven.',
-            duration: Duration(seconds: 2));
-        Get.offAllNamed('/nav_panel');
+            .set(user.toJson())
+            .then((value) => Get.snackbar('Successfully Registered',
+                'Hi $name, Welcome to Bachelor Heaven.',
+                duration: Duration(seconds: 2)))
+            .then((value) => Get.offAllNamed('/nav_panel'));
       } else {
         Fluttertoast.showToast(msg: 'Please select your profile picture');
       }
@@ -95,13 +90,72 @@ class AuthController extends GetxController {
     }
   }
 
-  singIn({required String email, required String pass}) async {
+  signInWithGoogle(
+      {required String location, required BuildContext context}) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: whiteColor,
+            ),
+          );
+        });
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    UserCredential currrentUser =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    UserModel user = UserModel(
+        name: currrentUser.user!.displayName,
+        email: currrentUser.user!.email,
+        uid: currrentUser.user!.uid,
+        location: location,
+        profilePic: currrentUser.user!.photoURL,
+        joinedDate: currentDate);
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currrentUser.user!.uid)
+        .set(user.toJson())
+        .then((value) => Get.snackbar(
+            'Logged In', 'Welcome to Bachelor Heaven.',
+            duration: Duration(seconds: 2)))
+        .then((value) => Get.offAllNamed('/nav_panel'));
+  }
+
+  singIn(
+      {required String email,
+      required String pass,
+      required BuildContext context}) async {
     try {
-      final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: pass);
-      Get.snackbar('Logged In', 'Welcome to Bachelor Heaven.',
-          duration: Duration(seconds: 2));
-      Get.offAllNamed('/nav_panel');
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: whiteColor,
+              ),
+            );
+          });
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: pass)
+          .then((value) => Get.snackbar(
+              'Logged In', 'Welcome to Bachelor Heaven.',
+              duration: Duration(seconds: 2)))
+          .then((value) => Get.offAllNamed('/nav_panel'));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Fluttertoast.showToast(msg: 'No user found for $email.');
@@ -111,10 +165,20 @@ class AuthController extends GetxController {
     }
   }
 
-  signOut() async {
-    await FirebaseAuth.instance.signOut();
-    Get.offAllNamed('/nav_panel');
-    Get.snackbar('Logged out', 'Hope to see you soon.',
-        duration: Duration(seconds: 2));
+  signOut(BuildContext context) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: whiteColor,
+            ),
+          );
+        });
+    await FirebaseAuth.instance
+        .signOut()
+        .then((value) => Get.offAllNamed('/nav_panel'))
+        .then((value) => Get.snackbar('Logged out', 'Hope to see you soon.',
+            duration: Duration(seconds: 2)));
   }
 }

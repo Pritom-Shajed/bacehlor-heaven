@@ -65,11 +65,11 @@ class ProfileScreen extends StatelessWidget {
                       CircleAvatar(
                         radius: 50,
                         backgroundColor: lightGreyColor,
-                        backgroundImage: AssetImage('assets/images/avatar.png'),
+                        backgroundImage: NetworkImage(_currentUser!.photoURL!),
                       ),
                       verticalSpace,
                       Text(
-                        'Pritom Shajed',
+                        '${_currentUser?.displayName}',
                         style: poppinsTextStyle(
                             size: 18, fontWeight: FontWeight.w600),
                       ),
@@ -96,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
                                   poppinsTextStyle(fontWeight: FontWeight.w600),
                             ),
                             Text(
-                              'pritomshajed@gmail.com',
+                              '${_currentUser?.email}',
                               style: poppinsTextStyle(size: 15),
                             ),
                           ],

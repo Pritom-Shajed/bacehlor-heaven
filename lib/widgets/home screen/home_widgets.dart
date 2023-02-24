@@ -4,6 +4,7 @@ import 'package:bachelor_heaven/widgets/bottom%20sheet/bottom_scheet_widget.dart
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/gridItems.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/slider_item.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,7 @@ AuthController controller = Get.put(AuthController());
 
 // Header
 Widget HeaderWidget() {
+  User? _currentUser = FirebaseAuth.instance.currentUser;
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -18,8 +20,11 @@ Widget HeaderWidget() {
           style: satisfyTextStyle(
               color: blackColor, size: 36, fontWeight: FontWeight.w200)),
       Text(currentDate, style: TextStyle(fontSize: 18)),
-      Text('Find your next stay...',
-          style: poppinsTextStyle(color: greyColor, size: 16)),
+      _currentUser == null
+          ? Text('Find your next stay...',
+              style: poppinsTextStyle(color: greyColor, size: 16))
+          : Text('Hi, ${_currentUser.displayName}. Welcome Back!',
+              style: poppinsTextStyle(color: greyColor, size: 16)),
     ],
   );
 }

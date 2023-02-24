@@ -30,6 +30,7 @@ class AuthController extends GetxController {
     try {
       if (image != null) {
         showDialog(
+            barrierDismissible: false,
             context: context,
             builder: (context) {
               return Center(
@@ -93,6 +94,7 @@ class AuthController extends GetxController {
   signInWithGoogle(
       {required String location, required BuildContext context}) async {
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return Center(
@@ -142,6 +144,7 @@ class AuthController extends GetxController {
       required BuildContext context}) async {
     try {
       showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (context) {
             return Center(
@@ -167,6 +170,7 @@ class AuthController extends GetxController {
 
   signOut(BuildContext context) async {
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return Center(
@@ -177,8 +181,8 @@ class AuthController extends GetxController {
         });
     await FirebaseAuth.instance
         .signOut()
-        .then((value) => Get.offAllNamed('/nav_panel'))
         .then((value) => Get.snackbar('Logged out', 'Hope to see you soon.',
-            duration: Duration(seconds: 2)));
+            duration: Duration(seconds: 2)))
+        .then((value) => Get.offAllNamed('/nav_panel'));
   }
 }

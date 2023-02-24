@@ -1,9 +1,9 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/auth/auth_controller.dart';
-import 'package:bachelor_heaven/widgets/auth/reg_screen.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -14,7 +14,6 @@ class RegScreen extends StatelessWidget {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -68,93 +67,96 @@ class RegScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          controller.image == null
-                              ? CircleAvatar(
-                                  radius: 50,
-                                  backgroundColor: lightGreyColor,
-                                  backgroundImage:
-                                      AssetImage('assets/images/avatar.png'))
-                              : CircleAvatar(
-                                  radius: 50,
-                                  backgroundColor: lightGreyColor,
-                                  backgroundImage:
-                                      FileImage(controller.image!)),
-                          controller.image == null
-                              ? Positioned(
-                                  bottom: 0,
-                                  right: 0,
-                                  child: InkWell(
-                                    onTap: () {
-                                      controller.pickImage(ImageSource.gallery);
-                                    },
-                                    child: Icon(
-                                      Icons.add_circle,
-                                    ),
-                                  ))
-                              : Positioned(
-                                  bottom: 0,
-                                  right: 0,
-                                  child: InkWell(
-                                    onTap: () {
-                                      controller.pickImage(ImageSource.gallery);
-                                    },
-                                    child: Icon(
-                                      Icons.change_circle,
-                                    ),
-                                  ))
-                        ],
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        controller.image == null
+                            ? CircleAvatar(
+                                radius: 50,
+                                backgroundColor: lightGreyColor,
+                                backgroundImage:
+                                    AssetImage('assets/images/avatar.png'))
+                            : CircleAvatar(
+                                radius: 50,
+                                backgroundColor: lightGreyColor,
+                                backgroundImage: FileImage(controller.image!)),
+                        controller.image == null
+                            ? Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: InkWell(
+                                  onTap: () {
+                                    controller.pickImage(ImageSource.gallery);
+                                  },
+                                  child: Icon(
+                                    Icons.add_circle,
+                                  ),
+                                ))
+                            : Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: InkWell(
+                                  onTap: () {
+                                    controller.pickImage(ImageSource.gallery);
+                                  },
+                                  child: Icon(
+                                    Icons.change_circle,
+                                  ),
+                                ))
+                      ],
+                    ),
+                    verticalSpace,
+                    customTextField(
+                        controller: _nameController,
+                        hintText: 'Username',
+                        icon: Icons.account_box),
+                    customTextField(
+                        controller: _emailController,
+                        hintText: 'Email',
+                        icon: Icons.email),
+                    customTextField(
+                        obscureText: true,
+                        controller: _passController,
+                        hintText: 'Password',
+                        icon: Icons.lock),
+                    customTextField(
+                        controller: _locationController,
+                        hintText: 'City Name',
+                        icon: Icons.location_city),
+                    verticalSpace,
+                    customButton(
+                        text: 'Register',
+                        onTap: () {
+                          if (controller.image == null) {
+                            Fluttertoast.showToast(
+                                msg: 'Add your profile photo');
+                          } else if (_nameController.text.isEmpty) {
+                            Fluttertoast.showToast(msg: 'Enter you name');
+                          } else if (_emailController.text.isEmpty) {
+                            Fluttertoast.showToast(msg: 'Enter you email');
+                          } else if (_passController.text.isEmpty) {
+                            Fluttertoast.showToast(msg: 'Enter your password');
+                          } else if (_locationController.text.isEmpty) {
+                            Fluttertoast.showToast(msg: 'Enter your city name');
+                          } else {
+                            controller.signUp(
+                              context: context,
+                              email: _emailController.text.toLowerCase().trim(),
+                              pass: _passController.text,
+                              name: _nameController.text.trim(),
+                              location: _locationController.text.trim(),
+                            );
+                          }
+                        }),
+                    verticalSpace,
+                    Center(
+                      child: Text(
+                        'Or login using your google account directly',
+                        style: poppinsTextStyle(color: greyColor, size: 12),
                       ),
-                      verticalSpace,
-                      userNameTextField(
-                          controller: _nameController,
-                          hintText: 'Username',
-                          icon: Icons.account_box),
-                      emailTextField(
-                          controller: _emailController,
-                          hintText: 'Email',
-                          icon: Icons.email),
-                      passTextField(
-                          controller: _passController,
-                          hintText: 'Password',
-                          icon: Icons.lock),
-                      locationTextField(
-                          controller: _locationController,
-                          hintText: 'City Name',
-                          icon: Icons.location_city),
-                      verticalSpace,
-                      customButton(
-                          text: 'Register',
-                          onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              controller.signUp(
-                                context: context,
-                                email:
-                                    _emailController.text.toLowerCase().trim(),
-                                pass: _passController.text,
-                                name: _nameController.text.trim(),
-                                location: _locationController.text.trim(),
-                              );
-                              _emailController.clear();
-                              _passController.clear();
-                              _nameController.clear();
-                              _locationController.clear();
-                            }
-                          }),
-                      verticalSpace,
-                      Center(
-                        child: Text(
-                          'Or login using your google account directly',
-                          style: poppinsTextStyle(color: greyColor, size: 12),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

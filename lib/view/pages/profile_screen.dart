@@ -125,12 +125,12 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                       verticalSpace,
-                      Container(
-                          child: customButton(
-                              text: 'Edit',
-                              onTap: () {
-                                print('edit');
-                              })),
+                      customButton(
+                          color: redColor,
+                          text: 'Delete Profile',
+                          onTap: () {
+                            print('edit');
+                          }),
                     ],
                   )),
             ),

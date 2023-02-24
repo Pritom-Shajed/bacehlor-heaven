@@ -5,6 +5,7 @@ import 'package:bachelor_heaven/view/auth/registration_screen.dart';
 import 'package:bachelor_heaven/view/bottom_nav.dart';
 import 'package:bachelor_heaven/view/pages/home_screen.dart';
 import 'package:bachelor_heaven/view/pages/landlords_screen.dart';
+import 'package:bachelor_heaven/view/pages/post_add_screen.dart';
 import 'package:bachelor_heaven/view/pages/profile_screen.dart';
 import 'package:bachelor_heaven/view/pages/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,6 +39,10 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/login_screen', page: () => LoginScreen()),
         GetPage(name: '/reg_screen', page: () => RegScreen()),
         GetPage(name: '/profile_screen', page: () => ProfileScreen()),
+        GetPage(
+            name: '/post_add',
+            page: () => PostAdd(),
+            binding: PostAddBinding()),
         GetPage(name: '/nav_panel', page: () => BottomNav()),
         GetPage(name: '/home_screen', page: () => HomeScreen()),
         GetPage(name: '/landlords_screen', page: () => LandlordsScreen()),

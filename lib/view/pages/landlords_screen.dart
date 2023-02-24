@@ -57,7 +57,7 @@ class LandlordsScreen extends StatelessWidget {
                                                 fontWeight: FontWeight.w600),
                                           ),
                                           Text(
-                                            'Pritom',
+                                            '${userMap['name']}',
                                             style: poppinsTextStyle(size: 14),
                                           ),
                                         ],

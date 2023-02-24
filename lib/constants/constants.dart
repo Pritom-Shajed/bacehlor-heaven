@@ -5,9 +5,10 @@ import 'package:intl/intl.dart';
 String currentDate = DateFormat.yMMMd().format(DateTime.now());
 
 //Colors
-Color blackColor = Colors.black;
-Color whiteColor = Colors.white;
-Color greyColor = Colors.grey;
+const Color blackColor = Colors.black;
+const Color whiteColor = Colors.white;
+const Color greyColor = Colors.grey;
+const Color redColor = Colors.red;
 Color lightGreyColor = Colors.grey.shade300;
 Color bgColor = Colors.black.withOpacity(0.7);
 // Color bgColor1 = Color(0xffBEA35E);

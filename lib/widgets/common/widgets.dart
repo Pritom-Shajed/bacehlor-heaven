@@ -73,19 +73,24 @@ Widget customTextField(
 }
 
 // Custom Button
-Widget customButton({required String text, required VoidCallback onTap}) {
+Widget customButton(
+    {required String text,
+    required VoidCallback onTap,
+    double width = double.maxFinite,
+    Alignment alignment = Alignment.center,
+    Color color = blackColor}) {
   return InkWell(
     onTap: onTap,
     child: Container(
-      alignment: Alignment.center,
-      width: double.maxFinite,
+      alignment: alignment,
+      width: width,
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
           blurRadius: 1,
           color: Colors.black45,
         )
-      ], color: blackColor, borderRadius: BorderRadius.circular(6)),
+      ], color: color, borderRadius: BorderRadius.circular(6)),
       child: Text(
         text,
         style: poppinsTextStyle(color: whiteColor, fontWeight: FontWeight.w500),

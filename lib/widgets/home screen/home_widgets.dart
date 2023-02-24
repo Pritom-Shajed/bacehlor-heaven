@@ -145,6 +145,13 @@ Widget LoggedInDrawer({required String text}) {
         ),
         ListTile(
           onTap: () {
+            Get.toNamed('/post_add');
+          },
+          title: Text('Post your add'.toUpperCase()),
+          leading: Icon(Icons.account_circle),
+        ),
+        ListTile(
+          onTap: () {
             controller.signOut();
           },
           title: Text('Sign Out'.toUpperCase()),

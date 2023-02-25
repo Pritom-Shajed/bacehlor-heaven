@@ -1,5 +1,5 @@
 import 'package:bachelor_heaven/constants/constants.dart';
-import 'package:bachelor_heaven/controller/category_controller.dart';
+import 'package:bachelor_heaven/controller/dashboard/category_controller.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

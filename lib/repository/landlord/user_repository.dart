@@ -1,9 +1,10 @@
-import 'package:bachelor_heaven/model/user_model.dart';
+import 'package:bachelor_heaven/model/landlord/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class UserRepository extends GetxController {
   final _firestore = FirebaseFirestore.instance;
+
   Future<UserModel> getUserDetails(String email) async {
     final snapshot = await _firestore
         .collection('users')

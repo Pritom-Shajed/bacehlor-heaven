@@ -1,4 +1,4 @@
-import 'package:bachelor_heaven/controller/bottom_nav_controller.dart';
+import 'package:bachelor_heaven/controller/intial/bottom_nav_controller.dart';
 import 'package:bachelor_heaven/view/dashboard/category_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/home_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/landlords_screen.dart';

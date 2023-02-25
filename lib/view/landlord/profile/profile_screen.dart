@@ -1,6 +1,6 @@
 import 'package:bachelor_heaven/constants/constants.dart';
-import 'package:bachelor_heaven/controller/profile_controller.dart';
-import 'package:bachelor_heaven/model/user_model.dart';
+import 'package:bachelor_heaven/controller/landlord/profile/profile_controller.dart';
+import 'package:bachelor_heaven/model/landlord/user_model.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/landloard/profile/edit_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

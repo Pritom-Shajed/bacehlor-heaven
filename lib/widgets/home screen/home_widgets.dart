@@ -146,13 +146,6 @@ Widget LoggedInDrawer(
         ),
         ListTile(
           onTap: () {
-            Get.toNamed('/profile_screen');
-          },
-          title: Text('Profile'.toUpperCase()),
-          leading: Icon(Icons.account_circle),
-        ),
-        ListTile(
-          onTap: () {
             Get.toNamed('/post_add');
           },
           title: Text('Post your add'.toUpperCase()),

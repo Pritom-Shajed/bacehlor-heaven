@@ -29,13 +29,13 @@ class UserModel {
   }
 
   static UserModel fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
+    var data = snap.data() as Map<String, dynamic>;
     return UserModel(
-        name: snapshot['name'],
-        email: snapshot['email'],
-        profilePic: snapshot['profilePic'],
-        uid: snapshot['uid'],
-        location: snapshot['location'],
-        joinedDate: snapshot['joinedDate']);
+      name: data['name'],
+      email: data['email'],
+      uid: data['uid'],
+      location: data['location'],
+      joinedDate: data['joinedDate'],
+    );
   }
 }

@@ -75,7 +75,7 @@ class AuthController extends GetxController {
             .set(user.toJson())
             .then((value) => Get.snackbar('Successfully Registered',
                 'Hi $name, Welcome to Bachelor Heaven.',
-                duration: Duration(seconds: 2)))
+                duration: Duration(seconds: 3)))
             .then((value) => Get.offAllNamed('/nav_panel'));
       } else {
         Fluttertoast.showToast(msg: 'Please select your profile picture');

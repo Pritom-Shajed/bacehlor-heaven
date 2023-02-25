@@ -1,13 +1,13 @@
 import 'package:bachelor_heaven/controller/bottom_nav_controller.dart';
-import 'package:bachelor_heaven/view/pages/home_screen.dart';
-import 'package:bachelor_heaven/view/pages/landlords_screen.dart';
-import 'package:bachelor_heaven/view/pages/category_screen.dart';
+import 'package:bachelor_heaven/view/dashboard/category_screen.dart';
+import 'package:bachelor_heaven/view/dashboard/home_screen.dart';
+import 'package:bachelor_heaven/view/dashboard/landlords_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-import '../widgets/home screen/home_widgets.dart';
+import '../../widgets/home screen/home_widgets.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({Key? key}) : super(key: key);
@@ -35,6 +35,13 @@ class _BottomNavState extends State<BottomNav> {
                 image: _currentUser!.photoURL!),
         appBar: AppBar(
           elevation: 0,
+          actions: [
+            _currentUser != null
+                ? IconButton(
+                    onPressed: () => Get.toNamed('/profile_screen'),
+                    icon: Icon(Icons.account_circle))
+                : Container()
+          ],
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(

@@ -11,7 +11,7 @@ class UserModel {
   UserModel({
     required this.name,
     required this.email,
-    this.profilePic,
+    required this.profilePic,
     required this.uid,
     required this.location,
     required this.joinedDate,
@@ -34,6 +34,7 @@ class UserModel {
       name: data['name'],
       email: data['email'],
       uid: data['uid'],
+      profilePic: data['profilePic'],
       location: data['location'],
       joinedDate: data['joinedDate'],
     );

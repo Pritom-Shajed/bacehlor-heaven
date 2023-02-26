@@ -1,12 +1,15 @@
 import 'package:bachelor_heaven/constants/constants.dart';
+import 'package:bachelor_heaven/controller/landlord/profile/profile_controller.dart';
+import 'package:bachelor_heaven/model/landlord/user_model.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:flutter/material.dart';
 
 Future<dynamic> editProfileDialog({
   required BuildContext context,
-  required String intialName,
-  required String initalEmail,
-  required String intialLocation,
+  required TextEditingController nameController,
+  required TextEditingController emailController,
+  required TextEditingController locationController,
+  required VoidCallback onTap,
   // required String imgUrl,
 }) async {
   return showDialog(
@@ -23,7 +26,7 @@ Future<dynamic> editProfileDialog({
                   //   backgroundImage: NetworkImage(imgUrl),
                   // ),
                   TextFormField(
-                    initialValue: intialName,
+                    controller: nameController,
                     decoration: InputDecoration(
                         labelText: 'Name',
                         border: OutlineInputBorder(
@@ -31,7 +34,7 @@ Future<dynamic> editProfileDialog({
                   ),
                   verticalSpace,
                   TextFormField(
-                    initialValue: initalEmail,
+                    controller: emailController,
                     decoration: InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(
@@ -39,14 +42,14 @@ Future<dynamic> editProfileDialog({
                   ),
                   verticalSpace,
                   TextFormField(
-                    initialValue: intialLocation,
+                    controller: locationController,
                     decoration: InputDecoration(
                         labelText: 'Location',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8))),
                   ),
                   verticalSpace,
-                  customButton(text: 'Edit', onTap: () {})
+                  customButton(text: 'Edit', onTap: onTap)
                 ],
               ),
             )

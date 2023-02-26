@@ -1,7 +1,9 @@
 import 'package:bachelor_heaven/controller/intial/bottom_nav_controller.dart';
+import 'package:bachelor_heaven/view/landlord/profile/profile_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/category_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/home_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/landlords_screen.dart';
+import 'package:bachelor_heaven/view/landlord/profile/profile(unused).dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

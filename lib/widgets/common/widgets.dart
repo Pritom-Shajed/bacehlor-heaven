@@ -1,6 +1,7 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
 
 //TextStyle
 TextStyle poppinsTextStyle({

@@ -4,23 +4,15 @@ import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
-class PostAdd extends StatefulWidget {
+class PostAdd extends StatelessWidget {
   PostAdd({super.key});
 
-  @override
-  State<PostAdd> createState() => _PostAddState();
-}
-
-class _PostAddState extends State<PostAdd> {
   TextEditingController _locationController = TextEditingController();
 
   TextEditingController _priceController = TextEditingController();
 
   final List<String> items = ['Seat', 'Flat', 'Room'];
-
-  String initialValue = 'Seat';
 
   @override
   Widget build(BuildContext context) {
@@ -102,8 +94,8 @@ class _PostAddState extends State<PostAdd> {
                       Card(
                         elevation: 1,
                         child: DropdownButtonFormField(
-                          value: initialValue,
-                          onChanged: (value) {},
+                          value: controller.category,
+                          onChanged: controller.pickCategory,
                           items: items
                               .map((valueItem) => DropdownMenuItem(
                                   value: valueItem,
@@ -167,11 +159,11 @@ class _PostAddState extends State<PostAdd> {
                                   msg: 'Add a photo',
                                   toastLength: Toast.LENGTH_SHORT);
                             } else {
-                              Fluttertoast.showToast(
-                                      msg: 'Added!',
-                                      toastLength: Toast.LENGTH_SHORT)
-                                  .then(
-                                      (value) => Get.offAllNamed('/nav_panel'));
+                              controller.addPost(
+                                  context: context,
+                                  category: controller.category,
+                                  location: _locationController.text.trim(),
+                                  price: _priceController.text.trim());
                             }
                           })
                     ],

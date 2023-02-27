@@ -7,13 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'dart:io';
-
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 class PostAddController extends GetxController {
   String category = 'Seat';
-
+  RxString currentTime =
+      DateFormat.yMMMMd('en_US').add_jms().format(DateTime.now()).obs;
   File? addImage;
   final _currentUser = FirebaseAuth.instance.currentUser;
 
@@ -86,7 +87,8 @@ class PostAddController extends GetxController {
           .ref()
           .child('adds')
           .child('user_${_currentUser!.uid}')
-          .child(category);
+          .child(category)
+          .child('${currentTime.value}');
 
       TaskSnapshot task = await ref.putFile(addImage!);
       String downloadUrl = await task.ref.getDownloadURL();
@@ -102,7 +104,7 @@ class PostAddController extends GetxController {
           .collection('adds')
           .doc('user_${_currentUser!.uid}')
           .collection(category)
-          .doc('1')
+          .doc('${currentTime.value}')
           .set(post.toJson())
           .then((value) => Fluttertoast.showToast(msg: 'Successfully added!'))
           .then((value) => Get.offAllNamed('/nav_panel'));

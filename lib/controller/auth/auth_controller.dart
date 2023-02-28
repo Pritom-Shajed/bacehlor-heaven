@@ -26,6 +26,7 @@ class AuthController extends GetxController {
     required String pass,
     required String name,
     required String location,
+    required String phoneNumber,
   }) async {
     try {
       if (image != null) {
@@ -68,7 +69,9 @@ class AuthController extends GetxController {
             uid: credential.user!.uid,
             profilePic: profilePicUrl,
             location: location,
-            joinedDate: currentDate);
+            joinedDate: currentDate,
+          phoneNumber: phoneNumber,
+        );
         await FirebaseFirestore.instance
             .collection('users')
             .doc(credential.user!.uid)
@@ -92,7 +95,7 @@ class AuthController extends GetxController {
   }
 
   signInWithGoogle(
-      {required String location, required BuildContext context}) async {
+      {required String location, required BuildContext context, required String phoneNumber}) async {
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -126,7 +129,8 @@ class AuthController extends GetxController {
         uid: currrentUser.user!.uid,
         location: location,
         profilePic: currrentUser.user!.photoURL,
-        joinedDate: currentDate);
+        joinedDate: currentDate,
+    phoneNumber: phoneNumber);
 
     await FirebaseFirestore.instance
         .collection('users')

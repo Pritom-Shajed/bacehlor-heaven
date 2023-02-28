@@ -56,10 +56,11 @@ Widget customTextField(
     {required TextEditingController controller,
     required String hintText,
     required IconData icon,
-    bool obscureText = false}) {
+    bool obscureText = false, TextInputType inputType = TextInputType.text}) {
   return Card(
     elevation: 1,
     child: TextField(
+      keyboardType: inputType,
       obscureText: obscureText,
       cursorColor: blackColor,
       controller: controller,

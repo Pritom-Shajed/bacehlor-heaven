@@ -5,6 +5,9 @@ import 'package:bachelor_heaven/view/auth/registration_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/home_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/landlords_screen.dart';
 import 'package:bachelor_heaven/view/intial/bottom_nav.dart';
+import 'package:bachelor_heaven/view/landlord/adds/flat.dart';
+import 'package:bachelor_heaven/view/landlord/adds/room.dart';
+import 'package:bachelor_heaven/view/landlord/adds/seat.dart';
 import 'package:bachelor_heaven/view/landlord/post_add_screen.dart';
 import 'package:bachelor_heaven/view/intial/splash_screen.dart';
 import 'package:bachelor_heaven/view/landlord/profile/profile_screen.dart';
@@ -39,6 +42,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/login_screen', page: () => LoginScreen()),
         GetPage(name: '/reg_screen', page: () => RegScreen()),
         GetPage(name: '/profile_screen', page: () => ProfileScreen()),
+        GetPage(name: '/my_seats', page: ()=> UserSeats()),
+        GetPage(name: '/my_flats', page: ()=> UserFlats()),
+        GetPage(name: '/my_rooms', page: ()=> UserRooms()),
         GetPage(
             name: '/post_add',
             page: () => PostAdd(),

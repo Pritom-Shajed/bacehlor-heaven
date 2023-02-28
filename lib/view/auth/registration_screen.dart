@@ -13,6 +13,7 @@ class RegScreen extends StatelessWidget {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
 
   @override
@@ -121,6 +122,12 @@ class RegScreen extends StatelessWidget {
                         hintText: 'Password',
                         icon: Icons.lock),
                     customTextField(
+                      inputType: TextInputType.number,
+                        obscureText: true,
+                        controller: _phoneController,
+                        hintText: 'Phone Number',
+                        icon: Icons.phone),
+                    customTextField(
                         controller: _locationController,
                         hintText: 'City Name',
                         icon: Icons.location_city),
@@ -145,6 +152,7 @@ class RegScreen extends StatelessWidget {
                               email: _emailController.text.toLowerCase().trim(),
                               pass: _passController.text,
                               name: _nameController.text.trim(),
+                              phoneNumber: _phoneController.text.trim(),
                               location: _locationController.text.trim(),
                             );
                           }

@@ -29,6 +29,7 @@ class ProfileScreen extends StatelessWidget {
             final _name = TextEditingController(text: userData['name']);
             final _email = TextEditingController(text: userData['email']);
             final _location = TextEditingController(text: userData['location']);
+            final _phone = TextEditingController(text: userData['phoneNumber']);
 
             return SingleChildScrollView(
               child: Stack(
@@ -130,6 +131,28 @@ class ProfileScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
+                                    'Phone Number:',
+                                    style: poppinsTextStyle(
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Text(
+                                    '${userData['phoneNumber']}',
+                                    style: poppinsTextStyle(size: 15),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            verticalSpace,
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              width: double.maxFinite,
+                              decoration: BoxDecoration(
+                                  color: whiteColor,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
                                     'Location:',
                                     style: poppinsTextStyle(
                                         fontWeight: FontWeight.w600),
@@ -152,9 +175,9 @@ class ProfileScreen extends StatelessWidget {
                                           context: context,
                                           nameController: _name,
                                           emailController: _email,
+                                          phoneController: _phone,
                                           locationController: _location,
                                           onTap: () async {
-                                            print('tapped');
                                             showDialog(
                                                 barrierDismissible: false,
                                                 context: context,
@@ -172,6 +195,7 @@ class ProfileScreen extends StatelessWidget {
                                                     userData['profilePic'],
                                                 uid: userData['uid'],
                                                 location: _location.text.trim(),
+                                                phoneNumber: _phone.text.trim(),
                                                 joinedDate:
                                                     userData['joinedDate']);
 

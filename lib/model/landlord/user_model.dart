@@ -7,6 +7,7 @@ class UserModel {
   String? uid;
   String? location;
   String? joinedDate;
+  String? phoneNumber;
 
   UserModel({
     required this.name,
@@ -15,6 +16,7 @@ class UserModel {
     required this.uid,
     required this.location,
     required this.joinedDate,
+     this.phoneNumber,
   });
 
   Map<String, dynamic> toJson() {
@@ -24,7 +26,8 @@ class UserModel {
       'profilePic': profilePic,
       'uid': uid,
       'location': location,
-      'joinedDate': joinedDate
+      'joinedDate': joinedDate,
+      'phoneNumber': phoneNumber
     };
   }
 
@@ -37,6 +40,7 @@ class UserModel {
       profilePic: data['profilePic'],
       location: data['location'],
       joinedDate: data['joinedDate'],
+      phoneNumber: data['phoneNumber'],
     );
   }
 }

@@ -101,15 +101,20 @@ class PostAddController extends GetxController {
           pictureUrl: downloadUrl);
 
       await FirebaseFirestore.instance
-          .collection('adds')
+          .collection('individualAdds')
           .doc('user_${_currentUser!.uid}')
           .collection(category)
           .doc('${currentTime.value}')
           .set(post.toJson())
-          .then((value) => Fluttertoast.showToast(msg: 'Successfully added!'))
-          .then((value) => Get.offAllNamed('/nav_panel'));
+          .then((value) => FirebaseFirestore.instance
+              .collection('allAdds')
+              .doc('${currentTime.value}')
+              .set(post.toJson())
+              .then(
+                  (value) => Fluttertoast.showToast(msg: 'Successfully added!'))
+              .then((value) => Get.offAllNamed('/nav_panel')));
     } else {
-      Fluttertoast.showToast(msg: 'Select atleast one image');
+      Fluttertoast.showToast(msg: 'Select at least one image');
     }
   }
 }

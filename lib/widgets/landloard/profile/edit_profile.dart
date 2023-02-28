@@ -9,6 +9,7 @@ Future<dynamic> editProfileDialog({
   required TextEditingController nameController,
   required TextEditingController emailController,
   required TextEditingController locationController,
+  required TextEditingController phoneController,
   required VoidCallback onTap,
   // required String imgUrl,
 }) async {
@@ -37,6 +38,14 @@ Future<dynamic> editProfileDialog({
                     controller: emailController,
                     decoration: InputDecoration(
                         labelText: 'Email',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8))),
+                  ),
+                  verticalSpace,
+                  TextFormField(
+                    controller: phoneController,
+                    decoration: InputDecoration(
+                        labelText: 'Phone Number',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8))),
                   ),

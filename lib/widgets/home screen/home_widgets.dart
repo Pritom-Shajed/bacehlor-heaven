@@ -6,6 +6,7 @@ import 'package:bachelor_heaven/widgets/home%20screen/gridItems.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/slider_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 AuthController controller = Get.put(AuthController());
@@ -63,6 +64,8 @@ List<Widget> gridItems = [
 
 //Normal Drawer
 Widget DrawerWidget(BuildContext context) {
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _locationController = TextEditingController();
   return Drawer(
     child: ListView(
       children: [
@@ -94,8 +97,53 @@ Widget DrawerWidget(BuildContext context) {
                       padding: EdgeInsets.all(12),
                       child: bottomSheetWidget(
                           onTapEmail: () => Get.offNamed('login_screen'),
-                          onTapGoogle: () => controller.signInWithGoogle(
-                              context: context, location: 'Uttara')),
+                          onTapGoogle: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return SimpleDialog(
+                                    alignment: Alignment.center,
+                                    contentPadding: EdgeInsets.all(8),
+                                    children: [
+                                      Center(
+                                          child: Text(
+                                              'Enter the details to continue')),
+                                      customTextField(
+                                          inputType: TextInputType.number,
+                                          controller: _phoneController,
+                                          hintText: 'Phone Number',
+                                          icon: Icons.phone),
+                                      customTextField(
+                                          controller: _locationController,
+                                          hintText: 'Location',
+                                          icon: Icons.location_city),
+                                      verticalSpace,
+                                      customButton(
+                                          text: 'Submit',
+                                          onTap: () {
+                                            if (_phoneController.text.isEmpty) {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      'Enter your phone number');
+                                            } else if (_locationController
+                                                .text.isEmpty) {
+                                              Fluttertoast.showToast(
+                                                  msg: 'Enter your location');
+                                            } else {
+                                              controller.signInWithGoogle(
+                                                  phoneNumber: _phoneController
+                                                      .text
+                                                      .trim(),
+                                                  location: _locationController
+                                                      .text
+                                                      .trim(),
+                                                  context: context);
+                                            }
+                                          })
+                                    ],
+                                  );
+                                });
+                          }),
                     ),
                   ),
                 );
@@ -143,6 +191,47 @@ Widget LoggedInDrawer(
               ),
             ],
           ),
+        ),
+        ListTile(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return SimpleDialog(
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Get.back();
+                            Get.toNamed('/my_seats');
+                          },
+                          child: Text(
+                            'Seats',
+                            style: poppinsTextStyle(color: blackColor),
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            Get.back();
+                            Get.toNamed('/my_flats');
+                          },
+                          child: Text(
+                            'Flat',
+                            style: poppinsTextStyle(color: blackColor),
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            Get.back();
+                            Get.toNamed('/my_rooms');
+                          },
+                          child: Text(
+                            'Room',
+                            style: poppinsTextStyle(color: blackColor),
+                          )),
+                    ],
+                  );
+                });
+          },
+          title: Text('My Adds'.toUpperCase()),
+          leading: Icon(Icons.add_business),
         ),
         ListTile(
           onTap: () {

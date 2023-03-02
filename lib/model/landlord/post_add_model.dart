@@ -3,6 +3,7 @@ class PostModel {
   String? location;
   String? price;
   String? category;
+  String? description;
   String? pictureUrl;
 
   PostModel({
@@ -10,6 +11,7 @@ class PostModel {
     required this.location,
     required this.price,
     required this.category,
+    required this.description,
     required this.pictureUrl,
   });
 
@@ -19,6 +21,7 @@ class PostModel {
       'location': location,
       'price': price,
       'category': category,
+      'description': description,
       'pictureUrl': pictureUrl,
     };
   }

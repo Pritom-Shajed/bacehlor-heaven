@@ -65,31 +65,34 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 160,
-                        child: Image.asset('assets/images/sign-in.png'),
-                      ),
-                      customTextField(
-                          controller: _emailController,
-                          hintText: 'Email',
-                          icon: Icons.email),
-                      customTextField(
-                          obscureText: true,
-                          controller: _passController,
-                          hintText: 'Password',
-                          icon: Icons.lock),
-                      verticalSpace,
-                      customButton(
-                          text: 'Login',
-                          onTap: () {
-                            controller.singIn(
-                                context: context,
-                                email: _emailController.text,
-                                pass: _passController.text);
-                          }),
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 160,
+                          child: Image.asset('assets/images/sign-in.png'),
+                        ),
+                        customTextField(
+                            controller: _emailController,
+                            hintText: 'Email',
+                            icon: Icons.email),
+                        customTextField(
+                            maxLines: 1,
+                            obscureText: true,
+                            controller: _passController,
+                            hintText: 'Password',
+                            icon: Icons.lock),
+                        verticalSpace,
+                        customButton(
+                            text: 'Login',
+                            onTap: () {
+                              controller.singIn(
+                                  context: context,
+                                  email: _emailController.text,
+                                  pass: _passController.text);
+                            }),
+                      ],
+                    ),
                   ),
                 ),
               ),

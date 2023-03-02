@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/model/landlord/user_model.dart';
+import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -12,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 
 class AuthController extends GetxController {
   File? image;
+
   pickImage(ImageSource src) async {
     XFile? xfile = await ImagePicker().pickImage(source: src);
     if (xfile != null) {
@@ -64,12 +66,12 @@ class AuthController extends GetxController {
 
         //Storing informations
         UserModel user = UserModel(
-            name: name,
-            email: email,
-            uid: credential.user!.uid,
-            profilePic: profilePicUrl,
-            location: location,
-            joinedDate: currentDate,
+          name: name,
+          email: email,
+          uid: credential.user!.uid,
+          profilePic: profilePicUrl,
+          location: location,
+          joinedDate: currentDate,
           phoneNumber: phoneNumber,
         );
         await FirebaseFirestore.instance
@@ -95,7 +97,9 @@ class AuthController extends GetxController {
   }
 
   signInWithGoogle(
-      {required String location, required BuildContext context, required String phoneNumber}) async {
+      {required String location,
+      required BuildContext context,
+      required String phoneNumber}) async {
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -130,7 +134,7 @@ class AuthController extends GetxController {
         location: location,
         profilePic: currrentUser.user!.photoURL,
         joinedDate: currentDate,
-    phoneNumber: phoneNumber);
+        phoneNumber: phoneNumber);
 
     await FirebaseFirestore.instance
         .collection('users')

@@ -9,6 +9,7 @@ const Color blackColor = Colors.black;
 const Color whiteColor = Colors.white;
 const Color greyColor = Colors.grey;
 const Color redColor = Colors.red;
+const Color amberColor = Colors.amber;
 Color lightGreyColor = Colors.grey.shade300;
 Color bgColor = Colors.black.withOpacity(0.7);
 // Color bgColor1 = Color(0xffBEA35E);

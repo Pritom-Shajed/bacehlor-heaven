@@ -1,7 +1,17 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter/material.dart';
+
+//Shimmer Effect
+Widget ShimmerEffect({required double height, required double width}) {
+  return Container(
+      height: height,
+      width: width,
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+          color: blackColor.withOpacity(0.04),
+          borderRadius: BorderRadius.circular(16)));
+}
 
 //TextStyle
 TextStyle poppinsTextStyle({
@@ -56,10 +66,13 @@ Widget customTextField(
     {required TextEditingController controller,
     required String hintText,
     required IconData icon,
-    bool obscureText = false, TextInputType inputType = TextInputType.text}) {
+    int? maxLines,
+    bool obscureText = false,
+    TextInputType inputType = TextInputType.text}) {
   return Card(
     elevation: 1,
     child: TextField(
+      maxLines: maxLines,
       keyboardType: inputType,
       obscureText: obscureText,
       cursorColor: blackColor,

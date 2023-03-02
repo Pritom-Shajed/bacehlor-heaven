@@ -1,5 +1,6 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,48 +49,49 @@ class UserFlats extends StatelessWidget {
             Positioned(
               top: 180,
               bottom: 0,
-              child: SingleChildScrollView(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.92),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(55),
-                        topRight: Radius.circular(55)),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 4,
-                        color: Colors.black38,
-                      ),
-                    ],
-                  ),
-                  child: StreamBuilder(
-                    stream: _firestore
-                        .collection('individualAdds')
-                        .doc('user_${_currentUser!.uid}')
-                        .collection('Flat')
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.active) {
-                        if (snapshot.hasData) {
-                          return GridView.builder(
-                              scrollDirection: Axis.vertical,
-                              itemCount: snapshot.data!.docs.length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2, childAspectRatio: 0.8),
-                              itemBuilder: (_, index) {
-                                Map<String, dynamic> seats =
-                                    snapshot.data!.docs[index].data();
-                                return Container(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.92),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(55),
+                      topRight: Radius.circular(55)),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 4,
+                      color: Colors.black38,
+                    ),
+                  ],
+                ),
+                child: StreamBuilder(
+                  stream: _firestore
+                      .collection('individualAdds')
+                      .doc('user_${_currentUser!.uid}')
+                      .collection('Flat')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.active) {
+                      if (snapshot.hasData) {
+                        return GridView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: snapshot.data!.docs.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2, childAspectRatio: 0.8),
+                            itemBuilder: (_, index) {
+                              Map<String, dynamic> flats =
+                                  snapshot.data!.docs[index].data();
+                              return CachedNetworkImage(
+                                imageUrl: "${flats['pictureUrl']}",
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
                                   margin: EdgeInsets.all(8),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                        image:
-                                            NetworkImage(seats['pictureUrl']),
+                                        image: imageProvider,
                                         fit: BoxFit.cover),
                                   ),
                                   child: Column(
@@ -104,7 +106,7 @@ class UserFlats extends StatelessWidget {
                                             color: Colors.white,
                                             borderRadius:
                                                 BorderRadius.circular(8)),
-                                        child: Text(seats['location']),
+                                        child: Text(flats['location']),
                                       ),
                                       Container(
                                         margin: EdgeInsets.all(5),
@@ -113,28 +115,34 @@ class UserFlats extends StatelessWidget {
                                             color: Colors.white,
                                             borderRadius:
                                                 BorderRadius.circular(8)),
-                                        child: Text(seats['price']),
+                                        child: Text(flats['price']),
                                       ),
                                     ],
                                   ),
-                                );
-                              });
-                        } else if (snapshot.hasError) {
-                          return Text('Error Occurred, please try again');
-                        } else {
-                          return Container(
-                            child: Text('No data'),
-                          );
-                        }
+                                ),
+                                placeholder: (context, url) => Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child:
+                                        ShimmerEffect(height: 240, width: 200)),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              );
+                            });
+                      } else if (snapshot.hasError) {
+                        return Text('Error Occurred, please try again');
                       } else {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: blackColor,
-                          ),
+                        return Container(
+                          child: Text('No data'),
                         );
                       }
-                    },
-                  ),
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: blackColor,
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ),

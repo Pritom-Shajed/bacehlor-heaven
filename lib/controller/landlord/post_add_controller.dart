@@ -72,6 +72,7 @@ class PostAddController extends GetxController {
       {required String category,
       required String location,
       required String price,
+      required String description,
       required BuildContext context}) async {
     if (addImage != null) {
       showDialog(
@@ -98,6 +99,7 @@ class PostAddController extends GetxController {
           location: location,
           price: price,
           category: category,
+          description: description,
           pictureUrl: downloadUrl);
 
       await FirebaseFirestore.instance

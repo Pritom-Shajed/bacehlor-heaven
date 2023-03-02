@@ -2,7 +2,8 @@ import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:get/get.dart';
 
 class CategoryController extends GetxController {
-  Selected? selected;
+  Selected selected = Selected.flat;
+
   void flatSelected() {
     selected = Selected.flat;
     update();

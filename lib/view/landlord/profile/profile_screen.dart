@@ -31,52 +31,52 @@ class ProfileScreen extends StatelessWidget {
             final _location = TextEditingController(text: userData['location']);
             final _phone = TextEditingController(text: userData['phoneNumber']);
 
-            return SingleChildScrollView(
-              child: Stack(
-                alignment: Alignment.topCenter,
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(top: 65),
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(color: bgColor),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Bachelor Heaven',
-                          style: satisfyTextStyle(size: 34, color: whiteColor),
-                        ),
-                        Text(
-                          'My Profile',
-                          style: poppinsTextStyle(
-                              size: 24,
-                              fontWeight: FontWeight.bold,
-                              color: whiteColor),
-                        ),
-                      ],
-                    ),
+            return Stack(
+              alignment: Alignment.topCenter,
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 65),
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(color: bgColor),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Bachelor Heaven',
+                        style: satisfyTextStyle(size: 34, color: whiteColor),
+                      ),
+                      Text(
+                        'My Profile',
+                        style: poppinsTextStyle(
+                            size: 24,
+                            fontWeight: FontWeight.bold,
+                            color: whiteColor),
+                      ),
+                    ],
                   ),
-                  Positioned(
-                    top: 170,
-                    bottom: 0,
-                    child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.92),
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(55),
-                              topRight: Radius.circular(55)),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 4,
-                              color: Colors.black38,
-                            ),
-                          ],
-                        ),
+                ),
+                Positioned(
+                  top: 170,
+                  bottom: 0,
+                  child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.92),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(55),
+                            topRight: Radius.circular(55)),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 4,
+                            color: Colors.black38,
+                          ),
+                        ],
+                      ),
+                      child: SingleChildScrollView(
                         child: Column(
                           children: [
                             CircleAvatar(
@@ -216,10 +216,10 @@ class ProfileScreen extends StatelessWidget {
                               ],
                             ),
                           ],
-                        )),
-                  ),
-                ],
-              ),
+                        ),
+                      )),
+                ),
+              ],
             );
           } else if (snapshot.hasError) {
             return Center(

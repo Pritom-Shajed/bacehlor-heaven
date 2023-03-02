@@ -1,7 +1,6 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/auth/auth_controller.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -68,103 +67,109 @@ class RegScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        controller.image == null
-                            ? CircleAvatar(
-                                radius: 50,
-                                backgroundColor: lightGreyColor,
-                                backgroundImage:
-                                    AssetImage('assets/images/avatar.png'))
-                            : CircleAvatar(
-                                radius: 50,
-                                backgroundColor: lightGreyColor,
-                                backgroundImage: FileImage(controller.image!)),
-                        controller.image == null
-                            ? Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: InkWell(
-                                  onTap: () {
-                                    controller.pickImage(ImageSource.gallery);
-                                  },
-                                  child: Icon(
-                                    Icons.add_circle,
-                                  ),
-                                ))
-                            : Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: InkWell(
-                                  onTap: () {
-                                    controller.pickImage(ImageSource.gallery);
-                                  },
-                                  child: Icon(
-                                    Icons.change_circle,
-                                  ),
-                                ))
-                      ],
-                    ),
-                    verticalSpace,
-                    customTextField(
-                        controller: _nameController,
-                        hintText: 'Username',
-                        icon: Icons.account_box),
-                    customTextField(
-                        controller: _emailController,
-                        hintText: 'Email',
-                        icon: Icons.email),
-                    customTextField(
-                        obscureText: true,
-                        controller: _passController,
-                        hintText: 'Password',
-                        icon: Icons.lock),
-                    customTextField(
-                      inputType: TextInputType.number,
-                        obscureText: true,
-                        controller: _phoneController,
-                        hintText: 'Phone Number',
-                        icon: Icons.phone),
-                    customTextField(
-                        controller: _locationController,
-                        hintText: 'City Name',
-                        icon: Icons.location_city),
-                    verticalSpace,
-                    customButton(
-                        text: 'Register',
-                        onTap: () {
-                          if (controller.image == null) {
-                            Fluttertoast.showToast(
-                                msg: 'Add your profile photo');
-                          } else if (_nameController.text.isEmpty) {
-                            Fluttertoast.showToast(msg: 'Enter you name');
-                          } else if (_emailController.text.isEmpty) {
-                            Fluttertoast.showToast(msg: 'Enter you email');
-                          } else if (_passController.text.isEmpty) {
-                            Fluttertoast.showToast(msg: 'Enter your password');
-                          } else if (_locationController.text.isEmpty) {
-                            Fluttertoast.showToast(msg: 'Enter your city name');
-                          } else {
-                            controller.signUp(
-                              context: context,
-                              email: _emailController.text.toLowerCase().trim(),
-                              pass: _passController.text,
-                              name: _nameController.text.trim(),
-                              phoneNumber: _phoneController.text.trim(),
-                              location: _locationController.text.trim(),
-                            );
-                          }
-                        }),
-                    verticalSpace,
-                    Center(
-                      child: Text(
-                        'Or login using your google account directly',
-                        style: poppinsTextStyle(color: greyColor, size: 12),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          controller.image == null
+                              ? CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: lightGreyColor,
+                                  backgroundImage:
+                                      AssetImage('assets/images/avatar.png'))
+                              : CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: lightGreyColor,
+                                  backgroundImage:
+                                      FileImage(controller.image!)),
+                          controller.image == null
+                              ? Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: InkWell(
+                                    onTap: () {
+                                      controller.pickImage(ImageSource.gallery);
+                                    },
+                                    child: Icon(
+                                      Icons.add_circle,
+                                    ),
+                                  ))
+                              : Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: InkWell(
+                                    onTap: () {
+                                      controller.pickImage(ImageSource.gallery);
+                                    },
+                                    child: Icon(
+                                      Icons.change_circle,
+                                    ),
+                                  ))
+                        ],
                       ),
-                    ),
-                  ],
+                      verticalSpace,
+                      customTextField(
+                          controller: _nameController,
+                          hintText: 'Username',
+                          icon: Icons.account_box),
+                      customTextField(
+                          controller: _emailController,
+                          hintText: 'Email',
+                          icon: Icons.email),
+                      customTextField(
+                          maxLines: 1,
+                          obscureText: true,
+                          controller: _passController,
+                          hintText: 'Password',
+                          icon: Icons.lock),
+                      customTextField(
+                          inputType: TextInputType.number,
+                          controller: _phoneController,
+                          hintText: 'Phone Number',
+                          icon: Icons.phone),
+                      customTextField(
+                          controller: _locationController,
+                          hintText: 'City Name',
+                          icon: Icons.location_city),
+                      verticalSpace,
+                      customButton(
+                          text: 'Register',
+                          onTap: () {
+                            if (controller.image == null) {
+                              Fluttertoast.showToast(
+                                  msg: 'Add your profile photo');
+                            } else if (_nameController.text.isEmpty) {
+                              Fluttertoast.showToast(msg: 'Enter you name');
+                            } else if (_emailController.text.isEmpty) {
+                              Fluttertoast.showToast(msg: 'Enter you email');
+                            } else if (_passController.text.isEmpty) {
+                              Fluttertoast.showToast(
+                                  msg: 'Enter your password');
+                            } else if (_locationController.text.isEmpty) {
+                              Fluttertoast.showToast(
+                                  msg: 'Enter your city name');
+                            } else {
+                              controller.signUp(
+                                context: context,
+                                email:
+                                    _emailController.text.toLowerCase().trim(),
+                                pass: _passController.text,
+                                name: _nameController.text.trim(),
+                                phoneNumber: _phoneController.text.trim(),
+                                location: _locationController.text.trim(),
+                              );
+                            }
+                          }),
+                      verticalSpace,
+                      Center(
+                        child: Text(
+                          'By continuing, you agree to our Terms and Conditions',
+                          style: poppinsTextStyle(color: greyColor, size: 12),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

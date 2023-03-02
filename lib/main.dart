@@ -39,12 +39,18 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme()),
       getPages: [
         GetPage(name: '/splash_screen', page: () => SplashScreen()),
-        GetPage(name: '/login_screen', page: () => LoginScreen()),
-        GetPage(name: '/reg_screen', page: () => RegScreen()),
+        GetPage(
+            name: '/login_screen',
+            page: () => LoginScreen(),
+            binding: AuthBinding()),
+        GetPage(
+            name: '/reg_screen',
+            page: () => RegScreen(),
+            binding: AuthBinding()),
         GetPage(name: '/profile_screen', page: () => ProfileScreen()),
-        GetPage(name: '/my_seats', page: ()=> UserSeats()),
-        GetPage(name: '/my_flats', page: ()=> UserFlats()),
-        GetPage(name: '/my_rooms', page: ()=> UserRooms()),
+        GetPage(name: '/my_seats', page: () => UserSeats()),
+        GetPage(name: '/my_flats', page: () => UserFlats()),
+        GetPage(name: '/my_rooms', page: () => UserRooms()),
         GetPage(
             name: '/post_add',
             page: () => PostAdd(),

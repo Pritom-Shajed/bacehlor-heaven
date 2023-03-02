@@ -11,6 +11,7 @@ class PostAdd extends StatelessWidget {
   TextEditingController _locationController = TextEditingController();
 
   TextEditingController _priceController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
 
   final List<String> items = ['Seat', 'Flat', 'Room'];
 
@@ -18,55 +19,55 @@ class PostAdd extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<PostAddController>(builder: (controller) {
-        return SingleChildScrollView(
-          child: Stack(
-            alignment: Alignment.topCenter,
-            clipBehavior: Clip.none,
-            children: [
-              Container(
-                padding: EdgeInsets.only(top: 65),
-                height: MediaQuery.of(context).size.height,
+        return Stack(
+          alignment: Alignment.topCenter,
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              padding: EdgeInsets.only(top: 65),
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(color: bgColor),
+              child: Column(
+                children: [
+                  Text(
+                    'Bachelor Heaven',
+                    style: satisfyTextStyle(size: 34, color: whiteColor),
+                  ),
+                  Text(
+                    'Post Your Add',
+                    style: poppinsTextStyle(
+                        size: 24,
+                        fontWeight: FontWeight.bold,
+                        color: whiteColor),
+                  ),
+                  Text(
+                    'Enter the below details to continue',
+                    style: poppinsTextStyle(size: 12, color: whiteColor),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 180,
+              bottom: 0,
+              child: Container(
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(color: bgColor),
-                child: Column(
-                  children: [
-                    Text(
-                      'Bachelor Heaven',
-                      style: satisfyTextStyle(size: 34, color: whiteColor),
-                    ),
-                    Text(
-                      'Post Your Add',
-                      style: poppinsTextStyle(
-                          size: 24,
-                          fontWeight: FontWeight.bold,
-                          color: whiteColor),
-                    ),
-                    Text(
-                      'Enter the below details to continue',
-                      style: poppinsTextStyle(size: 12, color: whiteColor),
+                height: MediaQuery.of(context).size.height,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.92),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(55),
+                      topRight: Radius.circular(55)),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 4,
+                      color: Colors.black38,
                     ),
                   ],
                 ),
-              ),
-              Positioned(
-                top: 180,
-                bottom: 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.92),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(55),
-                        topRight: Radius.circular(55)),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 4,
-                        color: Colors.black38,
-                      ),
-                    ],
-                  ),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       controller.addImage == null
@@ -142,6 +143,11 @@ class PostAdd extends StatelessWidget {
                           ),
                         ),
                       ),
+                      customTextField(
+                          inputType: TextInputType.multiline,
+                          controller: _descriptionController,
+                          hintText: 'Description',
+                          icon: Icons.description),
                       verticalSpace,
                       customButton(
                           text: 'ADD',
@@ -162,6 +168,8 @@ class PostAdd extends StatelessWidget {
                               controller.addPost(
                                   context: context,
                                   category: controller.category,
+                                  description:
+                                      _descriptionController.text.trim(),
                                   location: _locationController.text.trim(),
                                   price: _priceController.text.trim());
                             }
@@ -170,8 +178,8 @@ class PostAdd extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         );
       }),
     );

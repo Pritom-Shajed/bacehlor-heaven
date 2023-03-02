@@ -1,12 +1,11 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/auth/auth_controller.dart';
-import 'package:bachelor_heaven/widgets/bottom%20sheet/bottom_scheet_widget.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/gridItems.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/slider_item.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 AuthController controller = Get.put(AuthController());
@@ -31,41 +30,19 @@ Widget HeaderWidget() {
 }
 
 // Carousel Slider Items
-List<Widget> items = [
-  sliderItem(
-      imageUrl:
-          'https://paarthinfrablog.files.wordpress.com/2019/08/multistorey-apartment-flat-for-sale.jpeg',
-      text: 'Flat'),
-  sliderItem(
-      imageUrl:
-          'https://www.rd.com/wp-content/uploads/2021/03/GettyImages-1207490255-e1615485559611.jpg',
-      text: 'Room'),
-  sliderItem(
-      imageUrl:
-          'https://cdn.kiit.ac.in/wp-content/uploads/2022/03/KIIT-Hostel-3-Sharing.jpg',
-      text: 'Seat')
-];
-
-//Grid Items
-List<Widget> gridItems = [
-  gridItem(
-      imageUrl:
-          'https://paarthinfrablog.files.wordpress.com/2019/08/multistorey-apartment-flat-for-sale.jpeg',
-      text: 'Flat'),
-  gridItem(
-      imageUrl:
-          'https://www.rd.com/wp-content/uploads/2021/03/GettyImages-1207490255-e1615485559611.jpg',
-      text: 'Room'),
-  gridItem(
-      imageUrl:
-          'https://cdn.kiit.ac.in/wp-content/uploads/2022/03/KIIT-Hostel-3-Sharing.jpg',
-      text: 'Seat')
+List<Widget> sliderItems = [
+  sliderItemWidget(image: 'assets/category/flat.jpeg', text: 'Flat'),
+  sliderItemWidget(image: 'assets/category/room.jpg', text: 'Room'),
+  sliderItemWidget(image: 'assets/category/seat.jpg', text: 'Seat'),
 ];
 
 //Normal Drawer
 Widget DrawerWidget(BuildContext context) {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
+
+  User? _currentUser = FirebaseAuth.instance.currentUser;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   return Drawer(
     child: ListView(
       children: [
@@ -80,75 +57,32 @@ Widget DrawerWidget(BuildContext context) {
         ),
         ListTile(
           onTap: () {
-            Get.back();
-            showModalBottomSheet(
-              isScrollControlled: true,
-              context: context,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(12),
-                ),
-              ),
-              builder: (BuildContext context) {
-                return Padding(
-                  padding: MediaQuery.of(context).viewInsets,
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.all(12),
-                      child: bottomSheetWidget(
-                          onTapEmail: () => Get.offNamed('login_screen'),
-                          onTapGoogle: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return SimpleDialog(
-                                    alignment: Alignment.center,
-                                    contentPadding: EdgeInsets.all(8),
-                                    children: [
-                                      Center(
-                                          child: Text(
-                                              'Enter the details to continue')),
-                                      customTextField(
-                                          inputType: TextInputType.number,
-                                          controller: _phoneController,
-                                          hintText: 'Phone Number',
-                                          icon: Icons.phone),
-                                      customTextField(
-                                          controller: _locationController,
-                                          hintText: 'Location',
-                                          icon: Icons.location_city),
-                                      verticalSpace,
-                                      customButton(
-                                          text: 'Submit',
-                                          onTap: () {
-                                            if (_phoneController.text.isEmpty) {
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      'Enter your phone number');
-                                            } else if (_locationController
-                                                .text.isEmpty) {
-                                              Fluttertoast.showToast(
-                                                  msg: 'Enter your location');
-                                            } else {
-                                              controller.signInWithGoogle(
-                                                  phoneNumber: _phoneController
-                                                      .text
-                                                      .trim(),
-                                                  location: _locationController
-                                                      .text
-                                                      .trim(),
-                                                  context: context);
-                                            }
-                                          })
-                                    ],
-                                  );
-                                });
-                          }),
-                    ),
-                  ),
-                );
-              },
-            );
+            Get.toNamed('/login_screen');
+            // showModalBottomSheet(
+            //   isScrollControlled: true,
+            //   context: context,
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.vertical(
+            //       top: Radius.circular(12),
+            //     ),
+            //   ),
+            //   builder: (BuildContext context) {
+            //     return Padding(
+            //       padding: MediaQuery.of(context).viewInsets,
+            //       child: SingleChildScrollView(
+            //         child: Padding(
+            //           padding: EdgeInsets.all(12),
+            //           child: bottomSheetWidget(
+            //               onTapEmail: () => Get.offNamed('login_screen'),
+            //               onTapGoogle: () => controller.signInWithGoogle(
+            //                   phoneNumber: _phoneController.text.trim(),
+            //                   location: _locationController.text.trim(),
+            //                   context: context)),
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // );
           },
           title: Text('Login'.toUpperCase()),
           subtitle: Text('as landlord'),

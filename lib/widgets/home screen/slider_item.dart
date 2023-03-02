@@ -2,10 +2,10 @@ import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:flutter/material.dart';
 
-class sliderItem extends StatelessWidget {
-  String imageUrl;
+class sliderItemWidget extends StatelessWidget {
+  String image;
   String text;
-  sliderItem({super.key, required this.imageUrl, required this.text});
+  sliderItemWidget({super.key, required this.image, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +14,7 @@ class sliderItem extends StatelessWidget {
       height: 200,
       width: double.maxFinite,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          image: DecorationImage(
-              fit: BoxFit.cover, image: NetworkImage(imageUrl))),
+          image: DecorationImage(fit: BoxFit.cover, image: AssetImage(image))),
       child: Stack(
         children: [
           Text(text, style: poppinsTextStyle(size: 30, color: whiteColor)),

@@ -11,9 +11,11 @@ class sliderItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8),
+      margin: EdgeInsets.symmetric(horizontal: 8),
       height: 200,
       width: double.maxFinite,
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
           image: DecorationImage(fit: BoxFit.cover, image: AssetImage(image))),
       child: Stack(
         children: [

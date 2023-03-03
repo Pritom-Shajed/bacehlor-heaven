@@ -1,4 +1,5 @@
 import 'package:bachelor_heaven/constants/constants.dart';
+import 'package:bachelor_heaven/widgets/home%20screen/home_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -45,19 +46,18 @@ TextStyle satisfyTextStyle({
 //Search Bar
 Widget searchBar({
   required TextEditingController controller,
+  required Function(String) onChanged,
 }) {
-  return Card(
-    elevation: 3,
-    child: TextField(
-      cursorColor: blackColor,
-      controller: controller,
-      decoration: InputDecoration(
-        hintText: 'Search your desired place...',
-        prefixIcon: Icon(Icons.search),
-        prefixIconColor: Colors.grey.shade700,
-        border: InputBorder.none,
-      ),
+  return TextField(
+    controller:  controller,
+    cursorColor: blackColor,
+    decoration: InputDecoration(
+      hintText: 'Search by your location...',
+      prefixIcon: Icon(Icons.search),
+      prefixIconColor: Colors.grey.shade700,
+      border: InputBorder.none,
     ),
+    onChanged: onChanged,
   );
 }
 

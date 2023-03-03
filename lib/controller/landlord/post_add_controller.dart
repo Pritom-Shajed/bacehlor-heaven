@@ -69,7 +69,8 @@ class PostAddController extends GetxController {
   }
 
   addPost(
-      {required String category,
+      {required String title,
+      required String category,
       required String location,
       required String price,
       required String description,
@@ -96,11 +97,13 @@ class PostAddController extends GetxController {
 
       PostModel post = PostModel(
           uid: Uuid().v1(),
+          title: title,
           location: location,
           price: price,
           category: category,
           description: description,
-          pictureUrl: downloadUrl);
+          pictureUrl: downloadUrl,
+          postDate: currentDate);
 
       await FirebaseFirestore.instance
           .collection('individualAdds')

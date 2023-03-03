@@ -1,5 +1,6 @@
 import 'package:bachelor_heaven/bindings/bindings.dart';
 import 'package:bachelor_heaven/constants/constants.dart';
+import 'package:bachelor_heaven/view/dashboard/apartments.dart';
 import 'package:bachelor_heaven/view/auth/login_screen.dart';
 import 'package:bachelor_heaven/view/auth/registration_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/home_screen.dart';

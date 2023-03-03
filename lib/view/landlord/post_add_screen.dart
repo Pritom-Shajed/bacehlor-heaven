@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 class PostAdd extends StatelessWidget {
   PostAdd({super.key});
 
+  TextEditingController _titleController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
-
   TextEditingController _priceController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
 
@@ -84,6 +84,10 @@ class PostAdd extends StatelessWidget {
                                       image: FileImage(controller.addImage!))),
                             ),
                       verticalSpace,
+                      customTextField(
+                          controller: _titleController,
+                          hintText: 'Title',
+                          icon: Icons.title),
                       customTextField(
                           controller: _locationController,
                           hintText: 'Location',
@@ -167,6 +171,7 @@ class PostAdd extends StatelessWidget {
                             } else {
                               controller.addPost(
                                   context: context,
+                                  title: _titleController.text.trim(),
                                   category: controller.category,
                                   description:
                                       _descriptionController.text.trim(),

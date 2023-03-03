@@ -76,12 +76,17 @@ class LoginScreen extends StatelessWidget {
                             controller: _emailController,
                             hintText: 'Email',
                             icon: Icons.email),
-                        customTextField(
-                            maxLines: 1,
-                            obscureText: true,
-                            controller: _passController,
-                            hintText: 'Password',
-                            icon: Icons.lock),
+                        Obx(
+                          () => customTextField(
+                              maxLines: 1,
+                              obscureText: controller.obscureText.value,
+                              controller: _passController,
+                              hintText: 'Password',
+                              icon: Icons.lock,
+                          suffixIcon: controller.obscureText == true ? Icons.visibility_off : Icons.visibility,
+                          suffixIconTap: ()=>controller.changeObscureText(controller.obscureText.value == true ? false : true)),
+
+                        ),
                         verticalSpace,
                         customButton(
                             text: 'Login',

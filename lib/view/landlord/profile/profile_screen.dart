@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
+
   final _currentUser = FirebaseAuth.instance.currentUser;
   ProfileController _controller = Get.put(ProfileController());
 
@@ -198,9 +199,12 @@ class ProfileScreen extends StatelessWidget {
                                                 phoneNumber: _phone.text.trim(),
                                                 joinedDate:
                                                     userData['joinedDate']);
-
-                                            await _controller
-                                                .updateUserData(user);
+                                            await FirebaseAuth
+                                                .instance.currentUser!
+                                                .updateDisplayName(
+                                                    _name.text.trim())
+                                                .then((value) => _controller
+                                                    .updateUserDetails(user)).then((value) => Get.offAllNamed('/nav_panel'));
                                           }),
                                     )),
                                 horizontalSpace,

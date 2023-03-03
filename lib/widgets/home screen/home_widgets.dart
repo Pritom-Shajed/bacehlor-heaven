@@ -8,6 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../bottom sheet/bottom_scheet_widget.dart';
+
 AuthController controller = Get.put(AuthController());
 
 // Header

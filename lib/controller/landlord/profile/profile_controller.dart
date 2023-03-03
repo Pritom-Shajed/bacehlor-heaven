@@ -1,24 +1,24 @@
 import 'package:bachelor_heaven/model/landlord/user_model.dart';
-import 'package:bachelor_heaven/repository/landlord/user_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
-  UserRepository _userRepo = Get.put(UserRepository());
 
-  // User? _currentUser = FirebaseAuth.instance.currentUser;
+  final _firestore = FirebaseFirestore.instance;
+  final _currentUser = FirebaseAuth.instance.currentUser;
 
-  // getUserData() {
-  //   final _uid = _currentUser?.uid;
-
-  //   if (_uid != null) {
-  //     return _userRepo.getUserDetails(_uid);
-  //   } else {
-  //     Future.error('Error');
-  //   }
-  // }
-
-  updateUserData(UserModel user) async {
-    await _userRepo.updateUserDetails(user);
+  updateUserDetails(UserModel user) async {
+    await _firestore
+        .collection('users')
+        .doc(_currentUser!.uid)
+        .update(user.toJson())
+        .then((value) => Get.back())
+        .then((value) => Get.back())
+        .then((value) => Fluttertoast.showToast(msg: 'Successfully updated'));
   }
+
+
+
 }

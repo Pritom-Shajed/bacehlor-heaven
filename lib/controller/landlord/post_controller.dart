@@ -11,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
-class PostAddController extends GetxController {
+class PostController extends GetxController {
   String category = 'Seat';
   RxString currentTime =
       DateFormat.yMMMMd('en_US').add_jms().format(DateTime.now()).obs;
@@ -121,5 +121,32 @@ class PostAddController extends GetxController {
     } else {
       Fluttertoast.showToast(msg: 'Select at least one image');
     }
+  }
+
+  deletePost({required String uid, required String categoryName}) async {
+    final CollectionReference ref =
+        await FirebaseFirestore.instance.collection('allAdds');
+
+    QuerySnapshot snapshot =
+        await ref.where('uid', isEqualTo: uid).get();
+
+    snapshot.docs.forEach((element) {
+      element.reference.delete();
+    });
+
+    deletePersonalPost(categoryName: categoryName, uid: uid);
+  }
+
+  deletePersonalPost(
+      {required String categoryName, required String uid}) async {
+    final CollectionReference ref = await FirebaseFirestore.instance
+        .collection('individualAdds')
+        .doc('user_${_currentUser!.uid}')
+        .collection(categoryName);
+    QuerySnapshot snapshot = await ref.where('uid', isEqualTo: uid).get();
+
+    snapshot.docs.forEach((element) {
+      element.reference.delete();
+    });
   }
 }

@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 
 class AuthController extends GetxController {
   File? image;
+  RxBool obscureText = true.obs;
 
   pickImage(ImageSource src) async {
     XFile? xfile = await ImagePicker().pickImage(source: src);
@@ -20,6 +21,10 @@ class AuthController extends GetxController {
       image = File(xfile.path);
       update();
     }
+  }
+
+  changeObscureText(bool value){
+    obscureText.value = value;
   }
 
   signUp({
@@ -110,14 +115,12 @@ class AuthController extends GetxController {
             ),
           );
         });
-    // Trigger the authentication flow
+
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
 
-    // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,

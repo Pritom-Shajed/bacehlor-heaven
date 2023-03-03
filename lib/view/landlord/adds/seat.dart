@@ -1,11 +1,11 @@
 import 'package:bachelor_heaven/constants/constants.dart';
+import 'package:bachelor_heaven/view/landlord/adds/apartment_details_personal.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../../../widgets/home screen/home_widgets.dart';
+import 'package:get/get.dart';
 
 class UserSeats extends StatelessWidget {
   UserSeats({super.key});
@@ -83,49 +83,52 @@ class UserSeats extends StatelessWidget {
                             itemBuilder: (_, index) {
                               Map<String, dynamic> seats =
                                   snapshot.data!.docs[index].data();
-                              return CachedNetworkImage(
-                                imageUrl: "${seats['pictureUrl']}",
-                                imageBuilder: (context, imageProvider) =>
-                                    Container(
-                                  margin: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
+                              return InkWell(
+                                onTap: ()=>Get.to(()=>ApartmentDetailsPersonal(uid: seats['uid'])),
+                                child: CachedNetworkImage(
+                                  imageUrl: "${seats['pictureUrl']}",
+                                  imageBuilder: (context, imageProvider) =>
                                       Container(
-                                        margin: EdgeInsets.all(5),
-                                        padding: EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        child: Text(seats['location']),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.all(5),
-                                        padding: EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        child: Text(seats['price']),
-                                      ),
-                                    ],
+                                    margin: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.all(5),
+                                          padding: EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          child: Text(seats['location']),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.all(5),
+                                          padding: EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          child: Text(seats['price']),
+                                        ),
+                                      ],
+                                    ),
                                   ),
+                                  placeholder: (context, url) => Padding(
+                                      padding: EdgeInsets.all(8),
+                                      child:
+                                          ShimmerEffect(height: 240, width: 200)),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
                                 ),
-                                placeholder: (context, url) => Padding(
-                                    padding: EdgeInsets.all(8),
-                                    child:
-                                        ShimmerEffect(height: 240, width: 200)),
-                                errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
                               );
                             });
                       } else if (snapshot.hasError) {

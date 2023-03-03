@@ -117,12 +117,14 @@ class RegScreen extends StatelessWidget {
                           controller: _emailController,
                           hintText: 'Email',
                           icon: Icons.email),
-                      customTextField(
+                      Obx(() => customTextField(
                           maxLines: 1,
-                          obscureText: true,
+                          obscureText: controller.obscureText.value,
                           controller: _passController,
                           hintText: 'Password',
-                          icon: Icons.lock),
+                          suffixIcon: controller.obscureText == true ? Icons.visibility_off: Icons.visibility,
+                          suffixIconTap: ()=> controller.changeObscureText(controller.obscureText.value == true ? false : true),
+                          icon: Icons.lock),),
                       customTextField(
                           inputType: TextInputType.number,
                           controller: _phoneController,

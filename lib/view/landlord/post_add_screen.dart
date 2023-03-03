@@ -1,5 +1,5 @@
 import 'package:bachelor_heaven/constants/constants.dart';
-import 'package:bachelor_heaven/controller/landlord/post_add_controller.dart';
+import 'package:bachelor_heaven/controller/landlord/post_controller.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,7 +18,7 @@ class PostAdd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<PostAddController>(builder: (controller) {
+      body: GetBuilder<PostController>(builder: (controller) {
         return Stack(
           alignment: Alignment.topCenter,
           clipBehavior: Clip.none,

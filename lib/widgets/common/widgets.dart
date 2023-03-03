@@ -23,11 +23,11 @@ TextStyle poppinsTextStyle({
 }) =>
     GoogleFonts.poppins(
         textStyle: TextStyle(
-      color: color,
-      fontSize: size,
-      fontWeight: fontWeight,
-      letterSpacing: letterSpacing,
-    ));
+          color: color,
+          fontSize: size,
+          fontWeight: fontWeight,
+          letterSpacing: letterSpacing,
+        ));
 
 TextStyle satisfyTextStyle({
   Color? color,
@@ -37,11 +37,11 @@ TextStyle satisfyTextStyle({
 }) =>
     GoogleFonts.greatVibes(
         textStyle: TextStyle(
-      color: color,
-      fontSize: size,
-      fontWeight: fontWeight,
-      letterSpacing: letterSpacing,
-    ));
+          color: color,
+          fontSize: size,
+          fontWeight: fontWeight,
+          letterSpacing: letterSpacing,
+        ));
 
 //Search Bar
 Widget searchBar({
@@ -49,7 +49,7 @@ Widget searchBar({
   required Function(String) onChanged,
 }) {
   return TextField(
-    controller:  controller,
+    controller: controller,
     cursorColor: blackColor,
     decoration: InputDecoration(
       hintText: 'Search by your location...',
@@ -62,13 +62,14 @@ Widget searchBar({
 }
 
 // TextField
-Widget customTextField(
-    {required TextEditingController controller,
-    required String hintText,
-    required IconData icon,
-    int? maxLines,
-    bool obscureText = false,
-    TextInputType inputType = TextInputType.text}) {
+Widget customTextField({required TextEditingController controller,
+  required String hintText,
+  required IconData icon,
+  IconData? suffixIcon,
+  VoidCallback? suffixIconTap,
+  int? maxLines,
+  bool obscureText = false,
+  TextInputType inputType = TextInputType.text}) {
   return Card(
     elevation: 1,
     child: TextField(
@@ -78,6 +79,7 @@ Widget customTextField(
       cursorColor: blackColor,
       controller: controller,
       decoration: InputDecoration(
+        suffixIcon: InkWell(onTap: suffixIconTap, child: Icon(suffixIcon, color: greyColor,)),
         hintText: hintText,
         prefixIcon: Icon(icon),
         prefixIconColor: blackColor,
@@ -88,12 +90,11 @@ Widget customTextField(
 }
 
 // Custom Button
-Widget customButton(
-    {required String text,
-    required VoidCallback onTap,
-    double width = double.maxFinite,
-    Alignment alignment = Alignment.center,
-    Color color = blackColor}) {
+Widget customButton({required String text,
+  required VoidCallback onTap,
+  double width = double.maxFinite,
+  Alignment alignment = Alignment.center,
+  Color color = blackColor}) {
   return InkWell(
     onTap: onTap,
     child: Container(

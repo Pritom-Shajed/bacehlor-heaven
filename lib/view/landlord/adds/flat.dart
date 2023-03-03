@@ -4,8 +4,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../../widgets/home screen/home_widgets.dart';
+import 'apartment_details_personal.dart';
+
 
 class UserFlats extends StatelessWidget {
   UserFlats({super.key});
@@ -83,49 +85,52 @@ class UserFlats extends StatelessWidget {
                             itemBuilder: (_, index) {
                               Map<String, dynamic> flats =
                                   snapshot.data!.docs[index].data();
-                              return CachedNetworkImage(
-                                imageUrl: "${flats['pictureUrl']}",
-                                imageBuilder: (context, imageProvider) =>
-                                    Container(
-                                  margin: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
+                              return InkWell(
+                                onTap:  () => Get.to(()=>ApartmentDetailsPersonal(uid: flats['uid'],)),
+                                child: CachedNetworkImage(
+                                  imageUrl: "${flats['pictureUrl']}",
+                                  imageBuilder: (context, imageProvider) =>
                                       Container(
-                                        margin: EdgeInsets.all(5),
-                                        padding: EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        child: Text(flats['location']),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.all(5),
-                                        padding: EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        child: Text(flats['price']),
-                                      ),
-                                    ],
+                                    margin: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.all(5),
+                                          padding: EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          child: Text(flats['location']),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.all(5),
+                                          padding: EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          child: Text(flats['price']),
+                                        ),
+                                      ],
+                                    ),
                                   ),
+                                  placeholder: (context, url) => Padding(
+                                      padding: EdgeInsets.all(8),
+                                      child:
+                                          ShimmerEffect(height: 240, width: 200)),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
                                 ),
-                                placeholder: (context, url) => Padding(
-                                    padding: EdgeInsets.all(8),
-                                    child:
-                                        ShimmerEffect(height: 240, width: 200)),
-                                errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
                               );
                             });
                       } else if (snapshot.hasError) {

@@ -9,14 +9,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   HomeController _controller = Get.find();
 
   TextEditingController searchTextController = TextEditingController();
@@ -67,8 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: 10,
                                   decoration: BoxDecoration(
                                     color: _controller.currentIndex.value == i
-                                        ? amberColor
-                                        : whiteColor,
+                                        ? whiteColor
+                                        : whiteColor.withOpacity(0.4),
                                     shape: BoxShape.circle,
                                   ),
                                 ),
@@ -119,6 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         isGreaterThanOrEqualTo: _controller.searchName.value)
                     .snapshots(),
                 builder: (context, snapshot) {
+
                   if (snapshot.connectionState == ConnectionState.active) {
                     if (snapshot.hasData) {
                       return GridView.builder(
@@ -130,6 +126,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder: (_, index) {
                             Map<String, dynamic> adds =
                                 snapshot.data!.docs[index].data();
+
+
                             return CachedNetworkImage(
                               imageUrl: "${adds['pictureUrl']}",
                               imageBuilder: (context, imageProvider) =>
@@ -184,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(8)),
                                         child: Text(
-                                          adds['price'],
+                                          '${adds['price']}tk',
                                           style: poppinsTextStyle(size: 10),
                                         ),
                                       ),

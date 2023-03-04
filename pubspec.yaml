@@ -18,7 +18,6 @@ dependencies:
   animated_text_kit: ^4.2.2
   google_fonts: ^4.0.3
   intl: ^0.18.0
-  anim_search_bar: ^2.0.3
   carousel_slider: ^4.2.1
   google_nav_bar: ^5.0.6
   image_picker: ^0.8.6+2
@@ -44,6 +43,7 @@ flutter:
 
 
   assets:
+    - assets/icons/
     - assets/images/
     - assets/lottie/
     - assets/category/

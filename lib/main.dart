@@ -1,17 +1,12 @@
 import 'package:bachelor_heaven/bindings/bindings.dart';
 import 'package:bachelor_heaven/constants/constants.dart';
-import 'package:bachelor_heaven/view/dashboard/apartments.dart';
 import 'package:bachelor_heaven/view/auth/login_screen.dart';
 import 'package:bachelor_heaven/view/auth/registration_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/home_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/landlords_screen.dart';
-import 'package:bachelor_heaven/view/intial/bottom_nav.dart';
-import 'package:bachelor_heaven/view/landlord/adds/flat.dart';
-import 'package:bachelor_heaven/view/landlord/adds/room.dart';
-import 'package:bachelor_heaven/view/landlord/adds/seat.dart';
-import 'package:bachelor_heaven/view/landlord/post_add_screen.dart';
+import 'package:bachelor_heaven/view/intial/dashboard.dart';
 import 'package:bachelor_heaven/view/intial/splash_screen.dart';
-import 'package:bachelor_heaven/view/landlord/profile/profile_screen.dart';
+import 'package:bachelor_heaven/view/user/profile_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,14 +44,7 @@ class MyApp extends StatelessWidget {
             page: () => RegScreen(),
             binding: AuthBinding()),
         GetPage(name: '/profile_screen', page: () => ProfileScreen()),
-        GetPage(name: '/my_seats', page: () => UserSeats()),
-        GetPage(name: '/my_flats', page: () => UserFlats()),
-        GetPage(name: '/my_rooms', page: () => UserRooms()),
-        GetPage(
-            name: '/post_add',
-            page: () => PostAdd(),
-            binding: PostAddBinding()),
-        GetPage(name: '/nav_panel', page: () => BottomNav()),
+        GetPage(name: '/dashboard', page: () => Dashboard()),
         GetPage(name: '/home_screen', page: () => HomeScreen()),
         GetPage(name: '/landlords_screen', page: () => LandlordsScreen()),
       ],

@@ -1,6 +1,4 @@
 import 'package:bachelor_heaven/constants/constants.dart';
-import 'package:bachelor_heaven/controller/landlord/profile/profile_controller.dart';
-import 'package:bachelor_heaven/model/landlord/user_model.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +6,6 @@ Future<dynamic> editProfileDialog({
   required BuildContext context,
   required TextEditingController nameController,
   required TextEditingController emailController,
-  required TextEditingController locationController,
   required TextEditingController phoneController,
   required VoidCallback onTap,
   // required String imgUrl,
@@ -46,14 +43,6 @@ Future<dynamic> editProfileDialog({
                     controller: phoneController,
                     decoration: InputDecoration(
                         labelText: 'Phone Number',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8))),
-                  ),
-                  verticalSpace,
-                  TextFormField(
-                    controller: locationController,
-                    decoration: InputDecoration(
-                        labelText: 'Location',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8))),
                   ),

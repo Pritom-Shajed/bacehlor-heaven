@@ -1,14 +1,11 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/auth/auth_controller.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
-import 'package:bachelor_heaven/widgets/home%20screen/gridItems.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/slider_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../bottom sheet/bottom_scheet_widget.dart';
 
 AuthController controller = Get.put(AuthController());
 
@@ -87,7 +84,7 @@ Widget DrawerWidget(BuildContext context) {
             // );
           },
           title: Text('Login'.toUpperCase()),
-          subtitle: Text('as landlord'),
+          subtitle: Text('as user'),
           leading: Icon(Icons.login),
         ),
         ListTile(
@@ -130,50 +127,9 @@ Widget LoggedInDrawer(
         ),
         ListTile(
           onTap: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return SimpleDialog(
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            Get.back();
-                            Get.toNamed('/my_seats');
-                          },
-                          child: Text(
-                            'Seats',
-                            style: poppinsTextStyle(color: blackColor),
-                          )),
-                      TextButton(
-                          onPressed: () {
-                            Get.back();
-                            Get.toNamed('/my_flats');
-                          },
-                          child: Text(
-                            'Flat',
-                            style: poppinsTextStyle(color: blackColor),
-                          )),
-                      TextButton(
-                          onPressed: () {
-                            Get.back();
-                            Get.toNamed('/my_rooms');
-                          },
-                          child: Text(
-                            'Room',
-                            style: poppinsTextStyle(color: blackColor),
-                          )),
-                    ],
-                  );
-                });
+
           },
-          title: Text('My Adds'.toUpperCase()),
-          leading: Icon(Icons.add_business),
-        ),
-        ListTile(
-          onTap: () {
-            Get.toNamed('/post_add');
-          },
-          title: Text('Post your add'.toUpperCase()),
+          title: Text('My Bookings'.toUpperCase()),
           leading: Icon(Icons.add_business),
         ),
         ListTile(

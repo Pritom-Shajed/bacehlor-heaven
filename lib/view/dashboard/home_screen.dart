@@ -1,6 +1,6 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/dashboard/home_controller.dart';
-import 'package:bachelor_heaven/view/dashboard/apartments.dart';
+import 'package:bachelor_heaven/view/dashboard/ads_details.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/home_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -109,7 +109,7 @@ class HomeScreen extends StatelessWidget {
             () => Expanded(
               child: StreamBuilder(
                 stream: _firestore
-                    .collection('allAdds')
+                    .collection('Ads-All')
                     .where('location',
                         isGreaterThanOrEqualTo: _controller.searchName.value)
                     .snapshots(),

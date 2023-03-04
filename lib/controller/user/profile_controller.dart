@@ -1,4 +1,4 @@
-import 'package:bachelor_heaven/model/landlord/user_model.dart';
+import 'package:bachelor_heaven/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,7 +18,4 @@ class ProfileController extends GetxController {
         .then((value) => Get.back())
         .then((value) => Fluttertoast.showToast(msg: 'Successfully updated'));
   }
-
-
-
 }

@@ -91,7 +91,7 @@ class CategoryScreen extends StatelessWidget {
           Expanded(
             child: StreamBuilder(
               stream: _firestore
-                  .collection('allAdds')
+                  .collection('Ads-All')
                   .where('category',
                       isEqualTo: controller.selected == Selected.flat
                           ? 'Flat'

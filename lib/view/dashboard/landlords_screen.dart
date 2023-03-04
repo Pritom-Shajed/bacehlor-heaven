@@ -21,7 +21,7 @@ class LandlordsScreen extends StatelessWidget {
         ),
         Expanded(
           child: StreamBuilder(
-              stream: _firestore.collection('users').snapshots(),
+              stream: _firestore.collection('landlords').snapshots(),
               builder: (_, snapshot) {
                 if (snapshot.connectionState == ConnectionState.active) {
                   if (snapshot.hasData) {

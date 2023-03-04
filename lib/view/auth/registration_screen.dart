@@ -13,7 +13,6 @@ class RegScreen extends StatelessWidget {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
-  TextEditingController _locationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -130,10 +129,6 @@ class RegScreen extends StatelessWidget {
                           controller: _phoneController,
                           hintText: 'Phone Number',
                           icon: Icons.phone),
-                      customTextField(
-                          controller: _locationController,
-                          hintText: 'City Name',
-                          icon: Icons.location_city),
                       verticalSpace,
                       customButton(
                           text: 'Register',
@@ -148,9 +143,6 @@ class RegScreen extends StatelessWidget {
                             } else if (_passController.text.isEmpty) {
                               Fluttertoast.showToast(
                                   msg: 'Enter your password');
-                            } else if (_locationController.text.isEmpty) {
-                              Fluttertoast.showToast(
-                                  msg: 'Enter your city name');
                             } else {
                               controller.signUp(
                                 context: context,
@@ -159,7 +151,6 @@ class RegScreen extends StatelessWidget {
                                 pass: _passController.text,
                                 name: _nameController.text.trim(),
                                 phoneNumber: _phoneController.text.trim(),
-                                location: _locationController.text.trim(),
                               );
                             }
                           }),

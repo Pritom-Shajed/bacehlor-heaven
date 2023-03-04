@@ -5,7 +5,6 @@ class UserModel {
   String? email;
   String? profilePic;
   String? uid;
-  String? location;
   String? joinedDate;
   String? phoneNumber;
 
@@ -14,7 +13,6 @@ class UserModel {
     required this.email,
     required this.profilePic,
     required this.uid,
-    required this.location,
     required this.joinedDate,
      this.phoneNumber,
   });
@@ -25,7 +23,6 @@ class UserModel {
       'email': email,
       'profilePic': profilePic,
       'uid': uid,
-      'location': location,
       'joinedDate': joinedDate,
       'phoneNumber': phoneNumber
     };
@@ -38,7 +35,6 @@ class UserModel {
       email: data['email'],
       uid: data['uid'],
       profilePic: data['profilePic'],
-      location: data['location'],
       joinedDate: data['joinedDate'],
       phoneNumber: data['phoneNumber'],
     );

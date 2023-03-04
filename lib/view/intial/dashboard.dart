@@ -1,9 +1,8 @@
-import 'package:bachelor_heaven/controller/intial/bottom_nav_controller.dart';
-import 'package:bachelor_heaven/view/landlord/profile/profile_screen.dart';
+import 'package:bachelor_heaven/controller/intial/dashboard_controller.dart';
 import 'package:bachelor_heaven/view/dashboard/category_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/home_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/landlords_screen.dart';
-import 'package:bachelor_heaven/view/landlord/profile/profile(unused).dart';
+import 'package:bachelor_heaven/view/user/profile_screen.dart';
 import 'package:bachelor_heaven/widgets/common/alert_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +12,11 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../widgets/home screen/home_widgets.dart';
 
-class BottomNav extends StatefulWidget {
-  const BottomNav({Key? key}) : super(key: key);
+class Dashboard extends StatelessWidget {
+   Dashboard({Key? key}) : super(key: key);
 
-  @override
-  State<BottomNav> createState() => _BottomNavState();
-}
-
-class _BottomNavState extends State<BottomNav> {
   User? _currentUser = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     List<Widget> _pages = [
@@ -29,10 +24,15 @@ class _BottomNavState extends State<BottomNav> {
       CategoryScreen(),
       LandlordsScreen(),
     ];
-    return GetBuilder<BottomNavController>(builder: (controller) {
+    return GetBuilder<DashboardController>(builder: (controller) {
       return WillPopScope(
-        onWillPop: ()  {
+        onWillPop: ()  async{
+          if(controller.tabIndex == 0){
             return alertDialog(context: context,title: 'Are you sure to exit?', onTapYes: ()=>SystemNavigator.pop(), onTapNo: ()=>Get.back());
+          }  else {
+            controller.changeTabIndex(0);
+            return await false;
+          }
         },
         child: Scaffold(
           drawer: _currentUser == null

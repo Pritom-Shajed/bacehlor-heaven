@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:bachelor_heaven/constants/constants.dart';
-import 'package:bachelor_heaven/model/landlord/user_model.dart';
+import 'package:bachelor_heaven/model/user_model.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,7 +32,6 @@ class AuthController extends GetxController {
     required String email,
     required String pass,
     required String name,
-    required String location,
     required String phoneNumber,
   }) async {
     try {
@@ -75,7 +74,6 @@ class AuthController extends GetxController {
           email: email,
           uid: credential.user!.uid,
           profilePic: profilePicUrl,
-          location: location,
           joinedDate: currentDate,
           phoneNumber: phoneNumber,
         );
@@ -86,7 +84,7 @@ class AuthController extends GetxController {
             .then((value) => Get.snackbar('Successfully Registered',
                 'Hi $name, Welcome to Bachelor Heaven.',
                 duration: Duration(seconds: 3)))
-            .then((value) => Get.offAllNamed('/nav_panel'));
+            .then((value) => Get.offAllNamed('/dashboard'));
       } else {
         Fluttertoast.showToast(msg: 'Please select your profile picture');
       }
@@ -102,8 +100,7 @@ class AuthController extends GetxController {
   }
 
   signInWithGoogle(
-      {required String location,
-      required BuildContext context,
+      {required BuildContext context,
       required String phoneNumber}) async {
     showDialog(
         barrierDismissible: false,
@@ -134,7 +131,6 @@ class AuthController extends GetxController {
         name: currrentUser.user!.displayName,
         email: currrentUser.user!.email,
         uid: currrentUser.user!.uid,
-        location: location,
         profilePic: currrentUser.user!.photoURL,
         joinedDate: currentDate,
         phoneNumber: phoneNumber);
@@ -146,7 +142,7 @@ class AuthController extends GetxController {
         .then((value) => Get.snackbar(
             'Logged In', 'Welcome to Bachelor Heaven.',
             duration: Duration(seconds: 2)))
-        .then((value) => Get.offAllNamed('/nav_panel'));
+        .then((value) => Get.offAllNamed('/dashboard'));
   }
 
   singIn(
@@ -169,7 +165,7 @@ class AuthController extends GetxController {
           .then((value) => Get.snackbar(
               'Logged In', 'Welcome to Bachelor Heaven.',
               duration: Duration(seconds: 2)))
-          .then((value) => Get.offAllNamed('/nav_panel'));
+          .then((value) => Get.offAllNamed('/dashboard'));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Fluttertoast.showToast(msg: 'No user found for $email.');
@@ -194,6 +190,6 @@ class AuthController extends GetxController {
         .signOut()
         .then((value) => Get.snackbar('Logged out', 'Hope to see you soon.',
             duration: Duration(seconds: 2)))
-        .then((value) => Get.offAllNamed('/nav_panel'));
+        .then((value) => Get.offAllNamed('/dashboard'));
   }
 }

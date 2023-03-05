@@ -2,6 +2,7 @@ import 'package:bachelor_heaven/controller/intial/dashboard_controller.dart';
 import 'package:bachelor_heaven/view/dashboard/category_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/home_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/landlords_screen.dart';
+import 'package:bachelor_heaven/view/dashboard/my_bookings.dart';
 import 'package:bachelor_heaven/view/user/profile_screen.dart';
 import 'package:bachelor_heaven/widgets/common/alert_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -82,6 +82,7 @@ class AuthController extends GetxController {
             .doc(credential.user!.uid)
             .set(user.toJson())
             .then((value) => Get.snackbar('Successfully Registered',
+            snackPosition: SnackPosition.BOTTOM,
                 'Hi $name, Welcome to Bachelor Heaven.',
                 duration: Duration(seconds: 3)))
             .then((value) => Get.offAllNamed('/dashboard'));
@@ -164,6 +165,7 @@ class AuthController extends GetxController {
           .signInWithEmailAndPassword(email: email, password: pass)
           .then((value) => Get.snackbar(
               'Logged In', 'Welcome to Bachelor Heaven.',
+              snackPosition: SnackPosition.BOTTOM,
               duration: Duration(seconds: 2)))
           .then((value) => Get.offAllNamed('/dashboard'));
     } on FirebaseAuthException catch (e) {
@@ -189,6 +191,7 @@ class AuthController extends GetxController {
     await FirebaseAuth.instance
         .signOut()
         .then((value) => Get.snackbar('Logged out', 'Hope to see you soon.',
+        snackPosition: SnackPosition.BOTTOM,
             duration: Duration(seconds: 2)))
         .then((value) => Get.offAllNamed('/dashboard'));
   }

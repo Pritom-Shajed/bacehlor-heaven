@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'view/dashboard/my_bookings.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
             binding: AuthBinding()),
         GetPage(name: '/profile_screen', page: () => ProfileScreen()),
         GetPage(name: '/dashboard', page: () => Dashboard()),
+        GetPage(name: '/my_bookings', page: ()=>MyBookings()),
         GetPage(name: '/home_screen', page: () => HomeScreen()),
         GetPage(name: '/landlords_screen', page: () => LandlordsScreen()),
       ],

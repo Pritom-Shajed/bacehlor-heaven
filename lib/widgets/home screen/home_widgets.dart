@@ -126,9 +126,7 @@ Widget LoggedInDrawer(
           ),
         ),
         ListTile(
-          onTap: () {
-
-          },
+          onTap: () =>Get.toNamed('/my_bookings'),
           title: Text('My Bookings'.toUpperCase()),
           leading: Icon(Icons.add_business),
         ),

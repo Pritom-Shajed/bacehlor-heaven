@@ -116,11 +116,11 @@ class HomeScreen extends StatelessWidget {
                     if (snapshot.hasData) {
                       return Expanded(
                         child: GridView.builder(
-                            scrollDirection: Axis.vertical,
+                            scrollDirection: Axis.horizontal,
                             itemCount: snapshot.data!.docs.length,
                             gridDelegate:
                             SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2, childAspectRatio: 0.65),
+                                crossAxisCount: 1, childAspectRatio: 1.5),
                             itemBuilder: (_, index) {
                               Map<String, dynamic> adds =
                               snapshot.data!.docs[index].data();

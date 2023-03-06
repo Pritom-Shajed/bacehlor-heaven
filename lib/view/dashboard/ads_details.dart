@@ -342,6 +342,7 @@ class ApartmentDetails extends StatelessWidget {
                                                                       } else {
                                                                         _controller.confirmBooking(
                                                                           context: context,
+                                                                          addOwnerUid: apartment['adOwnerUid'],
                                                                           time: _currentTime,
                                                                           category: apartment['category'],
                                                                           title: apartment['title'],

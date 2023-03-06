@@ -28,7 +28,8 @@ class BookingController extends GetxController {
   }
 
   confirmBooking(
-      {required BuildContext context,
+      {required addOwnerUid,
+        required BuildContext context,
       required String time,
       required String pictureUrl,
       required String title,
@@ -46,10 +47,11 @@ class BookingController extends GetxController {
           );
         });
     BookingModel data = BookingModel(
+      adOwnerUid: addOwnerUid,
       checkIn: checkIn,
       checkOut: checkOut,
       persons: persons,
-      bookedByUid: userUid,
+      adBookedByUid: userUid,
       apartmentUid: apartmentUid,
       category: category,
       title: title,

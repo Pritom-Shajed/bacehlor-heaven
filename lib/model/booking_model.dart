@@ -1,18 +1,20 @@
 class BookingModel {
+  String adOwnerUid;
   String checkIn;
   String checkOut;
   String persons;
-  String bookedByUid;
+  String adBookedByUid;
   String apartmentUid;
   String title;
   String pictureUrl;
   String category;
 
   BookingModel({
+    required this.adOwnerUid,
     required this.checkIn,
     required this.checkOut,
     required this.persons,
-    required this.bookedByUid,
+    required this.adBookedByUid,
     required this.apartmentUid,
     required this.title,
     required this.pictureUrl,
@@ -21,10 +23,11 @@ class BookingModel {
 
   Map<String, dynamic> toJson(){
     return {
+      'adOwnerUid': adOwnerUid,
       'checkIn': checkIn,
       'checkOut': checkOut,
       'persons': persons,
-      'bookedByUid': bookedByUid,
+      'adBookedByUid': adBookedByUid,
       'apartmentUid': apartmentUid,
       'title': title,
       'category': category,

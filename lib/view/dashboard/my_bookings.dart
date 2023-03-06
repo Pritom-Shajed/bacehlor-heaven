@@ -18,7 +18,7 @@ class MyBookings extends StatelessWidget {
       body: StreamBuilder(
           stream: _firestore
               .collection('Bookings')
-              .where('bookedByUid', isEqualTo: _currentUser!.uid)
+              .where('adBookedByUid', isEqualTo: _currentUser!.uid)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {

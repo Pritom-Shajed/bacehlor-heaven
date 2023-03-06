@@ -29,22 +29,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Bachelor Heaven',
       theme: ThemeData(
-          appBarTheme: AppBarTheme(
-              elevation: 0,
+        useMaterial3: true,
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey).copyWith(background: whiteColor),
+        appBarTheme: AppBarTheme(
+            elevation: 0,
               color: Colors.white,
               iconTheme: IconThemeData(color: blackColor)),
-          primarySwatch: Colors.blueGrey,
           textTheme: GoogleFonts.poppinsTextTheme()),
       getPages: [
         GetPage(name: '/splash_screen', page: () => SplashScreen()),
-        GetPage(
-            name: '/login_screen',
-            page: () => LoginScreen(),
-            binding: AuthBinding()),
-        GetPage(
-            name: '/reg_screen',
-            page: () => RegScreen(),
-            binding: AuthBinding()),
+        GetPage(name: '/login_screen',page: () => LoginScreen(),binding: AuthBinding()),
+        GetPage(name: '/reg_screen',page: () => RegScreen(), binding: AuthBinding()),
         GetPage(name: '/profile_screen', page: () => ProfileScreen()),
         GetPage(name: '/dashboard', page: () => Dashboard()),
         GetPage(name: '/my_bookings', page: ()=>MyBookings()),

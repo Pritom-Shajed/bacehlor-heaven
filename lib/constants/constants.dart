@@ -7,15 +7,21 @@ String currentDate = DateFormat.yMMMd().format(DateTime.now());
 //Colors
 const Color blackColor = Colors.black;
 const Color whiteColor = Colors.white;
+const Color deepBrown = Color(0xff5C4033);
+final Color blueColor = Colors.blue.shade800;
 const Color greyColor = Colors.grey;
 const Color redColor = Colors.red;
 const Color amberColor = Colors.amber;
-Color lightGreyColor = Colors.grey.shade300;
-Color bgColor = Colors.black.withOpacity(0.7);
+final Color lightGreyColor = Colors.grey.shade300;
+final Color bgColor = Colors.black.withOpacity(0.7);
 
 //Vertical Space
 const verticalSpace = Divider(
   color: Colors.transparent,
+);
+
+const verticalSpaceSmall = SizedBox(
+  height: 10,
 );
 
 const horizontalSpace = SizedBox(

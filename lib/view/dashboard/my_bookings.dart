@@ -12,6 +12,9 @@ class MyBookings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('My Bookings', style: poppinsTextStyle(color: blackColor),),
+      ),
       body: StreamBuilder(
           stream: _firestore
               .collection('Bookings')
@@ -73,8 +76,17 @@ class MyBookings extends StatelessWidget {
                                 ),
                               ),
                               Expanded(
-                                flex: 1,
-                                  child: customButton(text: 'Cancel', onTap: (){}))
+                                flex: 2,
+                                child: Column(
+                                  children: [
+                                    customButton(color: Colors.green.shade800,text: 'Confirmed', onTap: (){}),
+                                    // customButton(color: deepBrown,text: 'In progress..', onTap: (){}),
+                                    verticalSpaceSmall,
+                                    customButton(text: 'Cancel', onTap: (){})
+                                  ]
+                                ),
+                              )
+
                             ],
                           ),
                         ),

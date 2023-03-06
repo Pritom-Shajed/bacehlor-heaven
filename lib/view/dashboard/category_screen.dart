@@ -115,9 +115,11 @@ class CategoryScreen extends StatelessWidget {
                           Map<String, dynamic> adds =
                               snapshot.data!.docs[index].data();
                           return InkWell(
-                            onTap: ()=>Get.to(()=>ApartmentDetails(
-                              uid: adds['uid'],
-                            ),),
+                            onTap: () => Get.to(
+                              () => ApartmentDetails(
+                                uid: adds['uid'],
+                              ),
+                            ),
                             child: customContainer(
                               margin: EdgeInsets.all(5),
                               child: Padding(
@@ -129,35 +131,59 @@ class CategoryScreen extends StatelessWidget {
                                       imageUrl: "${adds['pictureUrl']}",
                                       imageBuilder: (context, imageProvider) =>
                                           Container(
-                                            height: 150,
-                                            width: double.maxFinite,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(12),
-                                              image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover),
-                                            ),
-                                          ),
-                                      placeholder: (context, url) => ShimmerEffect(height: 150, width: double.maxFinite),
+                                        height: 150,
+                                        width: double.maxFinite,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                      placeholder: (context, url) =>
+                                          ShimmerEffect(
+                                              height: 150,
+                                              width: double.maxFinite),
                                       errorWidget: (context, url, error) =>
                                           Icon(Icons.error),
                                     ),
                                     verticalSpaceSmall,
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text('${adds['title']}', style: poppinsTextStyle(size: 18,fontWeight: FontWeight.w700),),
-                                        RichText(text: TextSpan(
-                                            children: [
-                                              TextSpan(text: '৳${adds['price']}',
-                                                style: poppinsTextStyle(size: 14, color: deepBrown,fontWeight: FontWeight.w600),),
-                                              TextSpan(text: adds['category'] == 'Seat '? '/month':'/night', style: poppinsTextStyle(size: 12, color: greyColor),),
-                                            ]
-                                        )),
+                                        Text(
+                                          '${adds['title']}',
+                                          style: poppinsTextStyle(
+                                              size: 18,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                            text: '৳${adds['price']}',
+                                            style: poppinsTextStyle(
+                                                size: 14,
+                                                color: deepBrown,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          TextSpan(
+                                            text: adds['category'] == 'Seat '
+                                                ? '/month'
+                                                : '/night',
+                                            style: poppinsTextStyle(
+                                                size: 12, color: greyColor),
+                                          ),
+                                        ])),
                                         verticalSpaceSmall,
                                         Row(
                                           children: [
-                                            Icon(Icons.location_pin, size: 19, color: greyColor,),
+                                            Icon(
+                                              Icons.location_pin,
+                                              size: 19,
+                                              color: greyColor,
+                                            ),
                                             Text(
                                               adds['location'],
                                               style: poppinsTextStyle(size: 12),
@@ -166,15 +192,17 @@ class CategoryScreen extends StatelessWidget {
                                         ),
                                         Row(
                                           children: [
-                                            Icon(Icons.star, size: 19, color: amberColor,),
+                                            Icon(
+                                              Icons.star,
+                                              size: 19,
+                                              color: amberColor,
+                                            ),
                                             Text(
                                               '4.0',
                                               style: poppinsTextStyle(size: 12),
                                             ),
                                           ],
                                         ),
-
-
                                       ],
                                     ),
                                   ],

@@ -1,4 +1,5 @@
 import 'package:bachelor_heaven/constants/constants.dart';
+import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:flutter/material.dart';
 
 Widget customContainer({required Widget child,  EdgeInsetsGeometry? margin,  EdgeInsetsGeometry? padding}){
@@ -18,5 +19,26 @@ Widget customContainer({required Widget child,  EdgeInsetsGeometry? margin,  Edg
         borderRadius: BorderRadius.circular(12)
     ),
     child: child,
+  );
+}
+
+Widget customContainer2({required String text,
+  double width = double.maxFinite,
+  Alignment alignment = Alignment.center,
+  Color color = blackColor}) {
+  return Container(
+    alignment: alignment,
+    width: width,
+    padding: EdgeInsets.all(10),
+    decoration: BoxDecoration(boxShadow: [
+      BoxShadow(
+        blurRadius: 1,
+        color: Colors.black45,
+      )
+    ], color: color, borderRadius: BorderRadius.circular(16)),
+    child: Text(
+      text,
+      style: poppinsTextStyle(color: whiteColor, fontWeight: FontWeight.w500),
+    ),
   );
 }

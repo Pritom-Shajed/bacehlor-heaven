@@ -116,11 +116,11 @@ class HomeScreen extends StatelessWidget {
                     if (snapshot.hasData) {
                       return Expanded(
                         child: GridView.builder(
-                            scrollDirection: Axis.horizontal,
+                            scrollDirection: Axis.vertical,
                             itemCount: snapshot.data!.docs.length,
                             gridDelegate:
                             SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 1, childAspectRatio: 1.5),
+                                crossAxisCount: 2, childAspectRatio: 0.65),
                             itemBuilder: (_, index) {
                               Map<String, dynamic> adds =
                               snapshot.data!.docs[index].data();
@@ -182,7 +182,7 @@ class HomeScreen extends StatelessWidget {
                                                         fontWeight: FontWeight.w600),
                                                   ),
                                                   TextSpan(
-                                                    text: adds['category'] == 'Seat '
+                                                    text: adds['category'] == 'Seat'
                                                         ? '/month'
                                                         : '/night',
                                                     style: poppinsTextStyle(

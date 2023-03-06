@@ -1,8 +1,11 @@
 import 'package:bachelor_heaven/constants/constants.dart';
+import 'package:bachelor_heaven/widgets/common/alert_dialog.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
+import 'package:bachelor_heaven/widgets/customContainer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyBookings extends StatelessWidget {
   MyBookings({Key? key}) : super(key: key);
@@ -79,10 +82,9 @@ class MyBookings extends StatelessWidget {
                                 flex: 2,
                                 child: Column(
                                   children: [
-                                    customButton(color: Colors.green.shade800,text: 'Confirmed', onTap: (){}),
-                                    // customButton(color: deepBrown,text: 'In progress..', onTap: (){}),
+                                    customContainer2(text: bookings['bookingStatus'], color: bookings['bookingStatus'] == 'Pending' ? indigoColor:Colors.green.shade700),
                                     verticalSpaceSmall,
-                                    customButton(text: 'Cancel', onTap: (){})
+                                    customButton(text: 'Cancel', onTap: ()=>alertDialog(context: context, title: 'Cancel booking?', onTapYes: (){}, onTapNo: ()=>Get.back()))
                                   ]
                                 ),
                               )

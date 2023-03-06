@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       title: 'Bachelor Heaven',
       theme: ThemeData(
         useMaterial3: true,
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey).copyWith(background: whiteColor),
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.brown, backgroundColor: whiteColor, cardColor: whiteColor),
         appBarTheme: AppBarTheme(
             elevation: 0,
               color: Colors.white,

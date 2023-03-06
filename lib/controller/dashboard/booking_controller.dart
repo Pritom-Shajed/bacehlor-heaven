@@ -1,3 +1,4 @@
+import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/model/booking_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +29,9 @@ class BookingController extends GetxController {
   }
 
   confirmBooking(
-      {required addOwnerUid,
-        required BuildContext context,
+      {required bookingStatus,
+      required addOwnerUid,
+      required BuildContext context,
       required String time,
       required String pictureUrl,
       required String title,
@@ -43,10 +45,11 @@ class BookingController extends GetxController {
         context: context,
         builder: (context) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(color: whiteColor,),
           );
         });
     BookingModel data = BookingModel(
+      bookingStatus: bookingStatus,
       adOwnerUid: addOwnerUid,
       checkIn: checkIn,
       checkOut: checkOut,
@@ -61,7 +64,8 @@ class BookingController extends GetxController {
         .collection('Bookings')
         .doc(time)
         .set(data.toJson())
-        .then((value) => Fluttertoast.showToast(msg: 'Booking completed'))
+        .then((value) => Fluttertoast.showToast(
+            msg: 'Booking requested, wait for confirmation'))
         .then((value) => Get.offAllNamed('/dashboard'));
   }
 }

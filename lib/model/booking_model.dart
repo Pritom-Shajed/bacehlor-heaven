@@ -1,5 +1,6 @@
 class BookingModel {
   String bookingStatus;
+  String cancelled;
   String adOwnerUid;
   String checkIn;
   String checkOut;
@@ -12,6 +13,7 @@ class BookingModel {
 
   BookingModel({
     required this.bookingStatus,
+    required this.cancelled,
     required this.adOwnerUid,
     required this.checkIn,
     required this.checkOut,
@@ -23,9 +25,10 @@ class BookingModel {
     required this.category,
   });
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     return {
       'bookingStatus': bookingStatus,
+      'cancelled': cancelled,
       'adOwnerUid': adOwnerUid,
       'checkIn': checkIn,
       'checkOut': checkOut,
@@ -35,6 +38,20 @@ class BookingModel {
       'title': title,
       'category': category,
       'pictureUrl': pictureUrl,
+    };
+  }
+}
+
+class CancelBookingModel {
+  String cancelled;
+
+  CancelBookingModel({
+    required this.cancelled,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'cancelled': cancelled,
     };
   }
 }

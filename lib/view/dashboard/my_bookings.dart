@@ -1,4 +1,5 @@
 import 'package:bachelor_heaven/constants/constants.dart';
+import 'package:bachelor_heaven/controller/booking/booking_controller.dart';
 import 'package:bachelor_heaven/widgets/common/alert_dialog.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/customContainer.dart';
@@ -11,12 +12,16 @@ class MyBookings extends StatelessWidget {
   MyBookings({Key? key}) : super(key: key);
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   User? _currentUser = FirebaseAuth.instance.currentUser;
+  BookingController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Bookings', style: poppinsTextStyle(color: blackColor),),
+        title: Text(
+          'My Bookings',
+          style: poppinsTextStyle(color: blackColor),
+        ),
       ),
       body: StreamBuilder(
           stream: _firestore
@@ -41,14 +46,15 @@ class MyBookings extends StatelessWidget {
                               Expanded(
                                 flex: 1,
                                 child: CircleAvatar(
-                                radius: 30,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              bookings['pictureUrl']), fit: BoxFit.cover)),
-                                )),
+                                    radius: 30,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  bookings['pictureUrl']),
+                                              fit: BoxFit.cover)),
+                                    )),
                               ),
                               horizontalSpace,
                               Expanded(
@@ -56,39 +62,84 @@ class MyBookings extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(bookings['title'], style: poppinsTextStyle(fontWeight: FontWeight.w600),),
-                                    RichText(text: TextSpan(
-                                      children: [
-                                        TextSpan(text: 'Persons: ',style: poppinsTextStyle(color: blackColor),),
-                                        TextSpan(text: bookings['persons'],style: poppinsTextStyle(color: blackColor),),
-                                      ]
-                                    )),
-                                    RichText(text: TextSpan(
-                                        children: [
-                                          TextSpan(text: 'Check-in: ',style: poppinsTextStyle(color: blackColor),),
-                                          TextSpan(text: bookings['checkIn'],style: poppinsTextStyle(color: blackColor),),
-                                        ]
-                                    )),
-                                    RichText(text: TextSpan(
-                                        children: [
-                                          TextSpan(text: 'Check-out: ',style: poppinsTextStyle(color: blackColor),),
-                                          TextSpan(text: bookings['checkIn'],style: poppinsTextStyle(color: blackColor),),
-                                        ]
-                                    )),
+                                    Text(
+                                      bookings['title'],
+                                      style: poppinsTextStyle(
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                        text: 'Persons: ',
+                                        style:
+                                            poppinsTextStyle(color: blackColor),
+                                      ),
+                                      TextSpan(
+                                        text: bookings['persons'],
+                                        style:
+                                            poppinsTextStyle(color: blackColor),
+                                      ),
+                                    ])),
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                        text: 'Check-in: ',
+                                        style:
+                                            poppinsTextStyle(color: blackColor),
+                                      ),
+                                      TextSpan(
+                                        text: bookings['checkIn'],
+                                        style:
+                                            poppinsTextStyle(color: blackColor),
+                                      ),
+                                    ])),
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                        text: 'Check-out: ',
+                                        style:
+                                            poppinsTextStyle(color: blackColor),
+                                      ),
+                                      TextSpan(
+                                        text: bookings['checkIn'],
+                                        style:
+                                            poppinsTextStyle(color: blackColor),
+                                      ),
+                                    ])),
                                   ],
                                 ),
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Column(
-                                  children: [
-                                    customContainer2(text: bookings['bookingStatus'], color: bookings['bookingStatus'] == 'Pending' ? indigoColor:Colors.green.shade700),
-                                    verticalSpaceSmall,
-                                    customButton(text: 'Cancel', onTap: ()=>alertDialog(context: context, title: 'Cancel booking?', onTapYes: (){}, onTapNo: ()=>Get.back()))
-                                  ]
-                                ),
-                              )
+                                child:
+                                bookings['cancelled'] == 'No' ? Column(children: [
+                                  customContainer2(
+                                      text: bookings['bookingStatus'],
+                                      color:
+                                          bookings['bookingStatus'] == 'Pending'
+                                              ? deepBrown
+                                              : greenColor),
+                                  verticalSpaceSmall,
+                                bookings['bookingStatus'] == 'Confirmed' ? Container(): customButton(
+                                      text: 'Cancel',
+                                      onTap: () => alertDialog(
+                                          context: context,
+                                          title: 'Cancel booking?',
+                                          onTapYes: () {
+                                            _controller.cancelBookingRequest(
+                                                context: context,
+                                                cancelled: 'Requested',
+                                                adBookedByUid:
+                                                bookings['adBookedByUid'],
+                                                apartmentUid:
+                                                bookings['apartmentUid']);
+                                          },
 
+                                          onTapNo: () => Get.back()))
+                                ]):customContainer2(
+                              text: bookings['cancelled'] == 'Requested' ? 'Requested to cancel' : 'Cancelled',
+                                  color:deepBrown),
+                              )
                             ],
                           ),
                         ),

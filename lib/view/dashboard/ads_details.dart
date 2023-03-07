@@ -1,5 +1,6 @@
 import 'package:bachelor_heaven/constants/constants.dart';
-import 'package:bachelor_heaven/controller/dashboard/booking_controller.dart';
+import 'package:bachelor_heaven/controller/booking/booking_controller.dart';
+import 'package:bachelor_heaven/controller/social/social_controller.dart';
 import 'package:bachelor_heaven/widgets/common/expanstion_tile.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/customContainer.dart';
@@ -19,10 +20,10 @@ class ApartmentDetails extends StatelessWidget {
   DateTime? lastDate;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   User? _currentUser = FirebaseAuth.instance.currentUser;
-  BookingController _controller = Get.put(BookingController());
+  BookingController _bookingController = Get.put(BookingController());
+  SocialController _socialController = Get.put(SocialController());
   String _currentTime =
       DateFormat.yMMMMd('en_US').add_jms().format(DateTime.now());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,9 +50,9 @@ class ApartmentDetails extends StatelessWidget {
                           Expanded(
                             child: FlexibleSpaceBar(
                               title: Text(
-                                '${apartment['title']}',
+                                apartment['category'],
                                 style: poppinsTextStyle(
-                                    size: 28, fontWeight: FontWeight.bold),
+                                    size: 30, fontWeight: FontWeight.bold),
                               ),
                               background: CachedNetworkImage(
                                 imageUrl: "${apartment['pictureUrl']}",
@@ -119,7 +120,7 @@ class ApartmentDetails extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(apartment['category'],
+                                      Text(apartment['title'],
                                         style: poppinsTextStyle(size: 32, fontWeight: FontWeight.w600),),
                                       Row(
                                         children: [
@@ -194,7 +195,9 @@ class ApartmentDetails extends StatelessWidget {
                                           child: IconButton(
                                             color: whiteColor,
                                             icon: Icon(Icons.call),
-                                            onPressed: () {},
+                                            onPressed: () async{
+                                              _socialController.phoneCall(phoneNumber: apartment['adOwnerPhone']);
+                                            },
                                           )),
                                       horizontalSpace,
                                       Expanded(
@@ -238,10 +241,10 @@ class ApartmentDetails extends StatelessWidget {
                                                                 ),
                                                                 InkWell(
                                                                     onTap: () {
-                                                                      _controller
+                                                                      _bookingController
                                                                           .checkInDate
                                                                           .value = '';
-                                                                      _controller
+                                                                      _bookingController
                                                                           .checkOutDate
                                                                           .value = '';
                                                                     },
@@ -287,7 +290,7 @@ class ApartmentDetails extends StatelessWidget {
                                                                           );
                                                                           if (initialDate !=
                                                                               null) {
-                                                                            _controller.formatCheckInDate(initialDate!);
+                                                                            _bookingController.formatCheckInDate(initialDate!);
                                                                           }
                                                                         },
                                                                         child:
@@ -301,7 +304,7 @@ class ApartmentDetails extends StatelessWidget {
                                                                                   Text('Check-in'),
                                                                                 ],
                                                                               ),
-                                                                              _controller.checkInDate.value == '' ? Container() : Text(_controller.checkInDate.value),
+                                                                              _bookingController.checkInDate.value == '' ? Container() : Text(_bookingController.checkInDate.value),
                                                                             ],
                                                                           ),
                                                                         ),
@@ -322,7 +325,7 @@ class ApartmentDetails extends StatelessWidget {
                                                                           );
                                                                           if (lastDate !=
                                                                               null) {
-                                                                            _controller.formatCheckOutDate(lastDate!);
+                                                                            _bookingController.formatCheckOutDate(lastDate!);
                                                                           }
                                                                         },
                                                                         child:
@@ -336,7 +339,7 @@ class ApartmentDetails extends StatelessWidget {
                                                                                   Text('Check-out'),
                                                                                 ],
                                                                               ),
-                                                                              _controller.checkOutDate.value == '' ? Container() : Text(_controller.checkOutDate.value),
+                                                                              _bookingController.checkOutDate.value == '' ? Container() : Text(_bookingController.checkOutDate.value),
                                                                             ],
                                                                           ),
                                                                         ),
@@ -360,7 +363,7 @@ class ApartmentDetails extends StatelessWidget {
                                                                     ),
                                                                     InkWell(
                                                                         onTap: () =>
-                                                                            _controller.persons.value =
+                                                                            _bookingController.persons.value =
                                                                                 0,
                                                                         child:
                                                                             Text(
@@ -394,19 +397,19 @@ class ApartmentDetails extends StatelessWidget {
                                                                       Row(
                                                                         children: [
                                                                           InkWell(
-                                                                              onTap: () => _controller.persons.value != 0 ? _controller.personDecrement() : null,
+                                                                              onTap: () => _bookingController.persons.value != 0 ? _bookingController.personDecrement() : null,
                                                                               child: Icon(Icons.remove)),
                                                                           horizontalSpace,
                                                                           Obx(
                                                                             () =>
                                                                                 Text(
-                                                                              '${_controller.persons.value}',
+                                                                              '${_bookingController.persons.value}',
                                                                               style: poppinsTextStyle(fontWeight: FontWeight.bold),
                                                                             ),
                                                                           ),
                                                                           horizontalSpace,
                                                                           InkWell(
-                                                                              onTap: () => _controller.personIncrement(),
+                                                                              onTap: () => _bookingController.personIncrement(),
                                                                               child: Icon(Icons.add)),
                                                                         ],
                                                                       ),
@@ -456,27 +459,28 @@ class ApartmentDetails extends StatelessWidget {
                                                                               'Confirm',
                                                                           onTap:
                                                                               () {
-                                                                            if (_controller.checkInDate.value ==
+                                                                            if (_bookingController.checkInDate.value ==
                                                                                 '') {
                                                                               Fluttertoast.showToast(msg: 'Pick check-in date');
-                                                                            } else if (_controller.checkOutDate.value ==
+                                                                            } else if (_bookingController.checkOutDate.value ==
                                                                                 '') {
                                                                               Fluttertoast.showToast(msg: 'Pick check-out date');
-                                                                            } else if (_controller.persons.value ==
+                                                                            } else if (_bookingController.persons.value ==
                                                                                 0) {
                                                                               Fluttertoast.showToast(msg: 'At least 1 person is required');
                                                                             } else {
-                                                                              _controller.confirmBooking(
+                                                                              _bookingController.confirmBooking(
                                                                                 context: context,
                                                                                 bookingStatus: 'Pending',
+                                                                                cancelled: 'No',
                                                                                 addOwnerUid: apartment['adOwnerUid'],
                                                                                 time: _currentTime,
                                                                                 category: apartment['category'],
                                                                                 title: apartment['title'],
                                                                                 pictureUrl: apartment['pictureUrl'],
-                                                                                checkIn: _controller.checkInDate.value,
-                                                                                checkOut: _controller.checkOutDate.value,
-                                                                                persons: '${_controller.persons.value}',
+                                                                                checkIn: _bookingController.checkInDate.value,
+                                                                                checkOut: _bookingController.checkOutDate.value,
+                                                                                persons: '${_bookingController.persons.value}',
                                                                                 userUid: '${_currentUser!.uid}',
                                                                                 apartmentUid: '${apartment['uid']}',
                                                                               );

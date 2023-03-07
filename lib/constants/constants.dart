@@ -9,6 +9,7 @@ const Color blackColor = Colors.black;
 const Color whiteColor = Colors.white;
 const Color indigoColor = Colors.indigo;
 const Color deepBrown = Color(0xff5C4033);
+final Color greenColor = Colors.green.shade700;
 final Color blueColor = Colors.blue;
 const Color greyColor = Colors.grey;
 const Color redColor = Colors.red;

@@ -30,6 +30,7 @@ class BookingController extends GetxController {
 
   confirmBooking(
       {required bookingStatus,
+      required cancelled,
       required addOwnerUid,
       required BuildContext context,
       required String time,
@@ -45,11 +46,14 @@ class BookingController extends GetxController {
         context: context,
         builder: (context) {
           return Center(
-            child: CircularProgressIndicator(color: whiteColor,),
+            child: CircularProgressIndicator(
+              color: whiteColor,
+            ),
           );
         });
     BookingModel data = BookingModel(
       bookingStatus: bookingStatus,
+      cancelled: cancelled,
       adOwnerUid: addOwnerUid,
       checkIn: checkIn,
       checkOut: checkOut,
@@ -68,4 +72,37 @@ class BookingController extends GetxController {
             msg: 'Booking requested, wait for confirmation'))
         .then((value) => Get.offAllNamed('/dashboard'));
   }
+
+  cancelBookingRequest({
+    required BuildContext context,
+    required String cancelled,
+    required String adBookedByUid,
+    required String apartmentUid,
+  }) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: whiteColor,
+            ),
+          );
+        });
+    CancelBookingModel cancelBookingModel = CancelBookingModel(
+      cancelled: cancelled,
+    );
+
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('Bookings')
+        .where('adBookedByUid', isEqualTo: adBookedByUid)
+        .where('apartmentUid', isEqualTo: apartmentUid)
+        .get();
+
+    snapshot.docs.forEach((element) {
+      element.reference.update(cancelBookingModel.toJson()).then((value) =>
+          Fluttertoast.showToast(msg: 'Cancel request sent...')
+              .then((value) => Get.offAllNamed('/dashboard')));
+    });
+  }
+
 }

@@ -11,7 +11,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'view/dashboard/my_bookings.dart';
 
 void main() async {
@@ -42,7 +41,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/reg_screen',page: () => RegScreen(), binding: AuthBinding()),
         GetPage(name: '/profile_screen', page: () => ProfileScreen()),
         GetPage(name: '/dashboard', page: () => Dashboard()),
-        GetPage(name: '/my_bookings', page: ()=>MyBookings()),
+        GetPage(name: '/my_bookings', page: ()=>MyBookings(), binding: BookingBinding()),
         GetPage(name: '/home_screen', page: () => HomeScreen()),
         GetPage(name: '/landlords_screen', page: () => LandlordsScreen()),
       ],

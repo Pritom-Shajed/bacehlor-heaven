@@ -12,6 +12,20 @@ class BookingController extends GetxController {
   RxString checkOutDate = ''.obs;
   RxInt persons = 0.obs;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  Booking booking = Booking.confirm;
+
+  void cancelledBookings(){
+    booking = Booking.cancel;
+    update();
+  }
+  void confirmedBookings(){
+    booking = Booking.confirm;
+    update();
+  }
+  void requestedBookings(){
+    booking = Booking.pending;
+    update();
+  }
 
   void personIncrement() {
     persons.value++;

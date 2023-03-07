@@ -31,3 +31,5 @@ const horizontalSpace = SizedBox(
 );
 
 enum Selected { flat, room, seat }
+
+enum Booking { confirm, pending, cancel }

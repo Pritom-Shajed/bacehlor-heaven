@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 
 class BookingController extends GetxController {
   RxString checkInDate = ''.obs;
@@ -53,6 +54,7 @@ class BookingController extends GetxController {
         });
     BookingModel data = BookingModel(
       bookingStatus: bookingStatus,
+      bookingUid: Uuid().v1(),
       cancelled: cancelled,
       adOwnerUid: addOwnerUid,
       checkIn: checkIn,
@@ -77,7 +79,7 @@ class BookingController extends GetxController {
     required BuildContext context,
     required String cancelled,
     required String adBookedByUid,
-    required String apartmentUid,
+    required String bookingUid,
   }) async {
     showDialog(
         context: context,
@@ -95,7 +97,7 @@ class BookingController extends GetxController {
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('Bookings')
         .where('adBookedByUid', isEqualTo: adBookedByUid)
-        .where('apartmentUid', isEqualTo: apartmentUid)
+        .where('bookingUid', isEqualTo: bookingUid)
         .get();
 
     snapshot.docs.forEach((element) {

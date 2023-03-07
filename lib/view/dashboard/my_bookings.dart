@@ -131,8 +131,8 @@ class MyBookings extends StatelessWidget {
                                                 cancelled: 'Requested',
                                                 adBookedByUid:
                                                 bookings['adBookedByUid'],
-                                                apartmentUid:
-                                                bookings['apartmentUid']);
+                                                bookingUid:
+                                                bookings['bookingUid']);
                                           },
 
                                           onTapNo: () => Get.back()))

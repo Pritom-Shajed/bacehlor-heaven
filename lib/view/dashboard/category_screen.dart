@@ -99,35 +99,41 @@ class CategoryScreen extends StatelessWidget {
               stream: _firestore
                   .collection('Ads-All')
                   .where('category',
-                  isEqualTo: controller.selected == Selected.flat
-                      ? 'Flat'
-                      : controller.selected == Selected.room
-                      ? 'Room'
-                      : controller.selected == Selected.seat
-                      ? 'Seat'
-                      : '')
+                      isEqualTo: controller.selected == Selected.flat
+                          ? 'Flat'
+                          : controller.selected == Selected.room
+                              ? 'Room'
+                              : controller.selected == Selected.seat
+                                  ? 'Seat'
+                                  : '')
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.active) {
                   if (snapshot.hasData) {
                     _ratingController.ratingChange(ratingActual: 5);
                     return ListView.separated(
-                      separatorBuilder: (_,index){
-                       return SizedBox(
-                         height: 14,
-                       );
-                      },
+                        separatorBuilder: (_, index) {
+                          return SizedBox(
+                            height: 14,
+                          );
+                        },
                         scrollDirection: Axis.vertical,
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (_, index) {
                           Map<String, dynamic> adds =
-                          snapshot.data!.docs[index].data();
-                          return BookingCard2(context: context,
+                              snapshot.data!.docs[index].data();
+                          return BookingCard2(
+                              context: context,
                               bookingTitle: adds['title'],
                               bookingLocation: adds['location'],
                               imgUrl: adds['pictureUrl'],
                               rating: 5,
-                              onTap: ()=> Get.to(()=>ApartmentDetails(uid: adds['uid'])));
+                              onTap: () => Get.to(
+                                  () => ApartmentDetails(uid: adds['uid'])),
+                              price: adds['price'],
+                              pricePerNightOrMonth: adds['category'] == 'Seat'
+                                  ? ' /month'
+                                  : ' /night');
                         });
                   } else if (snapshot.hasError) {
                     return Center(

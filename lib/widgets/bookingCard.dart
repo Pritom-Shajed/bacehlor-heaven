@@ -34,7 +34,8 @@ Widget BookingCard(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _controller.ratingTotal(iconSize: 25, textColor: whiteColor, textSize: 20),
+                _controller.ratingTotal(
+                    iconSize: 25, textColor: whiteColor, textSize: 20),
                 Expanded(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -78,6 +79,8 @@ Widget BookingCard2(
     {required BuildContext context,
     required String bookingTitle,
     required String bookingLocation,
+    required String price,
+    required String pricePerNightOrMonth,
     required String imgUrl,
     required int rating,
     required VoidCallback onTap}) {
@@ -131,6 +134,23 @@ Widget BookingCard2(
                             color: blackColor,
                             fontWeight: FontWeight.w600,
                             size: 14)),
+                    RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                        text: '৳${price}',
+                        style: poppinsTextStyle(
+                            color: blackColor,
+                            fontWeight: FontWeight.w500,
+                            size: 12),
+                      ),
+                      TextSpan(
+                        text: pricePerNightOrMonth,
+                        style: poppinsTextStyle(
+                            color: greyColor,
+                            fontWeight: FontWeight.w500,
+                            size: 12),
+                      )
+                    ])),
                     Row(
                       children: [
                         Icon(
@@ -147,7 +167,8 @@ Widget BookingCard2(
                         ),
                       ],
                     ),
-                    _controller.ratingTotal(iconSize: 15, textColor: blackColor, textSize: 12),
+                    _controller.ratingTotal(
+                        iconSize: 15, textColor: blackColor, textSize: 12),
                   ],
                 ),
                 Icon(Icons.arrow_forward_ios),

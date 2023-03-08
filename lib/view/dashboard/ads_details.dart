@@ -469,24 +469,21 @@ class ApartmentDetails extends StatelessWidget {
                                                                                 0) {
                                                                               Fluttertoast.showToast(msg: 'At least 1 person is required');
                                                                             } else {
-                                                                              print(_bookingController.checkInDate.value);
-                                                                              print(_bookingController.checkOutDate.value);
-
-                                                                              // _bookingController.confirmBooking(
-                                                                              //   context: context,
-                                                                              //   bookingStatus: 'Pending',
-                                                                              //   cancelled: 'No',
-                                                                              //   addOwnerUid: apartment['adOwnerUid'],
-                                                                              //   time: _currentTime,
-                                                                              //   category: apartment['category'],
-                                                                              //   title: apartment['title'],
-                                                                              //   pictureUrl: apartment['pictureUrl'],
-                                                                              //   checkIn: _bookingController.checkInDate.value,
-                                                                              //   checkOut: _bookingController.checkOutDate.value,
-                                                                              //   persons: '${_bookingController.persons.value}',
-                                                                              //   userUid: '${_currentUser!.uid}',
-                                                                              //   apartmentUid: '${apartment['uid']}',
-                                                                              // );
+                                                                              _bookingController.confirmBooking(
+                                                                                context: context,
+                                                                                bookingStatus: 'Pending',
+                                                                                cancelled: 'No',
+                                                                                addOwnerUid: apartment['adOwnerUid'],
+                                                                                time: _currentTime,
+                                                                                category: apartment['category'],
+                                                                                title: apartment['title'],
+                                                                                pictureUrl: apartment['pictureUrl'],
+                                                                                checkIn: _bookingController.checkInDate.value,
+                                                                                checkOut: _bookingController.checkOutDate.value,
+                                                                                persons: '${_bookingController.persons.value}',
+                                                                                userUid: '${_currentUser!.uid}',
+                                                                                apartmentUid: '${apartment['uid']}',
+                                                                              );
                                                                             }
                                                                           }),
                                                                 ),

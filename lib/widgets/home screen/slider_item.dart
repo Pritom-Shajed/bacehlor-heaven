@@ -15,7 +15,7 @@ class sliderItemWidget extends StatelessWidget {
       height: 200,
       width: double.maxFinite,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(6),
           image: DecorationImage(fit: BoxFit.cover, image: AssetImage(image))),
       child: Stack(
         children: [

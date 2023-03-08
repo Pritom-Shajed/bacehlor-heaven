@@ -1,5 +1,6 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/model/booking_model.dart';
+import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -13,6 +14,7 @@ class BookingController extends GetxController {
   RxInt persons = 0.obs;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Booking booking = Booking.confirm;
+
 
   void cancelledBookings(){
     booking = Booking.cancel;

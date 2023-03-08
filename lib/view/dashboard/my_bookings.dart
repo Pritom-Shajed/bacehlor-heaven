@@ -194,7 +194,7 @@ class MyBookings extends StatelessWidget {
                                                 flex: 2,
                                                 child: Column(
                                                   children: [
-                                                    customContainer2(
+                                                    bookingButtonContainer(
                                                         color: deepBrown,
                                                         text: 'Cancelled'),
                                                     verticalSpace,
@@ -329,7 +329,7 @@ class MyBookings extends StatelessWidget {
                                               child: bookings['cancelled'] ==
                                                       'No'
                                                   ? Column(children: [
-                                                      customContainer2(
+                                                      bookingButtonContainer(
                                                           text: bookings[
                                                               'bookingStatus'],
                                                           color: bookings[
@@ -363,7 +363,7 @@ class MyBookings extends StatelessWidget {
                                                                       onTapNo: () =>
                                                                           Get.back()))
                                                     ])
-                                                  : customContainer2(
+                                                  : bookingButtonContainer(
                                                       text: bookings[
                                                                   'cancelled'] ==
                                                               'Requested'

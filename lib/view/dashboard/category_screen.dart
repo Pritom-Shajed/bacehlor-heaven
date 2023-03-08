@@ -1,6 +1,8 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/dashboard/category_controller.dart';
+import 'package:bachelor_heaven/controller/dashboard/rating_controller.dart';
 import 'package:bachelor_heaven/view/dashboard/ads_details.dart';
+import 'package:bachelor_heaven/widgets/bookingCard.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/customContainer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,6 +15,7 @@ class CategoryScreen extends StatelessWidget {
 
   TextEditingController searchTextController = TextEditingController();
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  RatingController _ratingController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -90,126 +93,41 @@ class CategoryScreen extends StatelessWidget {
               ),
             ],
           ),
+          verticalSpaceSmall,
           Expanded(
             child: StreamBuilder(
               stream: _firestore
                   .collection('Ads-All')
                   .where('category',
-                      isEqualTo: controller.selected == Selected.flat
-                          ? 'Flat'
-                          : controller.selected == Selected.room
-                              ? 'Room'
-                              : controller.selected == Selected.seat
-                                  ? 'Seat'
-                                  : '')
+                  isEqualTo: controller.selected == Selected.flat
+                      ? 'Flat'
+                      : controller.selected == Selected.room
+                      ? 'Room'
+                      : controller.selected == Selected.seat
+                      ? 'Seat'
+                      : '')
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.active) {
                   if (snapshot.hasData) {
-                    return GridView.builder(
+                    _ratingController.ratingChange(ratingActual: 5);
+                    return ListView.separated(
+                      separatorBuilder: (_,index){
+                       return SizedBox(
+                         height: 14,
+                       );
+                      },
                         scrollDirection: Axis.vertical,
                         itemCount: snapshot.data!.docs.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, childAspectRatio: 0.65),
                         itemBuilder: (_, index) {
                           Map<String, dynamic> adds =
-                              snapshot.data!.docs[index].data();
-                          return InkWell(
-                            onTap: () => Get.to(
-                              () => ApartmentDetails(
-                                uid: adds['uid'],
-                              ),
-                            ),
-                            child: customContainer(
-                              margin: EdgeInsets.all(5),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CachedNetworkImage(
-                                      imageUrl: "${adds['pictureUrl']}",
-                                      imageBuilder: (context, imageProvider) =>
-                                          Container(
-                                        height: 150,
-                                        width: double.maxFinite,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                      placeholder: (context, url) =>
-                                          ShimmerEffect(
-                                              height: 150,
-                                              width: double.maxFinite),
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
-                                    ),
-                                    verticalSpaceSmall,
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${adds['title']}',
-                                          style: poppinsTextStyle(
-                                              size: 18,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                        RichText(
-                                            text: TextSpan(children: [
-                                          TextSpan(
-                                            text: '৳${adds['price']}',
-                                            style: poppinsTextStyle(
-                                                size: 14,
-                                                color: deepBrown,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          TextSpan(
-                                            text: adds['category'] == 'Seat '
-                                                ? '/month'
-                                                : '/night',
-                                            style: poppinsTextStyle(
-                                                size: 12, color: greyColor),
-                                          ),
-                                        ])),
-                                        verticalSpaceSmall,
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.location_pin,
-                                              size: 19,
-                                              color: greyColor,
-                                            ),
-                                            Text(
-                                              adds['location'],
-                                              style: poppinsTextStyle(size: 12),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.star,
-                                              size: 19,
-                                              color: amberColor,
-                                            ),
-                                            Text(
-                                              '4.0',
-                                              style: poppinsTextStyle(size: 12),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
+                          snapshot.data!.docs[index].data();
+                          return BookingCard2(context: context,
+                              bookingTitle: adds['title'],
+                              bookingLocation: adds['location'],
+                              imgUrl: adds['pictureUrl'],
+                              rating: 5,
+                              onTap: ()=> Get.to(()=>ApartmentDetails(uid: adds['uid'])));
                         });
                   } else if (snapshot.hasError) {
                     return Center(

@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/booking/booking_controller.dart';
+import 'package:bachelor_heaven/controller/googleMap/map_controller.dart';
 import 'package:bachelor_heaven/controller/social/social_controller.dart';
 import 'package:bachelor_heaven/widgets/common/expanstion_tile.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/customContainer.dart';
+import 'package:bachelor_heaven/widgets/mapMarker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
 class ApartmentDetails extends StatelessWidget {
@@ -24,6 +29,12 @@ class ApartmentDetails extends StatelessWidget {
   SocialController _socialController = Get.put(SocialController());
   String _currentTime =
       DateFormat.yMMMMd('en_US').add_jms().format(DateTime.now());
+
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+
+  MapController _mapController = Get.put(MapController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,13 +129,22 @@ class ApartmentDetails extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(apartment['title'],
-                                        style: poppinsTextStyle(size: 32, fontWeight: FontWeight.w600),),
+                                      Text(
+                                        apartment['title'],
+                                        style: poppinsTextStyle(
+                                            size: 32,
+                                            fontWeight: FontWeight.w600),
+                                      ),
                                       Row(
                                         children: [
-                                          Icon(Icons.star, size: 24, color: amberColor,),
+                                          Icon(
+                                            Icons.star,
+                                            size: 24,
+                                            color: amberColor,
+                                          ),
                                           Text(
                                             '4.0',
                                             style: poppinsTextStyle(size: 17),
@@ -136,6 +156,31 @@ class ApartmentDetails extends StatelessWidget {
                                   Text(
                                     'Posted on: ${apartment['postDate']}',
                                     style: poppinsTextStyle(size: 12),
+                                  ),
+                                  verticalSpaceSmall,
+                                  Container(
+                                    height: 150,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: GoogleMap(
+                                      myLocationButtonEnabled: false,
+                                      mapType: MapType.normal,
+                                      initialCameraPosition: CameraPosition(
+                                        target: LatLng(
+                                          double.parse(apartment['latitude']),
+                                          double.parse(
+                                              apartment['longitude']),
+                                        ),
+                                        zoom: 14.4746,
+                                      ),
+                                      onMapCreated:
+                                          (GoogleMapController controller) {
+                                        _controller.complete(controller);
+                                      },
+                                      markers: {
+                                        mapMarker(lat: double.parse(apartment['latitude']), lon: double.parse(
+                                            apartment['longitude']), infoTitle: apartment['title']),
+                                      },
+                                    ),
                                   ),
                                   verticalSpaceSmall,
                                   Row(
@@ -195,8 +240,10 @@ class ApartmentDetails extends StatelessWidget {
                                           child: IconButton(
                                             color: whiteColor,
                                             icon: Icon(Icons.call),
-                                            onPressed: () async{
-                                              _socialController.phoneCall(phoneNumber: apartment['adOwnerPhone']);
+                                            onPressed: () async {
+                                              _socialController.phoneCall(
+                                                  phoneNumber: apartment[
+                                                      'adOwnerPhone']);
                                             },
                                           )),
                                       horizontalSpace,

@@ -15,13 +15,13 @@ class RatingController extends GetxController{
             color: amberColor,
             size: iconSize,
           ),
-        Text(
-          i.toString(),
-          style: poppinsTextStyle(
-              color: textColor,
-              fontWeight: FontWeight.w600,
-              size: textSize),
-        ),
+        // Text(
+        //   i.toString(),
+        //   style: poppinsTextStyle(
+        //       color: textColor,
+        //       fontWeight: FontWeight.w600,
+        //       size: textSize),
+        // ),
       ],
     );
   }

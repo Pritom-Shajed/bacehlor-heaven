@@ -3,7 +3,7 @@ import 'package:bachelor_heaven/controller/booking/booking_controller.dart';
 import 'package:bachelor_heaven/controller/dashboard/home_controller.dart';
 import 'package:bachelor_heaven/controller/dashboard/rating_controller.dart';
 import 'package:bachelor_heaven/view/dashboard/ads_details.dart';
-import 'package:bachelor_heaven/widgets/bookingCard.dart';
+import 'package:bachelor_heaven/widgets/apartmentCard.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/customContainer.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/home_widgets.dart';
@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                                   height: 10,
                                   width: 10,
                                   decoration: BoxDecoration(
-                                    color: _homeController.currentIndex.value == i
+                                    color: _homeController.currentIndex == i
                                         ? whiteColor
                                         : whiteColor.withOpacity(0.4),
                                     shape: BoxShape.circle,
@@ -113,8 +113,8 @@ class HomeScreen extends StatelessWidget {
               () => StreamBuilder(
                 stream: _firestore
                     .collection('Ads-All')
-                    .where('location',
-                        isGreaterThanOrEqualTo: _homeController.searchName.value)
+                    .where('locationSearch',
+                        isGreaterThanOrEqualTo: _homeController.searchName.value.toLowerCase())
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.active) {
@@ -126,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                           itemBuilder: (_, index) {
                             Map<String, dynamic> adds = snapshot.data!.docs[index].data();
                             _ratingController.ratingChange(ratingActual: 4);
-                            return BookingCard(
+                            return ApartmentCard(
                                 onTap: () {
                                   Get.to(() => ApartmentDetails(uid: adds['uid']));
                                 },

@@ -2,13 +2,18 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends GetxController {
-  RxInt currentIndex = 0.obs;
+  final _currentIndex = 0.obs;
   RxString searchName = ''.obs;
   RxString allAdsUid = ''.obs;
 
+  get currentIndex => _currentIndex;
+
+  set currentIndex(value) {
+      _currentIndex.value = value;
+  }
 
   void updateSliderIndex(int index) {
-    currentIndex.value = index;
+    currentIndex = index;
   }
 
   void searchByCity(String value) {

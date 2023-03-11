@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/booking/booking_controller.dart';
 import 'package:bachelor_heaven/controller/googleMap/map_controller.dart';
@@ -12,7 +11,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -33,7 +31,6 @@ class ApartmentDetails extends StatelessWidget {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
-  MapController _mapController = Get.put(MapController());
 
   @override
   Widget build(BuildContext context) {
@@ -518,8 +515,10 @@ class ApartmentDetails extends StatelessWidget {
                                                                             } else {
                                                                               _bookingController.confirmBooking(
                                                                                 context: context,
+                                                                                price: apartment['price'],
                                                                                 bookingStatus: 'Pending',
                                                                                 cancelled: 'No',
+                                                                                address: '${apartment['location']}, ${apartment['division']}',
                                                                                 addOwnerUid: apartment['adOwnerUid'],
                                                                                 time: _currentTime,
                                                                                 category: apartment['category'],

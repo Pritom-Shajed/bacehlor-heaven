@@ -15,16 +15,17 @@ class BookingController extends GetxController {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Booking booking = Booking.confirm;
 
-
-  void cancelledBookings(){
+  void cancelledBookings() {
     booking = Booking.cancel;
     update();
   }
-  void confirmedBookings(){
+
+  void confirmedBookings() {
     booking = Booking.confirm;
     update();
   }
-  void requestedBookings(){
+
+  void requestedBookings() {
     booking = Booking.pending;
     update();
   }
@@ -58,7 +59,9 @@ class BookingController extends GetxController {
       required String persons,
       required String userUid,
       required String category,
-      required String apartmentUid}) async {
+      required String address,
+      required String apartmentUid,
+      required String price}) async {
     showDialog(
         context: context,
         builder: (context) {
@@ -81,6 +84,8 @@ class BookingController extends GetxController {
       category: category,
       title: title,
       pictureUrl: pictureUrl,
+      price: price,
+      address: address,
     );
     await _firestore
         .collection('Bookings')
@@ -122,5 +127,4 @@ class BookingController extends GetxController {
               .then((value) => Get.offAllNamed('/dashboard')));
     });
   }
-
 }

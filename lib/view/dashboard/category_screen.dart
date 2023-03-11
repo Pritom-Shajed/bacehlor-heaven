@@ -2,7 +2,7 @@ import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/dashboard/category_controller.dart';
 import 'package:bachelor_heaven/controller/dashboard/rating_controller.dart';
 import 'package:bachelor_heaven/view/dashboard/ads_details.dart';
-import 'package:bachelor_heaven/widgets/bookingCard.dart';
+import 'package:bachelor_heaven/widgets/apartmentCard.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/customContainer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -122,7 +122,7 @@ class CategoryScreen extends StatelessWidget {
                         itemBuilder: (_, index) {
                           Map<String, dynamic> adds =
                               snapshot.data!.docs[index].data();
-                          return BookingCard2(
+                          return ApartmentCard2(
                               context: context,
                               bookingTitle: adds['title'],
                               bookingLocation: adds['location'],

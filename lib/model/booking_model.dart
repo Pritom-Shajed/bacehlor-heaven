@@ -11,6 +11,8 @@ class BookingModel {
   String title;
   String pictureUrl;
   String category;
+  String price;
+  String address;
 
   BookingModel({
     required this.bookingStatus,
@@ -25,6 +27,8 @@ class BookingModel {
     required this.title,
     required this.pictureUrl,
     required this.category,
+    required this.price,
+    required this.address,
   });
 
   Map<String, dynamic> toJson() {
@@ -41,6 +45,8 @@ class BookingModel {
       'title': title,
       'category': category,
       'pictureUrl': pictureUrl,
+      'price': price,
+      'address': address,
     };
   }
 }

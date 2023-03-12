@@ -133,17 +133,11 @@ class _ApartmentDetailsState extends State<ApartmentDetails> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        apartment['title'],
-                                        style: poppinsTextStyle(
-                                            size: 32,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ],
+                                  Text(
+                                    apartment['title'],
+                                    style: poppinsTextStyle(
+                                        size: 32,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                   Text(
                                     'Posted on: ${apartment['postDate']}',
@@ -151,31 +145,32 @@ class _ApartmentDetailsState extends State<ApartmentDetails> {
                                   ),
                                   verticalSpaceSmall,
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Icon(
                                         Icons.location_pin,
                                         size: 22,
                                         color: greyColor,
                                       ),
-                                      Text(
-                                        '${apartment['location']}',
-                                        style: poppinsTextStyle(size: 20),
-                                      ),
-                                      SizedBox(
-                                        width: 40,
+                                      Expanded(
+                                        flex: 4,
+                                        child: Text(
+                                          '${apartment['location']}',
+                                          style: poppinsTextStyle(size: 20),
+                                        ),
                                       ),
                                       Expanded(
-                                          child: customButton(
-                                            color: deepBrown,
-                                              text: 'View on map',
-                                              onTap: () => Get.to(() =>
-                                                  ApartmentMapView(
-                                                      lat:
-                                                          apartment['latitude'],
-                                                      lon: apartment[
-                                                          'longitude'],
-                                                      title:
-                                                          apartment['title']))))
+                                        flex: 1,
+                                        child: TextButton(
+                                          onPressed: () => Get.to(() =>
+                                            ApartmentMapView(
+                                                lat:
+                                                apartment['latitude'],
+                                                lon: apartment[
+                                                'longitude'],
+                                                title:
+                                                apartment['title'])), child: Text('View', style: poppinsTextStyle(color: blueColor),),),
+                                      ),
                                     ],
                                   ),
                                   verticalSpaceSmall,
@@ -312,8 +307,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails> {
                                             icon: Icon(Icons.call),
                                             onPressed: () async {
                                               _socialController.phoneCall(
-                                                  phoneNumber: apartment[
-                                                      'adOwnerPhone']);
+                                                  phoneNumber: apartment['adOwnerPhone']);
                                             },
                                           )),
                                       horizontalSpace,

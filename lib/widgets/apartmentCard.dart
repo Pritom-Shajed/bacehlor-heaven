@@ -9,8 +9,9 @@ Widget ApartmentCard(
     {required String bookingTitle,
     required String bookingLocation,
     required String imgUrl,
+      required String price,
     required VoidCallback onTap}) {
-  RatingController _controller = Get.find();
+
   return Card(
       margin: EdgeInsets.all(10),
       clipBehavior: Clip.antiAlias,
@@ -33,8 +34,14 @@ Widget ApartmentCard(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // _controller.ratingTotal(
-                //     iconSize: 25, textColor: whiteColor, textSize: 20, apartmentUid: ''),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: deepBrown.withOpacity(0.9),
+                  ),
+                  child: Text('৳$price', style: poppinsTextStyle(color: whiteColor, size: 12)),
+                ),
                 Expanded(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,

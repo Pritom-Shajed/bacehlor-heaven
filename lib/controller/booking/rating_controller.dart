@@ -7,36 +7,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class RatingController extends GetxController {
-  // RxInt rating = 0.obs;
-
   final _rating = 3.0.obs;
 
-  get rating => _rating;
+  get rating => _rating.value;
 
   set rating(value) {
     _rating.value = value;
   }
 
-  // Widget ratingTotal({required Color textColor, required double iconSize, required double textSize}){
-  //   int i = 0;
-  //   return Row(
-  //     children: [
-  //       for(i; i < rating.value; i++)
-  //         Icon(
-  //           Icons.star,
-  //           color: amberColor,
-  //           size: iconSize,
-  //         ),
-  //       // Text(
-  //       //   i.toString(),
-  //       //   style: poppinsTextStyle(
-  //       //       color: textColor,
-  //       //       fontWeight: FontWeight.w600,
-  //       //       size: textSize),
-  //       // ),
-  //     ],
-  //   );
-  // }
 
 
   updateRating(double ratingActual) {
@@ -47,9 +25,11 @@ class RatingController extends GetxController {
       {required String apartmentUid,
       required String comments,
       required String time,
-      required BuildContext context, required String ratedBy}) async {
+      required BuildContext context,
+      required String ratedBy,
+      required String bookingUid}) async {
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return Center(
@@ -59,17 +39,29 @@ class RatingController extends GetxController {
           );
         });
     RatingModel _ratingModel = RatingModel(
-        apartmentUid: apartmentUid, comments: comments, rating: rating.toString(), ratedBy: ratedBy);
+        apartmentUid: apartmentUid,
+        comments: comments,
+        rating: rating,
+        ratedBy: ratedBy);
+
     await FirebaseFirestore.instance
         .collection('Ratings')
         .doc(time)
         .set(_ratingModel.toJson())
+        .then((value) => deleteRatedBookings(bookingUid: bookingUid))
         .then((value) =>
-            Fluttertoast.showToast(msg: 'Thanks for your honest rating!'))
+            Fluttertoast.showToast(msg: 'Thanks for your honest review!'))
         .then((value) => Get.offAllNamed('/dashboard'));
   }
 
-// void ratingChange({required int ratingActual}){
-//   rating.value = ratingActual;
-// }
+  deleteRatedBookings({required String bookingUid}) async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('Bookings')
+        .where('bookingUid', isEqualTo: bookingUid)
+        .get();
+
+    snapshot.docs.single.reference.delete();
+  }
+
+
 }

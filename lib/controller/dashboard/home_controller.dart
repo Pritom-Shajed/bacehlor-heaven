@@ -6,7 +6,7 @@ class HomeController extends GetxController {
   RxString searchName = ''.obs;
   RxString allAdsUid = ''.obs;
 
-  get currentIndex => _currentIndex;
+  get currentIndex => _currentIndex.value;
 
   set currentIndex(value) {
       _currentIndex.value = value;

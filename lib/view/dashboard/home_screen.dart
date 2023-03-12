@@ -130,7 +130,6 @@ class HomeScreen extends StatelessWidget {
                                 onTap: () {
                                   Get.to(() => ApartmentDetails(uid: adds['uid']));
                                 },
-                                rating: 4,
                                 bookingTitle: adds['title'],
                                 bookingLocation: adds['division'],
                                 imgUrl: adds['pictureUrl']);

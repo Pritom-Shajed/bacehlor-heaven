@@ -2,7 +2,7 @@ class RatingModel{
   String ratedBy;
   String apartmentUid;
   String comments;
-  String rating;
+  double rating;
 
   RatingModel({required this.apartmentUid, required this.comments, required this.rating, required this.ratedBy});
 

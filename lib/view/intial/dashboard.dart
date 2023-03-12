@@ -1,3 +1,4 @@
+import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/intial/dashboard_controller.dart';
 import 'package:bachelor_heaven/view/dashboard/category_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/home_screen.dart';
@@ -14,7 +15,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../widgets/home screen/home_widgets.dart';
 
 class Dashboard extends StatelessWidget {
-   Dashboard({Key? key}) : super(key: key);
+  Dashboard({Key? key}) : super(key: key);
 
   User? _currentUser = FirebaseAuth.instance.currentUser;
 
@@ -27,10 +28,14 @@ class Dashboard extends StatelessWidget {
     ];
     return GetBuilder<DashboardController>(builder: (controller) {
       return WillPopScope(
-        onWillPop: ()  async{
-          if(controller.tabIndex == 0){
-            return alertDialog(context: context,title: 'Are you sure to exit?', onTapYes: ()=>SystemNavigator.pop(), onTapNo: ()=>Get.back());
-          }  else {
+        onWillPop: () async {
+          if (controller.tabIndex == 0) {
+            return alertDialog(
+                context: context,
+                title: 'Are you sure to exit?',
+                onTapYes: () => SystemNavigator.pop(),
+                onTapNo: () => Get.back());
+          } else {
             controller.changeTabIndex(0);
             return await false;
           }
@@ -46,9 +51,17 @@ class Dashboard extends StatelessWidget {
             elevation: 0,
             actions: [
               _currentUser != null
-                  ? IconButton(
-                      onPressed: () => Get.toNamed('/profile_screen'),
-                      icon: Icon(Icons.account_circle))
+                  ? InkWell(
+                onTap: ()=>Get.toNamed('/profile_screen'),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 14.0),
+                      child: CircleAvatar(
+                          radius: 13,
+                          backgroundColor: lightGreyColor,
+                          backgroundImage: NetworkImage(_currentUser!.photoURL!),
+                        ),
+                    ),
+                  )
                   : Container()
             ],
           ),

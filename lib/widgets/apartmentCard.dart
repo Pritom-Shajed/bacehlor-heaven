@@ -9,7 +9,6 @@ Widget ApartmentCard(
     {required String bookingTitle,
     required String bookingLocation,
     required String imgUrl,
-    required int rating,
     required VoidCallback onTap}) {
   RatingController _controller = Get.find();
   return Card(
@@ -35,7 +34,7 @@ Widget ApartmentCard(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // _controller.ratingTotal(
-                //     iconSize: 25, textColor: whiteColor, textSize: 20),
+                //     iconSize: 25, textColor: whiteColor, textSize: 20, apartmentUid: ''),
                 Expanded(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,

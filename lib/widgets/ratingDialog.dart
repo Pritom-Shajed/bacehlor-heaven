@@ -10,25 +10,32 @@ import 'package:get/get.dart';
 RatingController _ratingController = Get.put(RatingController());
 
 Widget RatingDialog(
-    {required TextEditingController ratingTextController, required String apartmentUid, required String time, required BuildContext context, required String ratedBy}) {
+    {required TextEditingController ratingTextController,
+    required String apartmentUid,
+    required String time,
+    required BuildContext context,
+      required String bookingUid,
+    required String ratedBy}) {
   return SimpleDialog(
     children: [
-      Center(child: Text('How you liked your stay?',
-        style: poppinsTextStyle(fontWeight: FontWeight.w500),)),
+      Center(
+          child: Text(
+        'How you liked your stay?',
+        style: poppinsTextStyle(fontWeight: FontWeight.w500),
+      )),
       verticalSpace,
       Center(
         child: RatingBar.builder(
-          initialRating: _ratingController.rating.value,
+          initialRating: _ratingController.rating,
           minRating: 1,
           direction: Axis.horizontal,
           allowHalfRating: true,
           itemCount: 5,
           itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-          itemBuilder: (context, _) =>
-              Icon(
-                Icons.star,
-                color: Colors.amber,
-              ),
+          itemBuilder: (context, _) => Icon(
+            Icons.star,
+            color: Colors.amber,
+          ),
           onRatingUpdate: (rating) {
             _ratingController.updateRating(rating);
           },
@@ -39,7 +46,10 @@ Widget RatingDialog(
         cursorColor: bgColor,
         decoration: InputDecoration(
           hintText: 'Comments',
-          prefixIcon: Icon(Icons.comment, color: greyColor,),
+          prefixIcon: Icon(
+            Icons.comment,
+            color: greyColor,
+          ),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: greyColor),
           ),
@@ -49,17 +59,22 @@ Widget RatingDialog(
           disabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: greyColor),
           ),
-        ),),
+        ),
+      ),
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: customButton(text: 'Submit', onTap: (){
-          print(_ratingController.rating);
-          _ratingController.postRating(apartmentUid: apartmentUid,
-              ratedBy: ratedBy,
-              comments: ratingTextController.text.toString(),
-              time: time,
-              context: context);
-        }),
+        child: customButton(
+            text: 'Submit',
+            onTap: () {
+              print(_ratingController.rating);
+              _ratingController.postRating(
+                  apartmentUid: apartmentUid,
+                  bookingUid: bookingUid,
+                  ratedBy: ratedBy,
+                  comments: ratingTextController.text.toString(),
+                  time: time,
+                  context: context);
+            }),
       )
     ],
   );

@@ -29,6 +29,9 @@ class MyApp extends StatelessWidget {
       title: 'Bachelor Heaven',
       theme: ThemeData(
         useMaterial3: true,
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: bgColor, //<-- SEE HERE
+          ),
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.brown, backgroundColor: whiteColor, cardColor: whiteColor),
         appBarTheme: AppBarTheme(
             elevation: 0,

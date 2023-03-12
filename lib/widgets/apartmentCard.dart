@@ -1,5 +1,5 @@
 import 'package:bachelor_heaven/constants/constants.dart';
-import 'package:bachelor_heaven/controller/dashboard/rating_controller.dart';
+import 'package:bachelor_heaven/controller/booking/rating_controller.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +34,8 @@ Widget ApartmentCard(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _controller.ratingTotal(
-                    iconSize: 25, textColor: whiteColor, textSize: 20),
+                // _controller.ratingTotal(
+                //     iconSize: 25, textColor: whiteColor, textSize: 20),
                 Expanded(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -169,8 +169,8 @@ Widget ApartmentCard2(
                         ),
                       ],
                     ),
-                    _controller.ratingTotal(
-                        iconSize: 15, textColor: blackColor, textSize: 12),
+                    // _controller.ratingTotal(
+                    //     iconSize: 15, textColor: blackColor, textSize: 12),
                   ],
                 ),
                 Icon(Icons.arrow_forward_ios),

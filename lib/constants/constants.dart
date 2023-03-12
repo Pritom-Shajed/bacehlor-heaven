@@ -16,7 +16,7 @@ const Color greyColor = Colors.grey;
 const Color redColor = Colors.red;
 const Color amberColor = Colors.amber;
 final Color lightGreyColor = Colors.grey.shade300;
-final Color bgColor = Colors.black.withOpacity(0.7);
+const Color bgColor = Color(0xff363637);
 
 //Vertical Space
 const verticalSpace = Divider(

@@ -1,7 +1,7 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/booking/booking_controller.dart';
 import 'package:bachelor_heaven/controller/dashboard/home_controller.dart';
-import 'package:bachelor_heaven/controller/dashboard/rating_controller.dart';
+import 'package:bachelor_heaven/controller/booking/rating_controller.dart';
 import 'package:bachelor_heaven/view/dashboard/ads_details.dart';
 import 'package:bachelor_heaven/widgets/apartmentCard.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
@@ -125,14 +125,14 @@ class HomeScreen extends StatelessWidget {
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7),
                           itemBuilder: (_, index) {
                             Map<String, dynamic> adds = snapshot.data!.docs[index].data();
-                            _ratingController.ratingChange(ratingActual: 4);
+                            // _ratingController.ratingChange(ratingActual: 4);
                             return ApartmentCard(
                                 onTap: () {
                                   Get.to(() => ApartmentDetails(uid: adds['uid']));
                                 },
                                 rating: 4,
                                 bookingTitle: adds['title'],
-                                bookingLocation: adds['location'],
+                                bookingLocation: adds['division'],
                                 imgUrl: adds['pictureUrl']);
                           });
                     } else if (snapshot.hasError) {

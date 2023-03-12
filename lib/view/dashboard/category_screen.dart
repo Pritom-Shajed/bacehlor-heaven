@@ -1,6 +1,6 @@
 import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/dashboard/category_controller.dart';
-import 'package:bachelor_heaven/controller/dashboard/rating_controller.dart';
+import 'package:bachelor_heaven/controller/booking/rating_controller.dart';
 import 'package:bachelor_heaven/view/dashboard/ads_details.dart';
 import 'package:bachelor_heaven/widgets/apartmentCard.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
@@ -110,7 +110,7 @@ class CategoryScreen extends StatelessWidget {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.active) {
                   if (snapshot.hasData) {
-                    _ratingController.ratingChange(ratingActual: 5);
+                    // _ratingController.ratingChange(ratingActual: 5);
                     return ListView.separated(
                         separatorBuilder: (_, index) {
                           return SizedBox(

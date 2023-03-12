@@ -3,6 +3,7 @@ import 'package:bachelor_heaven/constants/constants.dart';
 import 'package:bachelor_heaven/controller/booking/booking_controller.dart';
 import 'package:bachelor_heaven/controller/googleMap/map_controller.dart';
 import 'package:bachelor_heaven/controller/social/social_controller.dart';
+import 'package:bachelor_heaven/view/dashboard/reviews.dart';
 import 'package:bachelor_heaven/widgets/common/expanstion_tile.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:bachelor_heaven/widgets/customContainer.dart';
@@ -16,20 +17,32 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
-class ApartmentDetails extends StatelessWidget {
+class ApartmentDetails extends StatefulWidget {
   ApartmentDetails({Key? key, required this.uid}) : super(key: key);
   String uid;
+
+  @override
+  State<ApartmentDetails> createState() => _ApartmentDetailsState();
+}
+
+class _ApartmentDetailsState extends State<ApartmentDetails> {
   DateTime? initialDate;
+
   DateTime? lastDate;
+
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   User? _currentUser = FirebaseAuth.instance.currentUser;
+
   BookingController _bookingController = Get.put(BookingController());
+
   SocialController _socialController = Get.put(SocialController());
+
   String _currentTime =
-      DateFormat.yMMMMd('en_US').add_jms().format(DateTime.now());
+  DateFormat.yMMMMd('en_US').add_jms().format(DateTime.now());
 
   final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  Completer<GoogleMapController>();
 
 
   @override
@@ -40,19 +53,22 @@ class ApartmentDetails extends StatelessWidget {
           SliverAppBar(
             iconTheme: IconThemeData(color: whiteColor),
             backgroundColor: deepBrown,
-            expandedHeight: MediaQuery.of(context).size.height / 2.2,
+            expandedHeight: MediaQuery
+                .of(context)
+                .size
+                .height / 2.2,
             floating: true,
             pinned: true,
             flexibleSpace: StreamBuilder(
                 stream: _firestore
                     .collection('Ads-All')
-                    .where('uid', isEqualTo: uid)
+                    .where('uid', isEqualTo: widget.uid)
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.active) {
                     if (snapshot.hasData) {
                       Map<String, dynamic> apartment =
-                          snapshot.data!.docs[0].data();
+                      snapshot.data!.docs[0].data();
                       return Column(
                         children: [
                           Expanded(
@@ -66,20 +82,27 @@ class ApartmentDetails extends StatelessWidget {
                                 imageUrl: "${apartment['pictureUrl']}",
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.45,
-                                  width: double.maxFinite,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover,
-                                  )),
-                                ),
-                                placeholder: (context, url) => ShimmerEffect(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.45,
-                                  width: double.maxFinite,
-                                ),
+                                      height:
+                                      MediaQuery
+                                          .of(context)
+                                          .size
+                                          .height * 0.45,
+                                      width: double.maxFinite,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          )),
+                                    ),
+                                placeholder: (context, url) =>
+                                    ShimmerEffect(
+                                      height:
+                                      MediaQuery
+                                          .of(context)
+                                          .size
+                                          .height * 0.45,
+                                      width: double.maxFinite,
+                                    ),
                                 errorWidget: (context, url, error) =>
                                     Icon(Icons.error),
                               ),
@@ -99,22 +122,23 @@ class ApartmentDetails extends StatelessWidget {
                   } else {
                     return Center(
                         child: CircularProgressIndicator(
-                      color: blackColor,
-                    ));
+                          color: blackColor,
+                        ));
                   }
                 }),
           ),
           SliverToBoxAdapter(
-            child: StreamBuilder(
-                stream: _firestore
+            child: FutureBuilder(
+                future: _firestore
                     .collection('Ads-All')
-                    .where('uid', isEqualTo: uid)
-                    .snapshots(),
+                    .where('uid', isEqualTo: widget.uid)
+                    .get(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.active) {
+                  if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
                       Map<String, dynamic> apartment =
-                          snapshot.data!.docs[0].data();
+                      snapshot.data!.docs[0].data();
+
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -127,7 +151,7 @@ class ApartmentDetails extends StatelessWidget {
                                 children: [
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         apartment['title'],
@@ -157,7 +181,10 @@ class ApartmentDetails extends StatelessWidget {
                                   verticalSpaceSmall,
                                   Container(
                                     height: 150,
-                                    width: MediaQuery.of(context).size.width,
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width,
                                     child: GoogleMap(
                                       myLocationButtonEnabled: false,
                                       mapType: MapType.normal,
@@ -174,8 +201,11 @@ class ApartmentDetails extends StatelessWidget {
                                         _controller.complete(controller);
                                       },
                                       markers: {
-                                        mapMarker(lat: double.parse(apartment['latitude']), lon: double.parse(
-                                            apartment['longitude']), infoTitle: apartment['title']),
+                                        mapMarker(lat: double.parse(
+                                            apartment['latitude']),
+                                            lon: double.parse(
+                                                apartment['longitude']),
+                                            infoTitle: apartment['title']),
                                       },
                                     ),
                                   ),
@@ -223,8 +253,50 @@ class ApartmentDetails extends StatelessWidget {
                                       children: [
                                         Text('${apartment['description']}'),
                                       ]),
+
                                   expansionTile(title: 'Reviews', children: [
-                                    Text('Reviews'),
+                                    Container(
+                                      child: FutureBuilder(
+                                          future: _firestore.collection("Ratings").where('apartmentUid', isEqualTo: apartment['uid']).get(),
+                                          builder: (context, snapshot) {
+                                            if(snapshot.connectionState == ConnectionState.done){
+                                              if(snapshot.hasData){
+                                                return ListView.separated(
+                                                  separatorBuilder: (context, index){
+                                                    return Divider(color: shadowColor,);
+                                                  },
+                                                  shrinkWrap: true,
+                                                    itemCount:  snapshot.data!.docs.length,
+                                                    itemBuilder: (context, index){
+                                                      Map<String, dynamic> reviews =
+                                                      snapshot.data!.docs[index].data();
+                                                      return Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(reviews['ratedBy'], style: poppinsTextStyle(color: greyColor,),),
+                                                          Text(reviews['comments'], style: poppinsTextStyle(color: blackColor, size: 14),),
+                                                        ],
+                                                      );
+
+                                                });
+
+                                              } else if (snapshot.hasError) {
+                                                return Center(
+                                                  child: Text('Error Occured'),
+                                                );
+                                              } else {
+                                                return Center(
+                                                  child: Text('Something went wrong'),
+                                                );
+                                              }
+                                            } else {
+                                              return Center(
+                                                  child: CircularProgressIndicator(
+                                                    color: blackColor,
+                                                  ));
+                                            }
+                                          }),
+                                    )
                                   ]),
                                   verticalSpace,
                                   Row(
@@ -240,7 +312,7 @@ class ApartmentDetails extends StatelessWidget {
                                             onPressed: () async {
                                               _socialController.phoneCall(
                                                   phoneNumber: apartment[
-                                                      'adOwnerPhone']);
+                                                  'adOwnerPhone']);
                                             },
                                           )),
                                       horizontalSpace,
@@ -250,297 +322,376 @@ class ApartmentDetails extends StatelessWidget {
                                             onTap: () {
                                               _currentUser != null
                                                   ? showDialog(
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return SimpleDialog(
-                                                          contentPadding:
-                                                              EdgeInsets.all(8),
-                                                          alignment:
-                                                              Alignment.center,
-                                                          children: [
-                                                            Center(
-                                                                child: Text(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return SimpleDialog(
+                                                      contentPadding:
+                                                      EdgeInsets.all(8),
+                                                      alignment:
+                                                      Alignment.center,
+                                                      children: [
+                                                        Center(
+                                                            child: Text(
                                                               '${apartment['title']}',
                                                               style: poppinsTextStyle(
                                                                   size: 20,
                                                                   fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
+                                                                  FontWeight
+                                                                      .w600),
                                                             )),
-                                                            Divider(
-                                                              color: greyColor,
+                                                        Divider(
+                                                          color: greyColor,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              'Dates',
+                                                              style: poppinsTextStyle(
+                                                                  size: 16,
+                                                                  fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
                                                             ),
+                                                            InkWell(
+                                                                onTap: () {
+                                                                  _bookingController
+                                                                      .checkInDate
+                                                                      .value =
+                                                                  '';
+                                                                  _bookingController
+                                                                      .checkOutDate
+                                                                      .value =
+                                                                  '';
+                                                                },
+                                                                child: Text(
+                                                                  'Clear',
+                                                                  style: poppinsTextStyle(
+                                                                      size:
+                                                                      16,
+                                                                      color:
+                                                                      deepBrown),
+                                                                ))
+                                                          ],
+                                                        ),
+                                                        verticalSpaceSmall,
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                          children: [
+                                                            customContainer(
+                                                              padding:
+                                                              EdgeInsets
+                                                                  .all(
+                                                                  14),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceAround,
+                                                                children: [
+                                                                  InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      initialDate =
+                                                                      await showDatePicker(
+                                                                        context:
+                                                                        context,
+                                                                        initialDate:
+                                                                        DateTime
+                                                                            .now(),
+                                                                        firstDate:
+                                                                        DateTime(
+                                                                            2000),
+                                                                        lastDate:
+                                                                        DateTime(
+                                                                            2050),
+                                                                      );
+                                                                      if (initialDate !=
+                                                                          null) {
+                                                                        _bookingController
+                                                                            .formatCheckInDate(
+                                                                            initialDate!);
+                                                                      }
+                                                                    },
+                                                                    child:
+                                                                    Obx(
+                                                                          () =>
+                                                                          Column(
+                                                                            children: [
+                                                                              Row(
+                                                                                children: [
+                                                                                  Icon(
+                                                                                      Icons
+                                                                                          .apartment),
+                                                                                  Text(
+                                                                                      'Check-in'),
+                                                                                ],
+                                                                              ),
+                                                                              _bookingController
+                                                                                  .checkInDate
+                                                                                  .value ==
+                                                                                  ''
+                                                                                  ? Container()
+                                                                                  : Text(
+                                                                                  _bookingController
+                                                                                      .checkInDate
+                                                                                      .value),
+                                                                            ],
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                  InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      lastDate =
+                                                                      await showDatePicker(
+                                                                        context:
+                                                                        context,
+                                                                        initialDate:
+                                                                        DateTime
+                                                                            .now(),
+                                                                        firstDate:
+                                                                        DateTime(
+                                                                            2000),
+                                                                        lastDate:
+                                                                        DateTime(
+                                                                            2050),
+                                                                      );
+                                                                      if (lastDate !=
+                                                                          null) {
+                                                                        _bookingController
+                                                                            .formatCheckOutDate(
+                                                                            lastDate!);
+                                                                      }
+                                                                    },
+                                                                    child:
+                                                                    Obx(
+                                                                          () =>
+                                                                          Column(
+                                                                            children: [
+                                                                              Row(
+                                                                                children: [
+                                                                                  Icon(
+                                                                                      Icons
+                                                                                          .apartment),
+                                                                                  Text(
+                                                                                      'Check-out'),
+                                                                                ],
+                                                                              ),
+                                                                              _bookingController
+                                                                                  .checkOutDate
+                                                                                  .value ==
+                                                                                  ''
+                                                                                  ? Container()
+                                                                                  : Text(
+                                                                                  _bookingController
+                                                                                      .checkOutDate
+                                                                                      .value),
+                                                                            ],
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            verticalSpace,
                                                             Row(
                                                               mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                               children: [
                                                                 Text(
-                                                                  'Dates',
+                                                                  'Guests',
                                                                   style: poppinsTextStyle(
-                                                                      size: 16,
+                                                                      size:
+                                                                      16,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w600),
+                                                                      FontWeight
+                                                                          .w600),
                                                                 ),
                                                                 InkWell(
-                                                                    onTap: () {
-                                                                      _bookingController
-                                                                          .checkInDate
-                                                                          .value = '';
-                                                                      _bookingController
-                                                                          .checkOutDate
-                                                                          .value = '';
-                                                                    },
-                                                                    child: Text(
+                                                                    onTap: () =>
+                                                                    _bookingController
+                                                                        .persons
+                                                                        .value =
+                                                                    0,
+                                                                    child:
+                                                                    Text(
                                                                       'Clear',
                                                                       style: poppinsTextStyle(
-                                                                          size:
-                                                                              16,
-                                                                          color:
-                                                                              deepBrown),
+                                                                          size: 16,
+                                                                          color: deepBrown),
                                                                     ))
                                                               ],
                                                             ),
                                                             verticalSpaceSmall,
-                                                            Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                customContainer(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              14),
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceAround,
-                                                                    children: [
-                                                                      InkWell(
-                                                                        onTap:
-                                                                            () async {
-                                                                          initialDate =
-                                                                              await showDatePicker(
-                                                                            context:
-                                                                                context,
-                                                                            initialDate:
-                                                                                DateTime.now(),
-                                                                            firstDate:
-                                                                                DateTime(2000),
-                                                                            lastDate:
-                                                                                DateTime(2050),
-                                                                          );
-                                                                          if (initialDate !=
-                                                                              null) {
-                                                                            _bookingController.formatCheckInDate(initialDate!);
-                                                                          }
-                                                                        },
-                                                                        child:
-                                                                            Obx(
-                                                                          () =>
-                                                                              Column(
-                                                                            children: [
-                                                                              Row(
-                                                                                children: [
-                                                                                  Icon(Icons.apartment),
-                                                                                  Text('Check-in'),
-                                                                                ],
-                                                                              ),
-                                                                              _bookingController.checkInDate.value == '' ? Container() : Text(_bookingController.checkInDate.value),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      InkWell(
-                                                                        onTap:
-                                                                            () async {
-                                                                          lastDate =
-                                                                              await showDatePicker(
-                                                                            context:
-                                                                                context,
-                                                                            initialDate:
-                                                                                DateTime.now(),
-                                                                            firstDate:
-                                                                                DateTime(2000),
-                                                                            lastDate:
-                                                                                DateTime(2050),
-                                                                          );
-                                                                          if (lastDate !=
-                                                                              null) {
-                                                                            _bookingController.formatCheckOutDate(lastDate!);
-                                                                          }
-                                                                        },
-                                                                        child:
-                                                                            Obx(
-                                                                          () =>
-                                                                              Column(
-                                                                            children: [
-                                                                              Row(
-                                                                                children: [
-                                                                                  Icon(Icons.apartment),
-                                                                                  Text('Check-out'),
-                                                                                ],
-                                                                              ),
-                                                                              _bookingController.checkOutDate.value == '' ? Container() : Text(_bookingController.checkOutDate.value),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
+                                                            customContainer(
+                                                              padding:
+                                                              EdgeInsets
+                                                                  .all(
+                                                                  14),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    'Person',
+                                                                    style: poppinsTextStyle(
+                                                                        color:
+                                                                        blackColor,
+                                                                        fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
                                                                   ),
-                                                                ),
-                                                                verticalSpace,
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    Text(
-                                                                      'Guests',
-                                                                      style: poppinsTextStyle(
-                                                                          size:
-                                                                              16,
-                                                                          fontWeight:
-                                                                              FontWeight.w600),
-                                                                    ),
-                                                                    InkWell(
-                                                                        onTap: () =>
-                                                                            _bookingController.persons.value =
-                                                                                0,
-                                                                        child:
-                                                                            Text(
-                                                                          'Clear',
-                                                                          style: poppinsTextStyle(
-                                                                              size: 16,
-                                                                              color: deepBrown),
-                                                                        ))
-                                                                  ],
-                                                                ),
-                                                                verticalSpaceSmall,
-                                                                customContainer(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              14),
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
+                                                                  horizontalSpace,
+                                                                  Row(
                                                                     children: [
-                                                                      Text(
-                                                                        'Person',
-                                                                        style: poppinsTextStyle(
-                                                                            color:
-                                                                                blackColor,
-                                                                            fontWeight:
-                                                                                FontWeight.w600),
+                                                                      InkWell(
+                                                                          onTap: () =>
+                                                                          _bookingController
+                                                                              .persons
+                                                                              .value !=
+                                                                              0
+                                                                              ? _bookingController
+                                                                              .personDecrement()
+                                                                              : null,
+                                                                          child: Icon(
+                                                                              Icons
+                                                                                  .remove)),
+                                                                      horizontalSpace,
+                                                                      Obx(
+                                                                            () =>
+                                                                            Text(
+                                                                              '${_bookingController
+                                                                                  .persons
+                                                                                  .value}',
+                                                                              style: poppinsTextStyle(
+                                                                                  fontWeight: FontWeight
+                                                                                      .bold),
+                                                                            ),
                                                                       ),
                                                                       horizontalSpace,
-                                                                      Row(
-                                                                        children: [
-                                                                          InkWell(
-                                                                              onTap: () => _bookingController.persons.value != 0 ? _bookingController.personDecrement() : null,
-                                                                              child: Icon(Icons.remove)),
-                                                                          horizontalSpace,
-                                                                          Obx(
-                                                                            () =>
-                                                                                Text(
-                                                                              '${_bookingController.persons.value}',
-                                                                              style: poppinsTextStyle(fontWeight: FontWeight.bold),
-                                                                            ),
-                                                                          ),
-                                                                          horizontalSpace,
-                                                                          InkWell(
-                                                                              onTap: () => _bookingController.personIncrement(),
-                                                                              child: Icon(Icons.add)),
-                                                                        ],
-                                                                      ),
+                                                                      InkWell(
+                                                                          onTap: () =>
+                                                                              _bookingController
+                                                                                  .personIncrement(),
+                                                                          child: Icon(
+                                                                              Icons
+                                                                                  .add)),
                                                                     ],
                                                                   ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: 50,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Column(
+                                                              crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                              children: [
+                                                                Text(
+                                                                  'Preliminary Cost',
+                                                                  style: poppinsTextStyle(
+                                                                      color:
+                                                                      greyColor,
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                                ),
+                                                                Row(
+                                                                  children: [
+                                                                    Text(
+                                                                      '৳${apartment['price']}',
+                                                                      style: poppinsTextStyle(
+                                                                          color: blackColor,
+                                                                          size: 18,
+                                                                          fontWeight: FontWeight
+                                                                              .w600),
+                                                                    ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
                                                             SizedBox(
-                                                              height: 50,
+                                                              width: 20,
                                                             ),
-                                                            Row(
-                                                              children: [
-                                                                Column(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Text(
-                                                                      'Preliminary Cost',
-                                                                      style: poppinsTextStyle(
-                                                                          color:
-                                                                              greyColor,
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
-                                                                    ),
-                                                                    Row(
-                                                                      children: [
-                                                                        Text(
-                                                                          '৳${apartment['price']}',
-                                                                          style: poppinsTextStyle(
-                                                                              color: blackColor,
-                                                                              size: 18,
-                                                                              fontWeight: FontWeight.w600),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 20,
-                                                                ),
-                                                                Expanded(
-                                                                  child:
-                                                                      customButton(
-                                                                          text:
-                                                                              'Confirm',
-                                                                          onTap:
-                                                                              () {
-                                                                            if (_bookingController.checkInDate.value ==
-                                                                                '') {
-                                                                              Fluttertoast.showToast(msg: 'Pick check-in date');
-                                                                            } else if (_bookingController.checkOutDate.value ==
-                                                                                '') {
-                                                                              Fluttertoast.showToast(msg: 'Pick check-out date');
-                                                                            } else if (_bookingController.persons.value ==
-                                                                                0) {
-                                                                              Fluttertoast.showToast(msg: 'At least 1 person is required');
-                                                                            } else {
-                                                                              _bookingController.confirmBooking(
-                                                                                context: context,
-                                                                                price: apartment['price'],
-                                                                                bookingStatus: 'Pending',
-                                                                                cancelled: 'No',
-                                                                                address: '${apartment['location']}, ${apartment['division']}',
-                                                                                addOwnerUid: apartment['adOwnerUid'],
-                                                                                time: _currentTime,
-                                                                                category: apartment['category'],
-                                                                                title: apartment['title'],
-                                                                                pictureUrl: apartment['pictureUrl'],
-                                                                                checkIn: _bookingController.checkInDate.value,
-                                                                                checkOut: _bookingController.checkOutDate.value,
-                                                                                persons: '${_bookingController.persons.value}',
-                                                                                userUid: '${_currentUser!.uid}',
-                                                                                apartmentUid: '${apartment['uid']}',
-                                                                              );
-                                                                            }
-                                                                          }),
-                                                                ),
-                                                              ],
+                                                            Expanded(
+                                                              child:
+                                                              customButton(
+                                                                  text:
+                                                                  'Confirm',
+                                                                  onTap:
+                                                                      () {
+                                                                    if (_bookingController
+                                                                        .checkInDate
+                                                                        .value ==
+                                                                        '') {
+                                                                      Fluttertoast
+                                                                          .showToast(
+                                                                          msg: 'Pick check-in date');
+                                                                    } else
+                                                                    if (_bookingController
+                                                                        .checkOutDate
+                                                                        .value ==
+                                                                        '') {
+                                                                      Fluttertoast
+                                                                          .showToast(
+                                                                          msg: 'Pick check-out date');
+                                                                    } else
+                                                                    if (_bookingController
+                                                                        .persons
+                                                                        .value ==
+                                                                        0) {
+                                                                      Fluttertoast
+                                                                          .showToast(
+                                                                          msg: 'At least 1 person is required');
+                                                                    } else {
+                                                                      _bookingController
+                                                                          .confirmBooking(
+                                                                        context: context,
+                                                                        price: apartment['price'],
+                                                                        bookingStatus: 'Pending',
+                                                                        cancelled: 'No',
+                                                                        address: '${apartment['location']}, ${apartment['division']}',
+                                                                        addOwnerUid: apartment['adOwnerUid'],
+                                                                        time: _currentTime,
+                                                                        category: apartment['category'],
+                                                                        title: apartment['title'],
+                                                                        pictureUrl: apartment['pictureUrl'],
+                                                                        checkIn: _bookingController
+                                                                            .checkInDate
+                                                                            .value,
+                                                                        checkOut: _bookingController
+                                                                            .checkOutDate
+                                                                            .value,
+                                                                        persons: '${_bookingController
+                                                                            .persons
+                                                                            .value}',
+                                                                        userUid: '${_currentUser!
+                                                                            .uid}',
+                                                                        apartmentUid: '${apartment['uid']}',
+                                                                      );
+                                                                    }
+                                                                  }),
                                                             ),
                                                           ],
-                                                        );
-                                                      })
+                                                        ),
+                                                      ],
+                                                    );
+                                                  })
                                                   : Fluttertoast.showToast(
-                                                      msg:
-                                                          'Login first to book your desired place');
+                                                  msg:
+                                                  'Login first to book your desired place');
                                             }),
                                       ),
                                     ],
@@ -563,11 +714,12 @@ class ApartmentDetails extends StatelessWidget {
                   } else {
                     return Center(
                         child: CircularProgressIndicator(
-                      color: blackColor,
-                    ));
+                          color: blackColor,
+                        ));
                   }
                 }),
           ),
+
         ],
       ),
     );

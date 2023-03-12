@@ -102,7 +102,7 @@ Widget customButton({required String text,
   required VoidCallback onTap,
   double width = double.maxFinite,
   Alignment alignment = Alignment.center,
-  Color color = blackColor}) {
+  Color color = bgColor}) {
   return InkWell(
     onTap: onTap,
     child: Container(

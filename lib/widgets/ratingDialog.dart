@@ -4,12 +4,13 @@ import 'package:bachelor_heaven/controller/booking/rating_controller.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 RatingController _ratingController = Get.put(RatingController());
 
 Widget RatingDialog(
-    {required TextEditingController ratingTextController, required String apartmentUid, required String comments, required String time, required BuildContext context, required String ratedBy}) {
+    {required TextEditingController ratingTextController, required String apartmentUid, required String time, required BuildContext context, required String ratedBy}) {
   return SimpleDialog(
     children: [
       Center(child: Text('How you liked your stay?',
@@ -33,7 +34,8 @@ Widget RatingDialog(
           },
         ),
       ),
-      TextField(controller: ratingTextController,
+      TextField(
+        controller: ratingTextController,
         cursorColor: bgColor,
         decoration: InputDecoration(
           hintText: 'Comments',
@@ -54,7 +56,7 @@ Widget RatingDialog(
           print(_ratingController.rating);
           _ratingController.postRating(apartmentUid: apartmentUid,
               ratedBy: ratedBy,
-              comments: comments,
+              comments: ratingTextController.text.toString(),
               time: time,
               context: context);
         }),

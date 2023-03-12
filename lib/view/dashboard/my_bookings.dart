@@ -224,7 +224,6 @@ class MyBookings extends StatelessWidget {
                                                             _ratingTextController,
                                                         apartmentUid: bookings[
                                                             'apartmentUid'],
-                                                        comments: _ratingTextController.text,
                                                         time: _currentTime,
                                                         context: context);
                                                   })

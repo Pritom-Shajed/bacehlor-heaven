@@ -10,6 +10,9 @@ Widget ApartmentCard(
     required String bookingLocation,
     required String imgUrl,
       required String price,
+      required VoidCallback onTapFav,
+      required IconData favIcon,
+      required Color favIconColor,
     required VoidCallback onTap}) {
 
   return Card(
@@ -34,13 +37,19 @@ Widget ApartmentCard(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: deepBrown.withOpacity(0.9),
-                  ),
-                  child: Text('৳$price', style: poppinsTextStyle(color: whiteColor, size: 12)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: deepBrown.withOpacity(0.9),
+                      ),
+                      child: Text('৳$price', style: poppinsTextStyle(color: whiteColor, size: 12)),
+                    ),
+                   IconButton(onPressed: onTapFav, icon: Icon(favIcon, color: favIconColor,)),
+                  ],
                 ),
                 Expanded(
                     child: Column(

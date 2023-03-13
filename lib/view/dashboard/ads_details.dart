@@ -133,11 +133,17 @@ class _ApartmentDetailsState extends State<ApartmentDetails> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    apartment['title'],
-                                    style: poppinsTextStyle(
-                                        size: 32,
-                                        fontWeight: FontWeight.w600),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        apartment['title'],
+                                        style: poppinsTextStyle(
+                                            size: 32,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      IconButton(onPressed: (){}, icon: Icon(Icons.favorite_outline))
+                                    ],
                                   ),
                                   Text(
                                     'Posted on: ${apartment['postDate']}',

@@ -3,8 +3,6 @@ import 'package:bachelor_heaven/controller/intial/dashboard_controller.dart';
 import 'package:bachelor_heaven/view/dashboard/category_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/home_screen.dart';
 import 'package:bachelor_heaven/view/dashboard/landlords_screen.dart';
-import 'package:bachelor_heaven/view/dashboard/my_bookings.dart';
-import 'package:bachelor_heaven/view/user/profile_screen.dart';
 import 'package:bachelor_heaven/widgets/common/alert_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +12,16 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../widgets/home screen/home_widgets.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
   Dashboard({Key? key}) : super(key: key);
 
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
   User? _currentUser = FirebaseAuth.instance.currentUser;
+
 
   @override
   Widget build(BuildContext context) {

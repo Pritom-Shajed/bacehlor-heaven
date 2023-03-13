@@ -1,17 +1,15 @@
 import 'package:bachelor_heaven/constants/constants.dart';
-import 'package:bachelor_heaven/controller/booking/booking_controller.dart';
 import 'package:bachelor_heaven/controller/dashboard/home_controller.dart';
-import 'package:bachelor_heaven/controller/booking/rating_controller.dart';
 import 'package:bachelor_heaven/view/dashboard/ads_details.dart';
 import 'package:bachelor_heaven/widgets/apartmentCard.dart';
 import 'package:bachelor_heaven/widgets/common/widgets.dart';
-import 'package:bachelor_heaven/widgets/customContainer.dart';
 import 'package:bachelor_heaven/widgets/home%20screen/home_widgets.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -23,7 +21,6 @@ class HomeScreen extends StatelessWidget {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   CarouselController _carouselController = CarouselController();
-  RatingController _ratingController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -114,26 +111,50 @@ class HomeScreen extends StatelessWidget {
                 stream: _firestore
                     .collection('Ads-All')
                     .where('locationSearch',
-                        isGreaterThanOrEqualTo: _homeController.searchName.value.toLowerCase())
+                        isGreaterThanOrEqualTo:
+                            _homeController.searchName.value.toLowerCase())
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.active) {
                     if (snapshot.hasData) {
-                      return GridView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: snapshot.data!.docs.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7),
-                          itemBuilder: (_, index) {
-                            Map<String, dynamic> adds = snapshot.data!.docs[index].data();
-                            // _ratingController.ratingChange(ratingActual: 4);
-                            return ApartmentCard(
-                                onTap: () {
-                                  Get.to(() => ApartmentDetails(uid: adds['uid']));
-                                },
-                                price: adds['price'],
-                                bookingTitle: adds['title'],
-                                bookingLocation: adds['division'],
-                                imgUrl: adds['pictureUrl']);
+                      return ValueListenableBuilder(
+                          valueListenable: Hive.box('favourites').listenable(),
+                          builder: (context, box, child) {
+                            return GridView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: snapshot.data!.docs.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 0.7),
+                                itemBuilder: (_, index) {
+                                  Map<String, dynamic> adds =
+                                      snapshot.data!.docs[index].data();
+                                  final isFavourite = box.get(index) !=null;
+
+                                  return ApartmentCard(
+                                      onTap: () {
+                                        Get.to(() =>
+                                            ApartmentDetails(uid: adds['uid'],));
+                                      },
+                                      onTapFav: () async{
+                                        ScaffoldMessenger.of(context).clearSnackBars();
+                                        if(isFavourite){
+                                          await box.delete(index);
+                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Removed from favourites'),backgroundColor: redColor));
+                                        } else {
+                                          await box.put(index, adds['uid']);
+                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Added to favourites', style: poppinsTextStyle(color: bgColor),),backgroundColor: whiteColor,));
+                                        }
+
+                                      },
+                                      favIcon: isFavourite ? Icons.favorite: Icons.favorite_outline,
+                                      favIconColor: isFavourite ? redColor: whiteColor,
+                                      price: adds['price'],
+                                      bookingTitle: adds['title'],
+                                      bookingLocation: adds['division'],
+                                      imgUrl: adds['pictureUrl']);
+                                });
                           });
                     } else if (snapshot.hasError) {
                       return Center(
